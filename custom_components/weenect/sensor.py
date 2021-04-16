@@ -17,7 +17,9 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
 
     @callback
-    def async_add_sensors(added: list[int]) -> None:
+    def async_add_sensors(
+        added: list[int],  # pylint disable=unsubscriptable-object
+    ) -> None:
         """Add sensors callback."""
 
         sensors: list = []
