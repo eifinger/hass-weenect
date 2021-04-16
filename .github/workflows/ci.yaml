@@ -64,15 +64,15 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest
-  hacs_validate:
-    name: "HACS Validate"
+  hacs:
+    name: HACS Action
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v2"
-      - name: "HACS validation"
+      - name: HACS Action
         uses: "hacs/action@main"
-          with:
-            category: "integration"
+        with:
+          category: "integration"
   hass_validate:
     name: Hassfest
     runs-on: "ubuntu-latest"
