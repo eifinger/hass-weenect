@@ -19,7 +19,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     @callback
     def async_add_binary_sensors(
-        added: list[int],  # pylint disable=unsubscriptable-object
+        added: list[int],
     ) -> None:
         """Add binary_sensors callback."""
 
