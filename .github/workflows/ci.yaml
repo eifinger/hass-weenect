@@ -69,11 +69,10 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v2"
-      - name: HACS validation
+      - name: "HACS validation"
         uses: "hacs/action@main"
           with:
             category: "integration"
-            ignore: brands
   hass_validate:
     name: Hassfest
     runs-on: "ubuntu-latest"
