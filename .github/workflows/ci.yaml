@@ -87,7 +87,7 @@ jobs:
       - black
       - pylint
       - pytest
-      - hacs_validate
+      - hacs
       - hass_validate
     if: github.ref == 'refs/heads/master'
     steps:
