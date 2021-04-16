@@ -10,6 +10,6 @@
     "@eifinger"
   ],
   "requirements": [
-    "aioweenect==1.0.0"
+    "aioweenect==1.0.1"
   ]
 }
