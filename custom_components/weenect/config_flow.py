@@ -1,20 +1,25 @@
-"""Adds config flow for Blueprint."""
+"""Adds config flow for weenect."""
+import logging
+
+from aioweenect import AioWeenect
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
 
-from .api import IntegrationBlueprintApiClient
 from .const import (
     CONF_PASSWORD,
+    CONF_UPDATE_RATE,
     CONF_USERNAME,
+    DEFAULT_UPDATE_RATE,
     DOMAIN,
-    PLATFORMS,
 )
 
+_LOGGER: logging.Logger = logging.getLogger(__package__)
 
-class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
-    """Config flow for Blueprint."""
+
+class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+    """Config flow for weenect."""
 
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
@@ -27,9 +32,13 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle a flow initialized by the user."""
         self._errors = {}
 
-        # Uncomment the next 2 lines if only a single instance of the integration is allowed:
-        # if self._async_current_entries():
-        #     return self.async_abort(reason="single_instance_allowed")
+        entries = self._async_current_entries()
+        for entry in entries:
+            if (
+                entry.data[CONF_USERNAME] == user_input[CONF_USERNAME]
+                and entry.data[CONF_PASSWORD] == user_input[CONF_PASSWORD]
+            ):
+                return self.async_abort(reason="already_configured")
 
         if user_input is not None:
             valid = await self._test_credentials(
@@ -37,22 +46,20 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             )
             if valid:
                 return self.async_create_entry(
-                    title=user_input[CONF_USERNAME], data=user_input
+                    title=user_input[CONF_USERNAME],
+                    data=user_input,
                 )
-            else:
-                self._errors["base"] = "auth"
-
-            return await self._show_config_form(user_input)
+            self._errors["base"] = "auth"
 
         return await self._show_config_form(user_input)
 
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return BlueprintOptionsFlowHandler(config_entry)
+        return WeenectOptionsFlowHandler(config_entry)
 
     async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
-        """Show the configuration form to edit location data."""
+        """Show the configuration form."""
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
@@ -61,23 +68,23 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=self._errors,
         )
 
-    async def _test_credentials(self, username, password):
+    async def _test_credentials(self, username, password) -> bool:
         """Return true if credentials is valid."""
         try:
             session = async_create_clientsession(self.hass)
-            client = IntegrationBlueprintApiClient(username, password, session)
-            await client.async_get_data()
+            client = AioWeenect(username=username, password=password, session=session)
+            await client.login()
             return True
-        except Exception:  # pylint: disable=broad-except
-            pass
+        except Exception as exception:  # pylint: disable=broad-except
+            _LOGGER.debug(exception)
         return False
 
 
-class BlueprintOptionsFlowHandler(config_entries.OptionsFlow):
-    """Blueprint config flow options handler."""
+class WeenectOptionsFlowHandler(config_entries.OptionsFlow):
+    """weenect config flow options handler."""
 
     def __init__(self, config_entry):
-        """Initialize HACS options flow."""
+        """Initialize weenect options flow."""
         self.config_entry = config_entry
         self.options = dict(config_entry.options)
 
@@ -95,8 +102,12 @@ class BlueprintOptionsFlowHandler(config_entries.OptionsFlow):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(x, default=self.options.get(x, True)): bool
-                    for x in sorted(PLATFORMS)
+                    vol.Optional(
+                        CONF_UPDATE_RATE,
+                        default=self.config_entry.options.get(
+                            CONF_UPDATE_RATE, DEFAULT_UPDATE_RATE
+                        ),
+                    ): int
                 }
             ),
         )

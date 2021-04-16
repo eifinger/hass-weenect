@@ -2,8 +2,8 @@
     "config": {
         "step": {
             "user": {
-                "title": "Blueprint",
-                "description": "If you need help with the configuration have a look here: https://github.com/custom-components/integration_blueprint",
+                "title": "Weenect",
+                "description": "If you need help with the configuration have a look here: https://github.com/eifinger/hass-weenect",
                 "data": {
                     "username": "Username",
                     "password": "Password"
@@ -14,16 +14,14 @@
             "auth": "Username/Password is wrong."
         },
         "abort": {
-            "single_instance_allowed": "Only a single instance is allowed."
+            "already_configured": "This account is already configured."
         }
     },
     "options": {
         "step": {
             "user": {
                 "data": {
-                    "binary_sensor": "Binary sensor enabled",
-                    "sensor": "Sensor enabled",
-                    "switch": "Switch enabled"
+                    "update_rate": "Update Interval"
                 }
             }
         }

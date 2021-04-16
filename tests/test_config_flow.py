@@ -1,16 +1,14 @@
-"""Test integration_blueprint config flow."""
+"""Test weenect config flow."""
 from unittest.mock import patch
 
 from homeassistant import config_entries, data_entry_flow
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.integration_blueprint.const import (
-    BINARY_SENSOR,
+from custom_components.weenect.const import (
+    CONF_UPDATE_RATE,
     DOMAIN,
     PLATFORMS,
-    SENSOR,
-    SWITCH,
 )
 
 from .const import MOCK_CONFIG
@@ -23,19 +21,16 @@ from .const import MOCK_CONFIG
 def bypass_setup_fixture():
     """Prevent setup."""
     with patch(
-        "custom_components.integration_blueprint.async_setup",
-        return_value=True,
-    ), patch(
-        "custom_components.integration_blueprint.async_setup_entry",
+        "custom_components.weenect.async_setup_entry",
         return_value=True,
     ):
         yield
 
 
 # Here we simiulate a successful config flow from the backend.
-# Note that we use the `bypass_get_data` fixture here because
+# Note that we use the `bypass_get_trackers` fixture here because
 # we want the config flow validation to succeed during the test.
-async def test_successful_config_flow(hass, bypass_get_data):
+async def test_successful_config_flow(hass, bypass_get_trackers, bypass_login):
     """Test a successful config flow."""
     # Initialize a config flow
     result = await hass.config_entries.flow.async_init(
@@ -61,10 +56,10 @@ async def test_successful_config_flow(hass, bypass_get_data):
 
 
 # In this case, we want to simulate a failure during the config flow.
-# We use the `error_on_get_data` mock instead of `bypass_get_data`
+# We use the `error_on_get_trackers` mock instead of `bypass_get_trackers`
 # (note the function parameters) to raise an Exception during
 # validation of the input config.
-async def test_failed_config_flow(hass, error_on_get_data):
+async def test_failed_config_flow(hass, error_on_get_trackers):
     """Test a failed config flow due to credential validation failure."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -99,7 +94,7 @@ async def test_options_flow(hass):
     # Enter some fake data into the form
     result = await hass.config_entries.options.async_configure(
         result["flow_id"],
-        user_input={platform: platform != SENSOR for platform in PLATFORMS},
+        user_input={CONF_UPDATE_RATE: 20},
     )
 
     # Verify that the flow finishes
@@ -107,4 +102,4 @@ async def test_options_flow(hass):
     assert result["title"] == "test_username"
 
     # Verify that the options were updated
-    assert entry.options == {BINARY_SENSOR: True, SENSOR: False, SWITCH: True}
+    assert entry.options == {CONF_UPDATE_RATE: 20}
