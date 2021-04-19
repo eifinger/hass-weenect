@@ -1,6 +1,6 @@
 """Binary_sensor platform for weenect."""
 import logging
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.core import callback
@@ -50,7 +50,7 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: str,
-        sensor_type: Dict[str],
+        sensor_type: Dict[str, Any],
     ):
         super().__init__(coordinator, tracker_id)
         self._device_class = sensor_type["device_class"]

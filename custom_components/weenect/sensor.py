@@ -1,6 +1,6 @@
 """Sensor platform for weenect."""
 import logging
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
@@ -47,7 +47,7 @@ class WeenectSensor(WeenectEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: str,
-        sensor_type: Dict[str],
+        sensor_type: Dict[str, Any],
     ):
         super().__init__(coordinator, tracker_id)
         self._device_class = sensor_type["device_class"]
