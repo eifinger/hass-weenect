@@ -6,7 +6,7 @@ set_update_interval:
       example: '10000'
     update_interval:
       description: The update interval. Possible values are 30S 1M 5M 10M 30M 1H
-      example: "01"
+      example: "30M"
 
 activate_super_live:
   description: Activate the super live mode.
