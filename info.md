@@ -16,9 +16,38 @@ _Homeassistant Custom Component for [https://my.weenect.com/](https://my.weenect
 
 Platform | Description
 -- | --
-`sensor` | Show travel time between two places.
+`binary_sensor` | Adds sensors to show the connection status of your trackers.
+`device_tracker` | Adds your trackers as device_trackers so they appear on the map.
+`sensor` | Adds sensors like signal and battery strength of your trackers.
 
 ![example][exampleimg]
+
+## Services
+
+### weeenct.set_update_interval
+
+Set the tracker update interval.
+
+Name | Description | Example
+-- | -- | --
+`tracker_id` | `The tracker id.` | `10000`
+`update_interval` | `The update interval. Possible values are 30S 1M 5M 10M 30M 1H.` | `30M`
+
+### weeenct.activate_super_live
+
+Activate the super live mode.
+
+Name | Description | Example
+-- | -- | --
+`tracker_id` | `The tracker id.` | `10000`
+
+### weeenct.refresh_location
+
+Request a location update.
+
+Name | Description | Example
+-- | -- | --
+`tracker_id` | `The tracker id.` | `10000`
 
 ## Installation
 
