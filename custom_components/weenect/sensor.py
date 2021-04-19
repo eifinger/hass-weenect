@@ -1,5 +1,6 @@
 """Sensor platform for weenect."""
 import logging
+from typing import Dict, List
 
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
@@ -18,7 +19,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     @callback
     def async_add_sensors(
-        added: list[int],
+        added: List[int],
     ) -> None:
         """Add sensors callback."""
 
@@ -46,7 +47,7 @@ class WeenectSensor(WeenectEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: str,
-        sensor_type: dict[str],
+        sensor_type: Dict[str],
     ):
         super().__init__(coordinator, tracker_id)
         self._device_class = sensor_type["device_class"]
