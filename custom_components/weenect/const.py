@@ -10,7 +10,7 @@ from homeassistant.const import (
 NAME = "Weenect"
 DOMAIN = "weenect"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "1.0.4"
+VERSION = "1.0.6"
 ATTRIBUTION = "Data provided by https://my.weenect.com/"
 ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
 
