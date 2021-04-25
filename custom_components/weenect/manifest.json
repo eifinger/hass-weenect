@@ -4,12 +4,12 @@
   "documentation": "https://github.com/eifinger/hass-weenect",
   "issue_tracker": "https://github.com/eifinger/hass-weenect/issues",
   "dependencies": [],
-  "version": "1.0.6",
+  "version": "1.0.7",
   "config_flow": true,
   "codeowners": [
     "@eifinger"
   ],
   "requirements": [
-    "aioweenect==1.0.2"
+    "aioweenect==1.1.0"
   ]
 }
