@@ -25,6 +25,36 @@ PLATFORMS = ["binary_sensor", "device_tracker", "sensor"]
 # Sensors
 SENSOR_TYPES = [
     {
+        "name": "Update Rate",
+        "value_name": "freq_mode",
+        "device_class": None,
+        "enabled": True,
+        "unit_of_measurement": None,
+    },
+    {
+        "name": "Last Update Rate",
+        "value_name": "last_freq_mode",
+        "device_class": None,
+        "enabled": True,
+        "unit_of_measurement": None,
+    },
+    {
+        "name": "Sensor Mode",
+        "value_name": "sensor_mode",
+        "device_class": None,
+        "enabled": True,
+        "unit_of_measurement": None,
+    },
+    {
+        "name": "Last Sensor Mode",
+        "value_name": "last_sensor_mode",
+        "device_class": None,
+        "enabled": True,
+        "unit_of_measurement": None,
+    },
+]
+LOCATION_SENSOR_TYPES = [
+    {
         "name": "Battery",
         "value_name": "battery",
         "device_class": DEVICE_CLASS_BATTERY,
@@ -57,41 +87,6 @@ SENSOR_TYPES = [
         "value_name": "satellites",
         "device_class": None,
         "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Update Rate",
-        "value_name": "freq_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Last Update Rate",
-        "value_name": "last_freq_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Sensor Mode",
-        "value_name": "sensor_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Last Sensor Mode",
-        "value_name": "last_sensor_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Type",
-        "value_name": "type",
-        "device_class": None,
-        "enabled": False,
         "unit_of_measurement": None,
     },
 ]

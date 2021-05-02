@@ -6,7 +6,7 @@ from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import DOMAIN, SENSOR_TYPES, TRACKER_ADDED
+from .const import DOMAIN, LOCATION_SENSOR_TYPES, SENSOR_TYPES, TRACKER_ADDED
 from .entity import WeenectEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -27,6 +27,10 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         for tracker_id in added:
             for sensor_type in SENSOR_TYPES:
                 sensors.append(WeenectSensor(coordinator, tracker_id, sensor_type))
+            for sensor_type in LOCATION_SENSOR_TYPES:
+                sensors.append(
+                    WeenectLocationSensor(coordinator, tracker_id, sensor_type)
+                )
 
         async_add_entities(sensors, True)
 
@@ -40,8 +44,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         async_add_sensors(coordinator.data.keys())
 
 
-class WeenectSensor(WeenectEntity):
-    """weenect sensor."""
+class WeenectSensorBase(WeenectEntity):
+    """weenect Sensor Base."""
 
     def __init__(
         self,
@@ -68,12 +72,6 @@ class WeenectSensor(WeenectEntity):
         return f"{self.id}_{self._value_name}"
 
     @property
-    def state(self):
-        """Return the state of the resources if it has been received yet."""
-        if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0][self._value_name]
-
-    @property
     def device_class(self):
         """Device class of this entity."""
         return self._device_class
@@ -87,3 +85,39 @@ class WeenectSensor(WeenectEntity):
     def unit_of_measurement(self):
         """Return the units of measurement."""
         return self._unit_of_measurement
+
+
+class WeenectSensor(WeenectSensorBase):
+    """weenect sensor for general informatio."""
+
+    def __init__(
+        self,
+        coordinator: DataUpdateCoordinator,
+        tracker_id: str,
+        sensor_type: Dict[str, Any],
+    ):
+        super().__init__(coordinator, tracker_id, sensor_type)
+
+    @property
+    def state(self):
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            return self.coordinator.data[self.id][self._value_name]
+
+
+class WeenectLocationSensor(WeenectSensorBase):
+    """weenect sensor for location informatio."""
+
+    def __init__(
+        self,
+        coordinator: DataUpdateCoordinator,
+        tracker_id: str,
+        sensor_type: Dict[str, Any],
+    ):
+        super().__init__(coordinator, tracker_id, sensor_type)
+
+    @property
+    def state(self):
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            return self.coordinator.data[self.id]["position"][0][self._value_name]
