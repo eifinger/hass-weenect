@@ -141,6 +141,7 @@ async def async_refresh_location(hass, data):
         "Could not find a registered integration for tracker with id: %s", tracker_id
     )
 
+
 async def async_ring(hass, data):
     """Send a ring command for this tracker id"""
 
@@ -153,6 +154,7 @@ async def async_ring(hass, data):
     _LOGGER.warning(
         "Could not find a registered integration for tracker with id: %s", tracker_id
     )
+
 
 async def async_vibrate(hass, data):
     """Send a vibrate command for this tracker id"""
