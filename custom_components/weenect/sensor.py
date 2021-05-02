@@ -54,6 +54,7 @@ class WeenectSensor(WeenectEntity):
         self._value_name = sensor_type["value_name"]
         self._enabled = sensor_type["enabled"]
         self._name = sensor_type["name"]
+        self._unit_of_measurement = sensor_type["unit_of_measurement"]
 
     @property
     def name(self):
@@ -81,3 +82,8 @@ class WeenectSensor(WeenectEntity):
     def entity_registry_enabled_default(self) -> bool:
         """Return if the entity should be enabled when first added to the entity registry."""
         return self._enabled
+
+    @property
+    def unit_of_measurement(self):
+        """Return the units of measurement."""
+        return self._unit_of_measurement
