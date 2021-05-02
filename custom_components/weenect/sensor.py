@@ -90,14 +90,6 @@ class WeenectSensorBase(WeenectEntity):
 class WeenectSensor(WeenectSensorBase):
     """weenect sensor for general informatio."""
 
-    def __init__(
-        self,
-        coordinator: DataUpdateCoordinator,
-        tracker_id: str,
-        sensor_type: Dict[str, Any],
-    ):
-        super().__init__(coordinator, tracker_id, sensor_type)
-
     @property
     def state(self):
         """Return the state of the resources if it has been received yet."""
@@ -107,14 +99,6 @@ class WeenectSensor(WeenectSensorBase):
 
 class WeenectLocationSensor(WeenectSensorBase):
     """weenect sensor for location informatio."""
-
-    def __init__(
-        self,
-        coordinator: DataUpdateCoordinator,
-        tracker_id: str,
-        sensor_type: Dict[str, Any],
-    ):
-        super().__init__(coordinator, tracker_id, sensor_type)
 
     @property
     def state(self):
