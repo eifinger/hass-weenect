@@ -49,6 +49,22 @@ Name | Description | Example
 -- | -- | --
 `tracker_id` | `The tracker id.` | `10000`
 
+### weeenct.ring
+
+Let the tracker ring.
+
+Name | Description | Example
+-- | -- | --
+`tracker_id` | `The tracker id.` | `10000`
+
+### weeenct.vibrate
+
+Let the tracker vibrate.
+
+Name | Description | Example
+-- | -- | --
+`tracker_id` | `The tracker id.` | `10000`
+
 ## Installation
 
 ### HACS
@@ -80,6 +96,45 @@ custom_components/weenect/services.py
 custom_components/weenect/services.yaml
 custom_components/weenect/translations/en.sjon
 ```
+
+## Automations
+
+I have configured the following two automations to save battery on the tracker without having it to turn on/off by hand:
+
+```yaml
+---
+automation:
+  - id: 743b7e7d-ffa8-4fa3-9c1c-62d9ada9ced8
+    alias: "Setze Nayas Tracker Updaterate auf 1M wenn wir unterwegs sind"
+    description: "Set Nayas tracker update rate to 1m when we are not at home"
+    mode: single
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.is_home
+        from: "on"
+        to: "off"
+    action:
+      - service: weenect.set_update_interval
+        data:
+          tracker_id: !secret naya_tracker_id
+          update_interval: "1M"
+  - id: 652b4b69-c951-4861-8b7d-3cbb15fc8b79
+    alias: "Setze Nayas Tracker Updaterate auf 60M wenn wir zu Hause sind"
+    description: "Set Nayas tracker update rate to 60m when we are at home"
+    mode: single
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.is_home
+        from: "off"
+        to: "on"
+    action:
+      - service: weenect.set_update_interval
+        data:
+          tracker_id: !secret naya_tracker_id
+          update_interval: "60M"
+````
 
 
 <a href="https://www.buymeacoffee.com/eifinger" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a><br>
