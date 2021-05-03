@@ -3,15 +3,12 @@ import logging
 
 from aioweenect import AioWeenect
 from homeassistant import config_entries
-from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import voluptuous as vol
 
 from .const import (
     CONF_PASSWORD,
-    CONF_UPDATE_RATE,
     CONF_USERNAME,
-    DEFAULT_UPDATE_RATE,
     DOMAIN,
 )
 
