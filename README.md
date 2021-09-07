@@ -69,7 +69,7 @@ Name | Description | Example
 
 ### HACS
 
-The easiest way to add this to your Homeassistant installation is using [HACS](https://custom-components.github.io/hacs/). And then follow the instructions under [Configuration](#configuration) below.
+The easiest way to add this to your Homeassistant installation is using [HACS](https://hacs.xyz/).
 
 ### Manual
 
