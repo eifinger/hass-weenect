@@ -30,40 +30,23 @@ Set the tracker update interval.
 
 Name | Description | Example
 -- | -- | --
-`tracker_id` | `The tracker id.` | `10000`
 `update_interval` | `The update interval. Possible values are 30S 1M 5M 10M 30M 1H.` | `30M`
 
 ### weeenct.activate_super_live
 
 Activate the super live mode.
 
-Name | Description | Example
--- | -- | --
-`tracker_id` | `The tracker id.` | `10000`
-
 ### weeenct.refresh_location
 
 Request a location update.
-
-Name | Description | Example
--- | -- | --
-`tracker_id` | `The tracker id.` | `10000`
 
 ### weeenct.ring
 
 Let the tracker ring.
 
-Name | Description | Example
--- | -- | --
-`tracker_id` | `The tracker id.` | `10000`
-
 ### weeenct.vibrate
 
 Let the tracker vibrate.
-
-Name | Description | Example
--- | -- | --
-`tracker_id` | `The tracker id.` | `10000`
 
 ## Automations
 
@@ -85,7 +68,7 @@ automation:
     action:
       - service: weenect.set_update_interval
         data:
-          tracker_id: !secret naya_tracker_id
+          entity_id: device_tracker.naya
           update_interval: "1M"
   - id: 652b4b69-c951-4861-8b7d-3cbb15fc8b79
     alias: "Setze Nayas Tracker Updaterate auf 60M wenn wir zu Hause sind"
@@ -100,7 +83,7 @@ automation:
     action:
       - service: weenect.set_update_interval
         data:
-          tracker_id: !secret naya_tracker_id
+          entity_id: device_tracker.naya
           update_interval: "60M"
 ````
 
