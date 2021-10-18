@@ -99,8 +99,9 @@ automation:
         to: "off"
     action:
       - service: weenect.set_update_interval
+        target:
+            entity_id: device_tracker.naya
         data:
-          entity_id: device_tracker.naya
           update_interval: "1M"
   - id: 652b4b69-c951-4861-8b7d-3cbb15fc8b79
     alias: "Setze Nayas Tracker Updaterate auf 60M wenn wir zu Hause sind"
@@ -114,8 +115,9 @@ automation:
         to: "on"
     action:
       - service: weenect.set_update_interval
-        data:
+        target:
           entity_id: device_tracker.naya
+        data:
           update_interval: "60M"
 ````
 
