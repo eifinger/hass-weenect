@@ -1,4 +1,4 @@
-pytest-homeassistant-custom-component==0.4.10
+pytest-homeassistant-custom-component==0.4.11
 pylint==2.11.1
 black==21.10b0
 aioweenect==1.1.0
