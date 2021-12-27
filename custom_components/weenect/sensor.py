@@ -85,7 +85,7 @@ class WeenectSensorBase(WeenectEntity):
         return self._enabled
 
     @property
-    def unit_of_measurement(self):
+    def native_unit_of_measurement(self):
         """Return the units of measurement."""
         return self._unit_of_measurement
 
@@ -94,7 +94,7 @@ class WeenectSensor(WeenectSensorBase):
     """weenect sensor for general informatio."""
 
     @property
-    def state(self):
+    def native_value(self):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             return self.coordinator.data[self.id][self._value_name]
@@ -104,7 +104,7 @@ class WeenectLocationSensor(WeenectSensorBase):
     """weenect sensor for location informatio."""
 
     @property
-    def state(self):
+    def native_value(self):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             return self.coordinator.data[self.id]["position"][0][self._value_name]

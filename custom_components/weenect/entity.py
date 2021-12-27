@@ -1,4 +1,5 @@
 """weenect class"""
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -51,16 +52,16 @@ class WeenectEntity(CoordinatorEntity):
 
     @property
     def device_info(self):
-        return {
-            "identifiers": {(DOMAIN, self.id)},
-            "name": self.device_name,
-            "model": self.tracker_type,
-            "manufacturer": NAME,
-            "sw_version": self.firmware,
-        }
+        return DeviceInfo(
+            identifiers={(DOMAIN, self.id)},
+            name=self.device_name,
+            model=self.tracker_type,
+            manufacturer=NAME,
+            sw_version=self.firmware,
+        )
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             "attribution": ATTRIBUTION,
