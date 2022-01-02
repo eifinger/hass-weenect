@@ -15,12 +15,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the weenect binary_sensors."""
-
     coordinator = hass.data[DOMAIN][config_entry.entry_id]
 
     @callback
     def async_add_binary_sensors(
-        added: List[int],
+        added: List[str],
     ) -> None:
         """Add binary_sensors callback."""
 
@@ -83,4 +82,4 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
     @property
     def entity_registry_enabled_default(self) -> bool:
         """Return if the entity should be enabled when first added to the entity registry."""
-        return self._enabled
+        return bool(self._enabled)

@@ -1,11 +1,13 @@
+---
 name: Automerge
 
+# yamllint disable-line rule:truthy
 on:
   workflow_run:
     types:
-        - completed
+      - completed
     workflows:
-        - 'CI'
+      - 'CI'
 
 jobs:
   automerge:

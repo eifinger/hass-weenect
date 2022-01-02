@@ -1,9 +1,9 @@
 """weenect services."""
 import logging
 
+import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
-import voluptuous as vol
 
 from .const import DOMAIN
 
@@ -28,7 +28,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_set_update_interval(
-    hass: HomeAssistant, tracker_id: int, update_interval: str
+    hass: HomeAssistant, tracker_id: str, update_interval: str
 ):
     """Set the update interval for this tracker id."""
 
@@ -43,7 +43,7 @@ async def async_set_update_interval(
     )
 
 
-async def async_activate_super_live(hass: HomeAssistant, tracker_id: int):
+async def async_activate_super_live(hass: HomeAssistant, tracker_id: str):
     """Activate the super live mode for this tracker id"""
 
     for config_entry in hass.data[DOMAIN]:
@@ -55,7 +55,7 @@ async def async_activate_super_live(hass: HomeAssistant, tracker_id: int):
     )
 
 
-async def async_refresh_location(hass: HomeAssistant, tracker_id: int):
+async def async_refresh_location(hass: HomeAssistant, tracker_id: str):
     """Request a position refresh for this tracker id"""
 
     for config_entry in hass.data[DOMAIN]:
@@ -67,7 +67,7 @@ async def async_refresh_location(hass: HomeAssistant, tracker_id: int):
     )
 
 
-async def async_ring(hass: HomeAssistant, tracker_id: int):
+async def async_ring(hass: HomeAssistant, tracker_id: str):
     """Send a ring command for this tracker id"""
 
     for config_entry in hass.data[DOMAIN]:
@@ -79,7 +79,7 @@ async def async_ring(hass: HomeAssistant, tracker_id: int):
     )
 
 
-async def async_vibrate(hass: HomeAssistant, tracker_id: int):
+async def async_vibrate(hass: HomeAssistant, tracker_id: str):
     """Send a vibrate command for this tracker id"""
 
     for config_entry in hass.data[DOMAIN]:

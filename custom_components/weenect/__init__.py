@@ -4,14 +4,15 @@ Custom integration to integrate weenect with Home Assistant.
 For more details about this integration, please refer to
 https://github.com/eifinger/hass-weenect
 """
+# pyright: reportGeneralTypeIssues=false
 import asyncio
-from datetime import timedelta
 import logging
-from typing import Any
+from datetime import timedelta
+from typing import Any, Callable, Dict, List
 
 from aioweenect import AioWeenect
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import Config, HomeAssistant
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_send
@@ -75,8 +76,8 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         )
         self.client = client
         self.config_entry = config_entry
-        self.unsub_dispatchers = []
-        self.data = {}
+        self.unsub_dispatchers: List[Callable[[], None]] = []
+        self.data: Dict[str, Any] = {}
 
     async def _async_update_data(self):
         """Update data via library."""

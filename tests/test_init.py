@@ -1,6 +1,6 @@
 """Test weenect setup process."""
-from homeassistant.exceptions import ConfigEntryNotReady
 import pytest
+from homeassistant.exceptions import ConfigEntryNotReady
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.weenect import (
@@ -19,7 +19,8 @@ from .const import MOCK_CONFIG
 # Home Assistant using the pytest_homeassistant_custom_component plugin.
 # Assertions allow you to verify that the return value of whatever is on the left
 # side of the assertion matches with the right side.
-async def test_setup_unload_and_reload_entry(hass, bypass_get_trackers):
+@pytest.mark.usefixtures("bypass_get_trackers")
+async def test_setup_unload_and_reload_entry(hass):
     """Test entry setup and unload."""
     # Create a mock entry so we don't have to go through config flow
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
@@ -29,15 +30,15 @@ async def test_setup_unload_and_reload_entry(hass, bypass_get_trackers):
     # call, no code from custom_components/integration_blueprint/api.py actually runs.
     assert await async_setup_entry(hass, config_entry)
     assert DOMAIN in hass.data and config_entry.entry_id in hass.data[DOMAIN]
-    assert (
-        type(hass.data[DOMAIN][config_entry.entry_id]) == WeenectDataUpdateCoordinator
+    assert isinstance(
+        hass.data[DOMAIN][config_entry.entry_id], WeenectDataUpdateCoordinator
     )
 
     # Reload the entry and assert that the data from above is still there
     assert await async_reload_entry(hass, config_entry) is None
     assert DOMAIN in hass.data and config_entry.entry_id in hass.data[DOMAIN]
-    assert (
-        type(hass.data[DOMAIN][config_entry.entry_id]) == WeenectDataUpdateCoordinator
+    assert isinstance(
+        hass.data[DOMAIN][config_entry.entry_id], WeenectDataUpdateCoordinator
     )
 
     # Unload the entry and verify that the data has been removed
@@ -45,7 +46,8 @@ async def test_setup_unload_and_reload_entry(hass, bypass_get_trackers):
     assert config_entry.entry_id not in hass.data[DOMAIN]
 
 
-async def test_setup_entry_exception(hass, error_on_get_trackers):
+@pytest.mark.usefixtures("error_on_get_trackers")
+async def test_setup_entry_exception(hass):
     """Test ConfigEntryNotReady when API raises an exception during entry setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 

@@ -1,3 +1,4 @@
+---
 default_config:
 
 logger:
@@ -5,5 +6,4 @@ logger:
   logs:
     custom_components.weenect: debug
 
-# If you need to debug uncommment the line below (doc: https://www.home-assistant.io/integrations/debugpy/)
 debugpy:

@@ -42,7 +42,7 @@ async def async_setup_entry(
 
     @callback
     def async_add_device_trackers(
-        added: List[int],
+        added: List[str],
     ) -> None:
         """Add device_trackers callback."""
 
@@ -68,12 +68,12 @@ async def async_setup_entry(
 
     async def async_call_service(service_call: ServiceCall) -> None:
         """Handle dispatched services."""
-        assert platform is not None
+        assert platform is not None  # nosec
         entities = await platform.async_extract_from_service(service_call)
 
         tracker_ids = []
         for entity in entities:
-            assert isinstance(entity, WeenectEntity)
+            assert isinstance(entity, WeenectEntity)  # nosec
             tracker_ids.append(entity.id)
         for tracker_id in set(tracker_ids):
             if service_call.service == SERVICE_SET_UPDATE_INTERVAL:

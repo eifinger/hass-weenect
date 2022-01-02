@@ -22,7 +22,7 @@ async def async_setup_entry(
 
     @callback
     def async_add_sensors(
-        added: List[int],
+        added: List[str],
     ) -> None:
         """Add sensors callback."""
 
@@ -82,7 +82,7 @@ class WeenectSensorBase(WeenectEntity):
     @property
     def entity_registry_enabled_default(self) -> bool:
         """Return if the entity should be enabled when first added to the entity registry."""
-        return self._enabled
+        return bool(self._enabled)
 
     @property
     def native_unit_of_measurement(self):
@@ -91,7 +91,7 @@ class WeenectSensorBase(WeenectEntity):
 
 
 class WeenectSensor(WeenectSensorBase):
-    """weenect sensor for general informatio."""
+    """weenect sensor for general information."""
 
     @property
     def native_value(self):
@@ -101,7 +101,7 @@ class WeenectSensor(WeenectSensorBase):
 
 
 class WeenectLocationSensor(WeenectSensorBase):
-    """weenect sensor for location informatio."""
+    """weenect sensor for location information."""
 
     @property
     def native_value(self):

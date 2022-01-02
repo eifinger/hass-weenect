@@ -1,13 +1,10 @@
 """Test weenect config flow."""
 from unittest.mock import patch
 
-from homeassistant import config_entries, data_entry_flow
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+from homeassistant import config_entries, data_entry_flow
 
-from custom_components.weenect.const import (
-    DOMAIN,
-)
+from custom_components.weenect.const import DOMAIN
 
 from .const import MOCK_CONFIG
 
@@ -28,7 +25,8 @@ def bypass_setup_fixture():
 # Here we simiulate a successful config flow from the backend.
 # Note that we use the `bypass_get_trackers` fixture here because
 # we want the config flow validation to succeed during the test.
-async def test_successful_config_flow(hass, bypass_get_trackers, bypass_login):
+@pytest.mark.usefixtures("bypass_get_trackers", "bypass_login")
+async def test_successful_config_flow(hass):
     """Test a successful config flow."""
     # Initialize a config flow
     result = await hass.config_entries.flow.async_init(
@@ -57,7 +55,8 @@ async def test_successful_config_flow(hass, bypass_get_trackers, bypass_login):
 # We use the `error_on_get_trackers` mock instead of `bypass_get_trackers`
 # (note the function parameters) to raise an Exception during
 # validation of the input config.
-async def test_failed_config_flow(hass, error_on_get_trackers):
+@pytest.mark.usefixtures("error_on_get_trackers")
+async def test_failed_config_flow(hass):
     """Test a failed config flow due to credential validation failure."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

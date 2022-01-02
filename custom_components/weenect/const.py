@@ -109,7 +109,7 @@ BINARY_SENSOR_TYPES = [
 # Configuration and options
 CONF_ENABLED = "enabled"
 CONF_USERNAME = "username"
-CONF_PASSWORD = "password"
+CONF_PASSWORD = "password"  # nosec
 CONF_UPDATE_RATE = "update_rate"
 DEFAULT_UPDATE_RATE = 30
 

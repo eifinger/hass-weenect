@@ -1,3 +1,4 @@
+---
 set_update_interval:
   description: Set the tracker update interval.
   target:

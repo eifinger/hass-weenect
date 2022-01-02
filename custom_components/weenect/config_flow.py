@@ -1,17 +1,18 @@
 """Adds config flow for weenect."""
 import logging
 
+import voluptuous as vol
 from aioweenect import AioWeenect
 from homeassistant import config_entries
+from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
-import voluptuous as vol
 
 from .const import CONF_PASSWORD, CONF_USERNAME, DOMAIN
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
-class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore
     """Config flow for weenect."""
 
     VERSION = 1
@@ -46,7 +47,7 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         return await self._show_config_form(user_input)
 
-    async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
+    async def _show_config_form(self, user_input) -> FlowResult:
         """Show the configuration form."""
         return self.async_show_form(
             step_id="user",
