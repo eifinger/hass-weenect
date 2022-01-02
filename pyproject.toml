@@ -61,7 +61,7 @@ vulture = "^2.3"
 yamllint = "^1.26.3"
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term-missing --cov-report xml --cov=custom_components tests"
+addopts = "--cov --cov-report term-missing --cov=custom_components tests"
 
 [tool.coverage.report]
 show_missing = true
