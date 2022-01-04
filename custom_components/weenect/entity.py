@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional
 
+from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
@@ -56,11 +57,6 @@ class WeenectEntity(CoordinatorEntity):
         return None
 
     @property
-    def unique_id(self) -> int:
-        """Return a unique ID to use for this entity."""
-        return self.id
-
-    @property
     def device_info(self) -> DeviceInfo:
         return DeviceInfo(
             identifiers={(DOMAIN, self.id)},
@@ -74,7 +70,7 @@ class WeenectEntity(CoordinatorEntity):
     def extra_state_attributes(self) -> Dict[str, Optional[str] | Optional[int]]:
         """Return the state attributes."""
         return {
-            "attribution": ATTRIBUTION,
+            ATTR_ATTRIBUTION: ATTRIBUTION,
             "id": self.id,
             "sim": self.sim,
             "imei": self.imei,

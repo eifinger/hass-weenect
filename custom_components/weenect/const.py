@@ -1,105 +1,95 @@
 """Constants for weenect."""
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
-from homeassistant.components.sensor import SensorDeviceClass
+from __future__ import annotations
+
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntityDescription,
+)
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
 
 # Base component constants
 NAME = "Weenect"
 DOMAIN = "weenect"
-DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "2.0.7"
 ATTRIBUTION = "Data provided by https://my.weenect.com/"
 ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
-
-# Device classes
-BINARY_SENSOR_DEVICE_CLASS = "connectivity"
 
 # Platforms
 PLATFORMS = ["binary_sensor", "device_tracker", "sensor"]
 
 # Sensors
-SENSOR_TYPES = [
-    {
-        "name": "Update Rate",
-        "value_name": "freq_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Last Update Rate",
-        "value_name": "last_freq_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Sensor Mode",
-        "value_name": "sensor_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "Last Sensor Mode",
-        "value_name": "last_sensor_mode",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-]
-LOCATION_SENSOR_TYPES = [
-    {
-        "name": "Battery",
-        "value_name": "battery",
-        "device_class": SensorDeviceClass.BATTERY,
-        "enabled": True,
-        "unit_of_measurement": PERCENTAGE,
-    },
-    {
-        "name": "Cell Tower Id",
-        "value_name": "cellid",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-    {
-        "name": "GSM Strength",
-        "value_name": "gsm",
-        "device_class": SensorDeviceClass.SIGNAL_STRENGTH,
-        "enabled": True,
-        "unit_of_measurement": SIGNAL_STRENGTH_DECIBELS,
-    },
-    {
-        "name": "Last Message Received",
-        "value_name": "last_message",
-        "device_class": SensorDeviceClass.TIMESTAMP,
-        "enabled": True,
-        "unit_of_measurement": "ISO8601",
-    },
-    {
-        "name": "GPS Satellites",
-        "value_name": "satellites",
-        "device_class": None,
-        "enabled": True,
-        "unit_of_measurement": None,
-    },
-]
+SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Update Rate",
+        key="freq_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        name="Last Update Rate",
+        key="last_freq_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        name="Sensor Mode",
+        key="sensor_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        name="Last Sensor Mode",
+        key="last_sensor_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
+LOCATION_SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Battery",
+        key="battery",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement=PERCENTAGE,
+    ),
+    SensorEntityDescription(
+        name="Cell Tower Id",
+        key="cellid",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        name="GSM Strength",
+        key="gsm",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS,
+    ),
+    SensorEntityDescription(
+        name="Last Message Received",
+        key="last_message",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TIMESTAMP,
+    ),
+    SensorEntityDescription(
+        name="GPS Satellites",
+        key="satellites",
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+)
 
-BINARY_SENSOR_TYPES = [
-    {
-        "name": "Valid Signal",
-        "value_name": "valid_signal",
-        "device_class": BinarySensorDeviceClass.CONNECTIVITY,
-        "enabled": True,
-    },
-    {
-        "name": "Is Online",
-        "value_name": "is_online",
-        "device_class": BinarySensorDeviceClass.CONNECTIVITY,
-        "enabled": True,
-    },
-]
+BINARY_SENSOR_TYPES: tuple[SensorEntityDescription, ...] = (
+    BinarySensorEntityDescription(
+        name="Valid Signal",
+        key="valid_signal",
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+    ),
+    BinarySensorEntityDescription(
+        name="Is Online",
+        key="is_online",
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+    ),
+)
 
 # Configuration and options
 CONF_ENABLED = "enabled"

@@ -1,8 +1,9 @@
 """Binary_sensor platform for weenect."""
 import logging
-from typing import Any, Dict, List
+from typing import List
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.sensor import SensorEntityDescription
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
@@ -49,37 +50,26 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: int,
-        sensor_type: Dict[str, Any],
+        entity_description: SensorEntityDescription,
     ):
         super().__init__(coordinator, tracker_id)
-        self._device_class = sensor_type["device_class"]
-        self._value_name = sensor_type["value_name"]
-        self._enabled = sensor_type["enabled"]
-        self._name = sensor_type["name"]
+        self.entity_description = entity_description
 
     @property
     def name(self):
         """Return the name of this tracker."""
         if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self._name}"
+            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
 
     @property
     def unique_id(self):
         """Return a unique ID to use for this entity."""
-        return f"{self.id}_{self._value_name}"
+        return f"{self.id}_{self.entity_description.key}"
 
     @property
     def is_on(self):
         """Return True if the binary sensor is on."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0][self._value_name]
-
-    @property
-    def device_class(self):
-        """Device class of this entity."""
-        return self._device_class
-
-    @property
-    def entity_registry_enabled_default(self) -> bool:
-        """Return if the entity should be enabled when first added to the entity registry."""
-        return bool(self._enabled)
+            return self.coordinator.data[self.id]["position"][0][
+                self.entity_description.key
+            ]

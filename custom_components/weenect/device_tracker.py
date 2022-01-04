@@ -9,6 +9,7 @@ from homeassistant.core import HomeAssistant, ServiceCall, callback
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from custom_components.weenect.services import (
     SERVICE_ACTIVATE_SUPER_LIVE,
@@ -127,6 +128,15 @@ async def async_setup_entry(
 class WeenectDeviceTracker(WeenectEntity, TrackerEntity):
     """weenect device tracker."""
 
+    def __init__(
+        self,
+        coordinator: DataUpdateCoordinator,
+        tracker_id: int,
+    ):
+        super().__init__(coordinator, tracker_id)
+        self._attr_icon = "mdi:paw"
+        self._attr_unique_id = tracker_id
+
     @property
     def name(self):
         """Return the name of this tracker."""
@@ -149,11 +159,6 @@ class WeenectDeviceTracker(WeenectEntity, TrackerEntity):
     def source_type(self):
         """Return the source type, eg gps or router, of the device."""
         return SOURCE_TYPE_GPS
-
-    @property
-    def icon(self):
-        """Return the icon to use in the frontend, if any."""
-        return "mdi:paw"
 
     @property
     def location_accuracy(self):

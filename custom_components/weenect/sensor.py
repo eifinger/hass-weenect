@@ -1,12 +1,21 @@
 """Sensor platform for weenect."""
-from typing import Any, Dict, List
+from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity
+from datetime import datetime
+from typing import List
+
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.util import dt
 
 from .const import DOMAIN, LOCATION_SENSOR_TYPES, SENSOR_TYPES, TRACKER_ADDED
 from .entity import WeenectEntity
@@ -55,57 +64,42 @@ class WeenectSensorBase(WeenectEntity, SensorEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: int,
-        sensor_type: Dict[str, Any],
+        entity_description: SensorEntityDescription,
     ):
         super().__init__(coordinator, tracker_id)
-        self._device_class = sensor_type["device_class"]
-        self._value_name = sensor_type["value_name"]
-        self._enabled = sensor_type["enabled"]
-        self._name = sensor_type["name"]
-        self._unit_of_measurement = sensor_type["unit_of_measurement"]
+        self.entity_description = entity_description
+        self._attr_unique_id = f"{tracker_id}_{entity_description.name}"
 
     @property
     def name(self):
         """Return the name of this sensor."""
         if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self._name}"
-
-    @property
-    def unique_id(self):
-        """Return a unique ID to use for this entity."""
-        return f"{self.id}_{self._value_name}"
-
-    @property
-    def device_class(self):
-        """Device class of this entity."""
-        return self._device_class
-
-    @property
-    def entity_registry_enabled_default(self) -> bool:
-        """Return if the entity should be enabled when first added to the entity registry."""
-        return bool(self._enabled)
-
-    @property
-    def native_unit_of_measurement(self):
-        """Return the units of measurement."""
-        return self._unit_of_measurement
+            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
+        return None
 
 
 class WeenectSensor(WeenectSensorBase):
     """weenect sensor for general information."""
 
     @property
-    def native_value(self):
+    def native_value(self) -> StateType | datetime:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id][self._value_name]
+            value = self.coordinator.data[self.id][self.entity_description.key]
+            if self.device_class == SensorDeviceClass.TIMESTAMP:
+                return dt.parse_datetime(value)
+            return value
+        return None
 
 
 class WeenectLocationSensor(WeenectSensorBase):
     """weenect sensor for location information."""
 
     @property
-    def native_value(self):
+    def native_value(self) -> StateType:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0][self._value_name]
+            return self.coordinator.data[self.id]["position"][0][
+                self.entity_description.key
+            ]
+        return None
