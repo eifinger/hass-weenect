@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.8 (2022-01-04)
+### Fix
+* Add support for HA 2022.2 ([`f0fb2d2`](https://github.com/eifinger/hass-weenect/commit/f0fb2d2c01606d93009d017b807e4aea48d0d138))
+
 ## v2.0.7 (2022-01-04)
 ### Fix
 * Use old unique_id for device_tracker ([`054626c`](https://github.com/eifinger/hass-weenect/commit/054626cbab9a61d294bc8254e9c55cd5cb4d1598))
