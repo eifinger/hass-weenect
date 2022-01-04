@@ -7,7 +7,7 @@ from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
 NAME = "Weenect"
 DOMAIN = "weenect"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "2.0.5"
+VERSION = "2.0.6"
 ATTRIBUTION = "Data provided by https://my.weenect.com/"
 ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
 
