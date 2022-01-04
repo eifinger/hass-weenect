@@ -56,9 +56,9 @@ class WeenectEntity(CoordinatorEntity):
         return None
 
     @property
-    def unique_id(self) -> str:
+    def unique_id(self) -> int:
         """Return a unique ID to use for this entity."""
-        return str(self.id)
+        return self.id
 
     @property
     def device_info(self) -> DeviceInfo:
