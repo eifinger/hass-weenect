@@ -1,6 +1,7 @@
 """Sensor platform for weenect."""
 from typing import Any, Dict, List
 
+from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
@@ -22,7 +23,7 @@ async def async_setup_entry(
 
     @callback
     def async_add_sensors(
-        added: List[str],
+        added: List[int],
     ) -> None:
         """Add sensors callback."""
 
@@ -47,13 +48,13 @@ async def async_setup_entry(
         async_add_sensors(coordinator.data.keys())
 
 
-class WeenectSensorBase(WeenectEntity):
+class WeenectSensorBase(WeenectEntity, SensorEntity):
     """weenect Sensor Base."""
 
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        tracker_id: str,
+        tracker_id: int,
         sensor_type: Dict[str, Any],
     ):
         super().__init__(coordinator, tracker_id)
@@ -65,7 +66,7 @@ class WeenectSensorBase(WeenectEntity):
 
     @property
     def name(self):
-        """Return the name of this tracker."""
+        """Return the name of this sensor."""
         if self.id in self.coordinator.data:
             return f"{self.coordinator.data[self.id]['name']} {self._name}"
 

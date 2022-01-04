@@ -1,4 +1,5 @@
 """Device tracker platform for weenect."""
+import logging
 from typing import List
 
 from homeassistant.components.device_tracker import SOURCE_TYPE_GPS
@@ -28,6 +29,8 @@ from custom_components.weenect.services import (
 from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
 
+_LOGGER: logging.Logger = logging.getLogger(__package__)
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -42,7 +45,7 @@ async def async_setup_entry(
 
     @callback
     def async_add_device_trackers(
-        added: List[str],
+        added: List[int],
     ) -> None:
         """Add device_trackers callback."""
 

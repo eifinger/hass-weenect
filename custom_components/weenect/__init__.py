@@ -13,7 +13,6 @@ from typing import Any, Callable, Dict, List
 from aioweenect import AioWeenect
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -45,10 +44,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     client = AioWeenect(username=username, password=password, session=session)
 
     coordinator = WeenectDataUpdateCoordinator(hass, config_entry=entry, client=client)
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
@@ -79,25 +75,25 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         self.unsub_dispatchers: List[Callable[[], None]] = []
         self.data: Dict[str, Any] = {}
 
-    async def _async_update_data(self):
+    async def _async_update_data(self) -> Dict[int, Any]:
         """Update data via library."""
         try:
             data = await self.client.get_trackers()
             data = self.transform_data(data)
             self._detect_added_and_removed_trackers(data)
             self._adjust_update_rate(data)
-            return data
+            return data  # type: ignore
         except Exception as exception:
             raise UpdateFailed(exception) from exception
 
-    def _detect_added_and_removed_trackers(self, data: Any):
+    def _detect_added_and_removed_trackers(self, data: Dict[int, Any]) -> None:
         """Detect if trackers were added or removed."""
-        added = set(data.keys()) - set(self.data.keys())
+        added = set(data.keys()) - set(self.data.keys())  # type: ignore
         async_dispatcher_send(
             self.hass, f"{self.config_entry.entry_id}_{TRACKER_ADDED}", added
         )
 
-    def _adjust_update_rate(self, data: Any):
+    def _adjust_update_rate(self, data: Dict[int, Any]) -> None:
         """Set the update rate to the shortest update rate of all trackers."""
         update_rate = timedelta(seconds=DEFAULT_UPDATE_RATE)
         for tracker in data.values():
@@ -108,7 +104,7 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         _LOGGER.debug("Setting update_interval to %s", update_rate)
 
     @staticmethod
-    def transform_data(data: Any):
+    def transform_data(data: Any) -> Dict[int, Any]:
         """Extract trackers from list and put them in a dict by tracker id."""
         result = {}
         for tracker in data["items"]:

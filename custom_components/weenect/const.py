@@ -1,12 +1,7 @@
 """Constants for weenect."""
-from homeassistant.components.binary_sensor import DEVICE_CLASS_CONNECTIVITY
-from homeassistant.const import (
-    DEVICE_CLASS_BATTERY,
-    DEVICE_CLASS_SIGNAL_STRENGTH,
-    DEVICE_CLASS_TIMESTAMP,
-    PERCENTAGE,
-    SIGNAL_STRENGTH_DECIBELS,
-)
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
 
 # Base component constants
 NAME = "Weenect"
@@ -57,7 +52,7 @@ LOCATION_SENSOR_TYPES = [
     {
         "name": "Battery",
         "value_name": "battery",
-        "device_class": DEVICE_CLASS_BATTERY,
+        "device_class": SensorDeviceClass.BATTERY,
         "enabled": True,
         "unit_of_measurement": PERCENTAGE,
     },
@@ -71,14 +66,14 @@ LOCATION_SENSOR_TYPES = [
     {
         "name": "GSM Strength",
         "value_name": "gsm",
-        "device_class": DEVICE_CLASS_SIGNAL_STRENGTH,
+        "device_class": SensorDeviceClass.SIGNAL_STRENGTH,
         "enabled": True,
         "unit_of_measurement": SIGNAL_STRENGTH_DECIBELS,
     },
     {
         "name": "Last Message Received",
         "value_name": "last_message",
-        "device_class": DEVICE_CLASS_TIMESTAMP,
+        "device_class": SensorDeviceClass.TIMESTAMP,
         "enabled": True,
         "unit_of_measurement": "ISO8601",
     },
@@ -95,13 +90,13 @@ BINARY_SENSOR_TYPES = [
     {
         "name": "Valid Signal",
         "value_name": "valid_signal",
-        "device_class": DEVICE_CLASS_CONNECTIVITY,
+        "device_class": BinarySensorDeviceClass.CONNECTIVITY,
         "enabled": True,
     },
     {
         "name": "Is Online",
         "value_name": "is_online",
-        "device_class": DEVICE_CLASS_CONNECTIVITY,
+        "device_class": BinarySensorDeviceClass.CONNECTIVITY,
         "enabled": True,
     },
 ]

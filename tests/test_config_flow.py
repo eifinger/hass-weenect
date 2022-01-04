@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import pytest
 from homeassistant import config_entries, data_entry_flow
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.weenect.const import DOMAIN
 
@@ -22,7 +23,7 @@ def bypass_setup_fixture():
         yield
 
 
-# Here we simiulate a successful config flow from the backend.
+# Here we simulate a successful config flow from the backend.
 # Note that we use the `bypass_get_trackers` fixture here because
 # we want the config flow validation to succeed during the test.
 @pytest.mark.usefixtures("bypass_get_trackers", "bypass_login")
@@ -49,6 +50,21 @@ async def test_successful_config_flow(hass):
     assert result["title"] == "test_username"
     assert result["data"] == MOCK_CONFIG
     assert result["result"]
+
+
+# Here we simulate that an already configured entry is detected.
+# Note that we use the `bypass_get_trackers` fixture here because
+# we want the config flow validation to succeed during the test.
+@pytest.mark.usefixtures("bypass_get_trackers", "bypass_login")
+async def test_already_configured(hass):
+    """Test already configured result."""
+    MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test").add_to_hass(hass)
+
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, data=MOCK_CONFIG, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result.get("type") == "abort"
+    assert result.get("reason") == "already_configured"
 
 
 # In this case, we want to simulate a failure during the config flow.

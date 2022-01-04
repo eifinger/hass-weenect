@@ -1,7 +1,9 @@
 """Global fixtures for integration_blueprint integration."""
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
+
+from tests.const import GET_RACKERS_RESPONSE
 
 pytest_plugins = "pytest_homeassistant_custom_component"  # pylint: disable=invalid-name
 
@@ -52,5 +54,17 @@ def error_get_trackers_fixture():
     with patch(
         "aioweenect.AioWeenect.get_trackers",
         side_effect=Exception,
+    ):
+        yield
+
+
+# In this fixture, we are forcing calls to get_trackers to return a static result.
+# This is useful to test the platforms.
+@pytest.fixture(name="get_trackers")
+def get_trackers_fixture():
+    """Static result when retrieving data from weenect."""
+    with patch(
+        "aioweenect.AioWeenect.get_trackers",
+        side_effect=AsyncMock(return_value=GET_RACKERS_RESPONSE),
     ):
         yield

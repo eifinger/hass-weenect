@@ -19,7 +19,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     @callback
     def async_add_binary_sensors(
-        added: List[str],
+        added: List[int],
     ) -> None:
         """Add binary_sensors callback."""
 
@@ -48,7 +48,7 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        tracker_id: str,
+        tracker_id: int,
         sensor_type: Dict[str, Any],
     ):
         super().__init__(coordinator, tracker_id)
