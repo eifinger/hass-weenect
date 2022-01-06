@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.9 (2022-01-06)
+### Fix
+* Generate correct unique_ids ([`f67ee48`](https://github.com/eifinger/hass-weenect/commit/f67ee48e581f1168a4ac3f1508ff214209160d06))
+
 ## v2.0.8 (2022-01-04)
 ### Fix
 * Add support for HA 2022.2 ([`f0fb2d2`](https://github.com/eifinger/hass-weenect/commit/f0fb2d2c01606d93009d017b807e4aea48d0d138))
