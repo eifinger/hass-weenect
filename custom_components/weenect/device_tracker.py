@@ -1,5 +1,4 @@
 """Device tracker platform for weenect."""
-import logging
 from typing import List
 
 from homeassistant.components.device_tracker import SOURCE_TYPE_GPS
@@ -12,13 +11,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from custom_components.weenect.services import (
-    SERVICE_ACTIVATE_SUPER_LIVE,
-    SERVICE_REFRESH_LOCATION,
-    SERVICE_RING,
     SERVICE_SCHEMA,
-    SERVICE_SET_UPDATE_INTERVAL,
     SERVICE_SET_UPDATE_INTERVAL_SCHEMA,
-    SERVICE_VIBRATE,
     UPDATE_INTERVAL,
     async_activate_super_live,
     async_refresh_location,
@@ -27,10 +21,16 @@ from custom_components.weenect.services import (
     async_vibrate,
 )
 
-from .const import DOMAIN, TRACKER_ADDED
+from .const import (
+    DOMAIN,
+    SERVICE_ACTIVATE_SUPER_LIVE,
+    SERVICE_REFRESH_LOCATION,
+    SERVICE_RING,
+    SERVICE_SET_UPDATE_INTERVAL,
+    SERVICE_VIBRATE,
+    TRACKER_ADDED,
+)
 from .entity import WeenectEntity
-
-_LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup_entry(

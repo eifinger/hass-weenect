@@ -5,23 +5,16 @@ import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 
-from .const import DOMAIN
+from .const import DOMAIN, UPDATE_INTERVAL
 
 DOMAIN_SERVICES = f"{DOMAIN}_services"
 
-UPDATE_INTERVAL = "update_interval"
-
-SERVICE_SET_UPDATE_INTERVAL = "set_update_interval"
 SERVICE_SET_UPDATE_INTERVAL_SCHEMA = cv.make_entity_service_schema(
     {
         vol.Optional(UPDATE_INTERVAL, default="30M"): cv.string,
     }
 )
 
-SERVICE_ACTIVATE_SUPER_LIVE = "activate_super_live"
-SERVICE_REFRESH_LOCATION = "refresh_location"
-SERVICE_RING = "ring"
-SERVICE_VIBRATE = "vibrate"
 SERVICE_SCHEMA = cv.make_entity_service_schema({})
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)

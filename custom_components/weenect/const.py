@@ -5,6 +5,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntityDescription,
 )
+from homeassistant.components.button import ButtonEntityDescription
 from homeassistant.components.select import SelectEntityDescription
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -23,10 +24,46 @@ ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
 
 PLATFORMS = [
     Platform.BINARY_SENSOR,
+    Platform.BUTTON,
     Platform.DEVICE_TRACKER,
     Platform.SELECT,
     Platform.SENSOR,
 ]
+
+UPDATE_INTERVAL = "update_interval"
+
+SERVICE_ACTIVATE_SUPER_LIVE = "activate_super_live"
+SERVICE_REFRESH_LOCATION = "refresh_location"
+SERVICE_RING = "ring"
+SERVICE_VIBRATE = "vibrate"
+SERVICE_SET_UPDATE_INTERVAL = "set_update_interval"
+
+BUTTON_ENTITY_DESCRIPTIONS: tuple[ButtonEntityDescription, ...] = (
+    ButtonEntityDescription(
+        key=SERVICE_ACTIVATE_SUPER_LIVE,
+        name="Activate Super Live",
+        icon="mdi:lightning-bolt",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_REFRESH_LOCATION,
+        name="Refresh Location",
+        icon="mdi:refresh",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_RING,
+        name="Ring",
+        icon="mdi:music-note",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_VIBRATE,
+        name="Vibrate",
+        icon="mdi:vibrate",
+        entity_category=EntityCategory.CONFIG,
+    ),
+)
 
 SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
@@ -110,7 +147,7 @@ SELECT_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     ),
 )
 
-SELECT_OPTIONS = ("30S", "1M", "5M", "10M", "30M", "1H")
+SELECT_OPTIONS = ("30S", "1M", "5M", "10M", "30M", "60M")
 DEFAULT_SELECT_OPTION = "30M"
 
 # Configuration and options

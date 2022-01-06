@@ -1,4 +1,4 @@
-"""Tests for the sensor platform."""
+"""Tests for the select platform."""
 
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
