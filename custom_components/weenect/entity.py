@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import Dict, Optional
 
-from homeassistant.const import ATTR_ATTRIBUTION
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
@@ -20,6 +19,7 @@ class WeenectEntity(CoordinatorEntity):
     def __init__(self, coordinator: DataUpdateCoordinator, tracker_id: int) -> None:
         super().__init__(coordinator)
         self.id = tracker_id
+        self._attr_attribution = ATTRIBUTION
 
     @property
     def device_name(self) -> Optional[str]:
@@ -70,7 +70,6 @@ class WeenectEntity(CoordinatorEntity):
     def extra_state_attributes(self) -> Dict[str, Optional[str] | Optional[int]]:
         """Return the state attributes."""
         return {
-            ATTR_ATTRIBUTION: ATTRIBUTION,
             "id": self.id,
             "sim": self.sim,
             "imei": self.imei,

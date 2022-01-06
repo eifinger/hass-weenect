@@ -43,3 +43,19 @@ async def test_sensor(hass):
         == "2021-04-15T08:29:28+00:00"
     )
     assert hass.states.get("sensor.test_gps_satellites").state == "0"
+
+
+@pytest.mark.usefixtures("get_trackers")
+async def test_device_class_does_not_return_strin_for_its_state(hass, caplog):
+    """Test that sensor works."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert (
+        "is providing a string for its state, while the device class is"
+        not in caplog.text
+    )

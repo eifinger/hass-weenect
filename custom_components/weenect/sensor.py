@@ -1,6 +1,7 @@
 """Sensor platform for weenect."""
 from __future__ import annotations
 
+import logging
 from datetime import datetime
 from typing import List
 
@@ -19,6 +20,8 @@ from homeassistant.util import dt
 
 from .const import DOMAIN, LOCATION_SENSOR_TYPES, SENSOR_TYPES, TRACKER_ADDED
 from .entity import WeenectEntity
+
+_LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup_entry(
@@ -68,7 +71,7 @@ class WeenectSensorBase(WeenectEntity, SensorEntity):
     ):
         super().__init__(coordinator, tracker_id)
         self.entity_description = entity_description
-        self._attr_unique_id = f"{tracker_id}_{entity_description.name}"
+        self._attr_unique_id = f"{tracker_id}_{entity_description.key}"
 
     @property
     def name(self):
@@ -85,10 +88,7 @@ class WeenectSensor(WeenectSensorBase):
     def native_value(self) -> StateType | datetime:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            value = self.coordinator.data[self.id][self.entity_description.key]
-            if self.device_class == SensorDeviceClass.TIMESTAMP:
-                return dt.parse_datetime(value)
-            return value
+            return self.coordinator.data[self.id][self.entity_description.key]
         return None
 
 
@@ -99,7 +99,10 @@ class WeenectLocationSensor(WeenectSensorBase):
     def native_value(self) -> StateType:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0][
+            value = self.coordinator.data[self.id]["position"][0][
                 self.entity_description.key
             ]
+            if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                return dt.parse_datetime(value)
+            return value
         return None
