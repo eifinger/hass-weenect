@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2022-01-06)
+### Feature
+* Add button entities ([`caa9ad6`](https://github.com/eifinger/hass-weenect/commit/caa9ad6db710ac4a82bd464115ed7fc2c9a64350))
+* Add select entity for update rate ([`3733d88`](https://github.com/eifinger/hass-weenect/commit/3733d88948b87de11974933d947bfe93aa8d8519))
+
 ## v2.0.9 (2022-01-06)
 ### Fix
 * Generate correct unique_ids ([`f67ee48`](https://github.com/eifinger/hass-weenect/commit/f67ee48e581f1168a4ac3f1508ff214209160d06))

@@ -18,7 +18,7 @@ from homeassistant.helpers.entity import EntityCategory
 # Base component constants
 NAME = "Weenect"
 DOMAIN = "weenect"
-VERSION = "2.0.9"
+VERSION = "2.1.0"
 ATTRIBUTION = "Data provided by https://my.weenect.com/"
 ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
 
