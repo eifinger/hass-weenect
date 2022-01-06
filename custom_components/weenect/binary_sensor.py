@@ -2,13 +2,15 @@
 import logging
 from typing import List
 
-from homeassistant.components.binary_sensor import BinarySensorEntity
-from homeassistant.components.sensor import SensorEntityDescription
+from homeassistant.components.binary_sensor import (
+    BinarySensorEntity,
+    BinarySensorEntityDescription,
+)
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import BINARY_SENSOR_TYPES, DOMAIN, TRACKER_ADDED
+from .const import BINARY_SENSOR_ENTITY_DESCRIPTIONS, DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -26,9 +28,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
         sensors: list = []
         for tracker_id in added:
-            for sensor_type in BINARY_SENSOR_TYPES:
+            for binary_sensor_description in BINARY_SENSOR_ENTITY_DESCRIPTIONS:
                 sensors.append(
-                    WeenectBinarySensor(coordinator, tracker_id, sensor_type)
+                    WeenectBinarySensor(
+                        coordinator, tracker_id, binary_sensor_description
+                    )
                 )
 
         async_add_entities(sensors, True)
@@ -50,7 +54,7 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
         self,
         coordinator: DataUpdateCoordinator,
         tracker_id: int,
-        entity_description: SensorEntityDescription,
+        entity_description: BinarySensorEntityDescription,
     ):
         super().__init__(coordinator, tracker_id)
         self.entity_description = entity_description

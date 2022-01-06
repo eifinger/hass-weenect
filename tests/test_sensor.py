@@ -18,20 +18,19 @@ async def test_sensor(hass):
     await hass.async_block_till_done()
 
     assert (
-        hass.states.get("sensor.test_update_rate").attributes["attribution"]
+        hass.states.get("sensor.test_sensor_mode").attributes["attribution"]
         == ATTRIBUTION
     )
-    assert hass.states.get("sensor.test_update_rate").attributes["id"] == 100000
+    assert hass.states.get("sensor.test_sensor_mode").attributes["id"] == 100000
     assert (
-        hass.states.get("sensor.test_update_rate").attributes["sim"]
+        hass.states.get("sensor.test_sensor_mode").attributes["sim"]
         == "8849390213023093728"
     )
     assert (
-        hass.states.get("sensor.test_update_rate").attributes["imei"]
+        hass.states.get("sensor.test_sensor_mode").attributes["imei"]
         == "160389554842512"
     )
 
-    assert hass.states.get("sensor.test_update_rate").state == "10M"
     assert hass.states.get("sensor.test_last_update_rate").state == "10M"
     assert hass.states.get("sensor.test_sensor_mode").state == "normal"
     assert hass.states.get("sensor.test_last_sensor_mode").state == "normal"

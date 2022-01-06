@@ -1,7 +1,6 @@
 """Sensor platform for weenect."""
 from __future__ import annotations
 
-import logging
 from datetime import datetime
 from typing import List
 
@@ -18,10 +17,13 @@ from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt
 
-from .const import DOMAIN, LOCATION_SENSOR_TYPES, SENSOR_TYPES, TRACKER_ADDED
+from .const import (
+    DOMAIN,
+    LOCATION_SENSOR_ENTITY_DESCRIPTIONS,
+    SENSOR_ENTITY_DESCRIPTIONS,
+    TRACKER_ADDED,
+)
 from .entity import WeenectEntity
-
-_LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup_entry(
@@ -41,11 +43,15 @@ async def async_setup_entry(
 
         sensors: list = []
         for tracker_id in added:
-            for sensor_type in SENSOR_TYPES:
-                sensors.append(WeenectSensor(coordinator, tracker_id, sensor_type))
-            for sensor_type in LOCATION_SENSOR_TYPES:
+            for sensor_description in SENSOR_ENTITY_DESCRIPTIONS:
                 sensors.append(
-                    WeenectLocationSensor(coordinator, tracker_id, sensor_type)
+                    WeenectSensor(coordinator, tracker_id, sensor_description)
+                )
+            for location_sensor_description in LOCATION_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(
+                    WeenectLocationSensor(
+                        coordinator, tracker_id, location_sensor_description
+                    )
                 )
 
         async_add_entities(sensors, True)
