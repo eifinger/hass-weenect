@@ -31,7 +31,7 @@ jobs:
           poetry install
       - name: Lint
         run: |
-          poetry run pre-commit run --all-files
+          SKIP=no-commit-to-branch poetry run pre-commit run --all-files
       - name: Coverage
         run: |
           poetry run coverage xml -i
