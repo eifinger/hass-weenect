@@ -127,8 +127,8 @@ automation:
 [buymecoffee]: https://www.buymeacoffee.com/eifinger
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/eifinger/hass-weenect?style=for-the-badge
-[commits]: https://github.com/eifinger/hass-weenect/commits/master
-[exampleimg]: https://github.com/eifinger/hass-weenect/blob/master/example.png?raw=true
+[commits]: https://github.com/eifinger/hass-weenect/commits/main
+[exampleimg]: https://github.com/eifinger/hass-weenect/blob/main/example.png?raw=true
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/t/custom-integration-weenect/300996
 [license-shield]: https://img.shields.io/github/license/eifinger/hass-weenect.svg?style=for-the-badge
