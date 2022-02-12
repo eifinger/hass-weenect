@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2022-02-12)
+### Fix
+* Handle empty position responses ([`303b8d3`](https://github.com/eifinger/hass-weenect/commit/303b8d3ad7551e4322c4b932148f0c500f2d3720))
+
 ## v2.1.0 (2022-01-06)
 ### Feature
 * Add button entities ([`caa9ad6`](https://github.com/eifinger/hass-weenect/commit/caa9ad6db710ac4a82bd464115ed7fc2c9a64350))
