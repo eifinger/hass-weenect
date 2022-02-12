@@ -2,9 +2,7 @@
 # pyright: reportGeneralTypeIssues=false
 from __future__ import annotations
 
-from typing import Dict, Optional
-
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.entity import DeviceInfo, EntityDescription
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -13,64 +11,39 @@ from homeassistant.helpers.update_coordinator import (
 from .const import ATTRIBUTION, DOMAIN, NAME
 
 
-class WeenectEntity(CoordinatorEntity):
-    """Base entity for weenect."""
+class WeenectBaseEntity(CoordinatorEntity):
+    """Abstract base entity for weenect."""
 
-    def __init__(self, coordinator: DataUpdateCoordinator, tracker_id: int) -> None:
+    def __init__(self, coordinator: DataUpdateCoordinator, tracker_id: int):
         super().__init__(coordinator)
         self.id = tracker_id
         self._attr_attribution = ATTRIBUTION
-
-    @property
-    def device_name(self) -> Optional[str]:
-        """Return the name of this tracker."""
-        if self.id in self.coordinator.data:
-            return str(self.coordinator.data[self.id]["name"])
-        return None
-
-    @property
-    def imei(self) -> Optional[str]:
-        """Return the imei of this tracker."""
-        if self.id in self.coordinator.data:
-            return str(self.coordinator.data[self.id]["imei"])
-        return None
-
-    @property
-    def sim(self) -> Optional[str]:
-        """Return the sim of this tracker."""
-        if self.id in self.coordinator.data:
-            return str(self.coordinator.data[self.id]["sim"])
-        return None
-
-    @property
-    def tracker_type(self) -> Optional[str]:
-        """Return the type of this tracker."""
-        if self.id in self.coordinator.data:
-            return str(self.coordinator.data[self.id]["type"])
-        return None
-
-    @property
-    def firmware(self) -> Optional[str]:
-        """Return the firmware of this tracker."""
-        if self.id in self.coordinator.data:
-            return str(self.coordinator.data[self.id]["firmware"])
-        return None
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return DeviceInfo(
+        self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self.id)},
-            name=self.device_name,
-            model=self.tracker_type,
+            name=str(self.coordinator.data[self.id]["name"]),
+            model=str(self.coordinator.data[self.id]["type"]),
             manufacturer=NAME,
-            sw_version=self.firmware,
+            sw_version=str(self.coordinator.data[self.id]["firmware"]),
         )
-
-    @property
-    def extra_state_attributes(self) -> Dict[str, Optional[str] | Optional[int]]:
-        """Return the state attributes."""
-        return {
+        self._attr_extra_state_attributes = {
             "id": self.id,
-            "sim": self.sim,
-            "imei": self.imei,
+            "sim": str(self.coordinator.data[self.id]["sim"]),
+            "imei": str(self.coordinator.data[self.id]["imei"]),
         }
+
+
+class WeenectEntity(WeenectBaseEntity):
+    """Entity for weenect."""
+
+    def __init__(
+        self,
+        coordinator: DataUpdateCoordinator,
+        tracker_id: int,
+        entity_description: EntityDescription,
+    ) -> None:
+        super().__init__(coordinator, tracker_id)
+        self.entity_description = entity_description
+        self._attr_name = (
+            f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
+        )
+        self._attr_unique_id = f"{self.id}_{self.entity_description.key}"

@@ -8,22 +8,78 @@ from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
     SensorEntityDescription,
+    SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt
 
-from .const import (
-    DOMAIN,
-    LOCATION_SENSOR_ENTITY_DESCRIPTIONS,
-    SENSOR_ENTITY_DESCRIPTIONS,
-    TRACKER_ADDED,
-)
+from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
+
+SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Last Update Rate",
+        key="last_freq_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Sensor Mode",
+        key="sensor_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Last Sensor Mode",
+        key="last_sensor_mode",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Battery",
+        key="battery",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.BATTERY,
+        native_unit_of_measurement=PERCENTAGE,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Cell Tower Id",
+        key="cellid",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="GSM Strength",
+        key="gsm",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Last Message Received",
+        key="last_message",
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="GPS Satellites",
+        key="satellites",
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
 
 
 async def async_setup_entry(
@@ -66,28 +122,7 @@ async def async_setup_entry(
         async_add_sensors(coordinator.data.keys())
 
 
-class WeenectSensorBase(WeenectEntity, SensorEntity):
-    """weenect Sensor Base."""
-
-    def __init__(
-        self,
-        coordinator: DataUpdateCoordinator,
-        tracker_id: int,
-        entity_description: SensorEntityDescription,
-    ):
-        super().__init__(coordinator, tracker_id)
-        self.entity_description = entity_description
-        self._attr_unique_id = f"{tracker_id}_{entity_description.key}"
-
-    @property
-    def name(self):
-        """Return the name of this sensor."""
-        if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
-        return None
-
-
-class WeenectSensor(WeenectSensorBase):
+class WeenectSensor(WeenectEntity, SensorEntity):
     """weenect sensor for general information."""
 
     @property
@@ -98,17 +133,23 @@ class WeenectSensor(WeenectSensorBase):
         return None
 
 
-class WeenectLocationSensor(WeenectSensorBase):
+class WeenectLocationSensor(WeenectSensor):
     """weenect sensor for location information."""
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["position"])
 
     @property
     def native_value(self) -> StateType:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            value = self.coordinator.data[self.id]["position"][0][
-                self.entity_description.key
-            ]
-            if self.device_class == str(SensorDeviceClass.TIMESTAMP):
-                return dt.parse_datetime(value)
-            return value
+            if self.coordinator.data[self.id]["position"]:
+                value = self.coordinator.data[self.id]["position"][0][
+                    self.entity_description.key
+                ]
+                if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                    return dt.parse_datetime(value)
+                return value
         return None

@@ -7,19 +7,25 @@ from homeassistant.components.select import SelectEntity, SelectEntityDescriptio
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from custom_components.weenect.services import async_set_update_interval
 
-from .const import (
-    DEFAULT_SELECT_OPTION,
-    DOMAIN,
-    SELECT_ENTITY_DESCRIPTIONS,
-    SELECT_OPTIONS,
-    TRACKER_ADDED,
-)
+from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
+
+SELECT_OPTIONS = ("30S", "1M", "5M", "10M", "30M", "60M")
+DEFAULT_SELECT_OPTION = "30M"
+
+SELECT_ENTITY_DESCRIPTIONS: tuple[SelectEntityDescription, ...] = (
+    SelectEntityDescription(
+        name="Update Rate",
+        key="freq_mode",
+        entity_category=EntityCategory.CONFIG,
+    ),
+)
 
 
 async def async_setup_entry(
@@ -65,17 +71,8 @@ class WeenectSelect(WeenectEntity, SelectEntity):
         tracker_id: int,
         entity_description: SelectEntityDescription,
     ):
-        super().__init__(coordinator, tracker_id)
-        self.entity_description = entity_description
+        super().__init__(coordinator, tracker_id, entity_description)
         self._attr_options = SELECT_OPTIONS
-        self._attr_unique_id = f"{tracker_id}_{entity_description.key}"
-
-    @property
-    def name(self):
-        """Return the name of this sensor."""
-        if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
-        return None
 
     @property
     def current_option(self) -> str:
