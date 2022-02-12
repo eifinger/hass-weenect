@@ -7,8 +7,9 @@ https://github.com/eifinger/hass-weenect
 # pyright: reportGeneralTypeIssues=false
 import asyncio
 import logging
+import re
 from datetime import timedelta
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 
 from aioweenect import AioWeenect
 from homeassistant.config_entries import ConfigEntry
@@ -20,15 +21,15 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from .const import (
     CONF_PASSWORD,
     CONF_USERNAME,
-    DEFAULT_UPDATE_RATE,
     DOMAIN,
     PLATFORMS,
     STARTUP_MESSAGE,
     TRACKER_ADDED,
 )
-from .util import parse_duration
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
+
+DEFAULT_UPDATE_RATE = 30
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
@@ -97,7 +98,7 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         """Set the update rate to the shortest update rate of all trackers."""
         update_rate = timedelta(seconds=DEFAULT_UPDATE_RATE)
         for tracker in data.values():
-            tracker_rate = parse_duration(tracker["last_freq_mode"])
+            tracker_rate = self.parse_duration(tracker["last_freq_mode"])
             if tracker_rate and tracker_rate < update_rate:
                 update_rate = tracker_rate
         self.update_interval = update_rate
@@ -110,6 +111,20 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         for tracker in data["items"]:
             result[tracker["id"]] = tracker
         return result
+
+    @staticmethod
+    def parse_duration(duration: str) -> Optional[timedelta]:
+        """Parse a timedelta from a weenect duration."""
+        pattern = re.compile(r"\d\d[S,M,H]")
+
+        if pattern.match(duration) is not None:
+            if duration.endswith("S"):
+                return timedelta(seconds=float(duration[:-1]))
+            if duration.endswith("M"):
+                return timedelta(minutes=float(duration[:-1]))
+            if duration.endswith("H"):
+                return timedelta(hours=float(duration[:-1]))
+        return None
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

@@ -7,11 +7,11 @@ from homeassistant.components.button import ButtonEntity, ButtonEntityDescriptio
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
-    BUTTON_ENTITY_DESCRIPTIONS,
     DOMAIN,
     SERVICE_ACTIVATE_SUPER_LIVE,
     SERVICE_REFRESH_LOCATION,
@@ -25,6 +25,33 @@ from .services import (
     async_refresh_location,
     async_ring,
     async_vibrate,
+)
+
+BUTTON_ENTITY_DESCRIPTIONS: tuple[ButtonEntityDescription, ...] = (
+    ButtonEntityDescription(
+        key=SERVICE_ACTIVATE_SUPER_LIVE,
+        name="Activate Super Live",
+        icon="mdi:lightning-bolt",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_REFRESH_LOCATION,
+        name="Refresh Location",
+        icon="mdi:refresh",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_RING,
+        name="Ring",
+        icon="mdi:music-note",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    ButtonEntityDescription(
+        key=SERVICE_VIBRATE,
+        name="Vibrate",
+        icon="mdi:vibrate",
+        entity_category=EntityCategory.CONFIG,
+    ),
 )
 
 
@@ -71,16 +98,7 @@ class WeenectButton(WeenectEntity, ButtonEntity):
         tracker_id: int,
         entity_description: ButtonEntityDescription,
     ):
-        super().__init__(coordinator, tracker_id)
-        self.entity_description = entity_description
-        self._attr_unique_id = f"{tracker_id}_{entity_description.key}"
-
-    @property
-    def name(self):
-        """Return the name of this sensor."""
-        if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
-        return None
+        super().__init__(coordinator, tracker_id, entity_description)
 
     async def async_press(self) -> None:
         """Handle the button press."""

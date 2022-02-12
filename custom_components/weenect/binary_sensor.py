@@ -1,19 +1,35 @@
 """Binary_sensor platform for weenect."""
-import logging
+from __future__ import annotations
+
 from typing import List
 
 from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
 from homeassistant.core import callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import BINARY_SENSOR_ENTITY_DESCRIPTIONS, DOMAIN, TRACKER_ADDED
+from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
 
-_LOGGER = logging.getLogger(__name__)
+BINARY_SENSOR_ENTITY_DESCRIPTIONS: tuple[BinarySensorEntityDescription, ...] = (
+    BinarySensorEntityDescription(
+        name="Valid Signal",
+        key="valid_signal",
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    BinarySensorEntityDescription(
+        name="Is Online",
+        key="is_online",
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -56,24 +72,21 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
         tracker_id: int,
         entity_description: BinarySensorEntityDescription,
     ):
-        super().__init__(coordinator, tracker_id)
-        self.entity_description = entity_description
+        super().__init__(coordinator, tracker_id, entity_description)
 
     @property
-    def name(self):
-        """Return the name of this tracker."""
-        if self.id in self.coordinator.data:
-            return f"{self.coordinator.data[self.id]['name']} {self.entity_description.name}"
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["position"])
 
     @property
-    def unique_id(self):
-        """Return a unique ID to use for this entity."""
-        return f"{self.id}_{self.entity_description.key}"
-
-    @property
-    def is_on(self):
+    def is_on(self) -> bool | None:
         """Return True if the binary sensor is on."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0][
-                self.entity_description.key
-            ]
+            if self.coordinator.data[self.id]["position"]:
+                return bool(
+                    self.coordinator.data[self.id]["position"][0][
+                        self.entity_description.key
+                    ]
+                )
+        return None

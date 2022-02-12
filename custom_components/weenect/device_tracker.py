@@ -30,7 +30,7 @@ from .const import (
     SERVICE_VIBRATE,
     TRACKER_ADDED,
 )
-from .entity import WeenectEntity
+from .entity import WeenectBaseEntity
 
 
 async def async_setup_entry(
@@ -77,7 +77,7 @@ async def async_setup_entry(
 
         tracker_ids = []
         for entity in entities:
-            assert isinstance(entity, WeenectEntity)  # nosec
+            assert isinstance(entity, WeenectBaseEntity)  # nosec
             tracker_ids.append(entity.id)
         for tracker_id in set(tracker_ids):
             if service_call.service == SERVICE_SET_UPDATE_INTERVAL:
@@ -125,7 +125,7 @@ async def async_setup_entry(
     )
 
 
-class WeenectDeviceTracker(WeenectEntity, TrackerEntity):
+class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
     """weenect device tracker."""
 
     def __init__(
@@ -136,24 +136,26 @@ class WeenectDeviceTracker(WeenectEntity, TrackerEntity):
         super().__init__(coordinator, tracker_id)
         self._attr_icon = "mdi:paw"
         self._attr_unique_id = tracker_id
+        self._attr_name = self.coordinator.data[self.id]["name"]
 
     @property
-    def name(self):
-        """Return the name of this tracker."""
-        if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["name"]
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["position"])
 
     @property
     def latitude(self):
         """Return latitude value of the device."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0]["latitude"]
+            if self.coordinator.data[self.id]["position"]:
+                return self.coordinator.data[self.id]["position"][0]["latitude"]
 
     @property
     def longitude(self):
         """Return longitude value of the device."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0]["longitude"]
+            if self.coordinator.data[self.id]["position"]:
+                return self.coordinator.data[self.id]["position"][0]["longitude"]
 
     @property
     def source_type(self):
@@ -167,4 +169,5 @@ class WeenectDeviceTracker(WeenectEntity, TrackerEntity):
         Value in meters.
         """
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id]["position"][0]["radius"]
+            if self.coordinator.data[self.id]["position"]:
+                return self.coordinator.data[self.id]["position"][0]["radius"]
