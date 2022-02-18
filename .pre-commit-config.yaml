@@ -171,10 +171,14 @@ repos:
         types: [python]
         pass_filenames: false
         additional_dependencies: ['pyright@1.1.99']
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v2.5.1"
     hooks:
       - id: prettier
         name: 💄 Ensuring files are prettier
         types: [yaml, json, markdown]
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: "v0.8.0"
+    hooks:
+      - id: shellcheck
+        name: ✅ Check Shell files
