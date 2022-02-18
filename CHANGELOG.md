@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.2 (2022-02-18)
+### Fix
+* Use selector for update rate service ([`e983cc8`](https://github.com/eifinger/hass-weenect/commit/e983cc8fdf5d8593f2b5b16fef6d841fea0702aa))
+
+### Documentation
+* Update documentation ([`51fe1cf`](https://github.com/eifinger/hass-weenect/commit/51fe1cf8ed60b1f8df23159866cc4917b2e551f1))
+* Use main branch in links ([`096f6b3`](https://github.com/eifinger/hass-weenect/commit/096f6b38214e4a250c05685302e5b069c855d325))
+
 ## v2.1.1 (2022-02-12)
 ### Fix
 * Handle empty position responses ([`303b8d3`](https://github.com/eifinger/hass-weenect/commit/303b8d3ad7551e4322c4b932148f0c500f2d3720))
