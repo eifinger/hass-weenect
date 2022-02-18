@@ -17,10 +17,13 @@ _Homeassistant Custom Component for [https://my.weenect.com/](https://my.weenect
 Platform | Description
 -- | --
 `binary_sensor` | Adds sensors to show the connection status of your trackers.
+`button` | Shortcuts to service. Activate Super Live Mode, Ring, Vibrate and Request a Location Update.
 `device_tracker` | Adds your trackers as device_trackers so they appear on the map.
+`select` | Select the update interval.
 `sensor` | Adds sensors like signal and battery strength of your trackers.
 
 ![example][exampleimg]
+![configuration][configurationimg]
 
 ## Services
 
@@ -68,16 +71,18 @@ Using your HA configuration directory (folder) as a starting point you should no
 
 ```text
 custom_components/weenect/__init__.py
+custom_components/weenect/button.py
 custom_components/weenect/binary_sensor.py
 custom_components/weenect/config_flow.py
 custom_components/weenect/const.py
 custom_components/weenect/device_tracker.py
 custom_components/weenect/entity.py
 custom_components/weenect/manifest.json
+custom_components/weenect/select.py
 custom_components/weenect/sensor.py
 custom_components/weenect/services.py
 custom_components/weenect/services.yaml
-custom_components/weenect/translations/en.sjon
+custom_components/weenect/translations/en.json
 ```
 
 ## Automations
@@ -129,6 +134,7 @@ automation:
 [commits-shield]: https://img.shields.io/github/commit-activity/y/eifinger/hass-weenect?style=for-the-badge
 [commits]: https://github.com/eifinger/hass-weenect/commits/main
 [exampleimg]: https://github.com/eifinger/hass-weenect/blob/main/example.png?raw=true
+[configurationimg]: https://github.com/eifinger/hass-weenect/blob/main/configuration.png?raw=true
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/t/custom-integration-weenect/300996
 [license-shield]: https://img.shields.io/github/license/eifinger/hass-weenect.svg?style=for-the-badge
