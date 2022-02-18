@@ -11,8 +11,15 @@ set_update_interval:
       description: The update interval. Possible values are 30S 1M 5M 10M 30M 1H
       required: true
       example: "30M"
-      selector:
-        text:
+      default: "30M"
+      select:
+        options:
+          - "30S"
+          - "1M"
+          - "5M"
+          - "10M"
+          - "30M"
+          - "1H"
 
 activate_super_live:
   description: Activate the super live mode.
