@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v2.2.0 (2022-04-03)
+### Feature
+* Add German translation ([`55f7107`](https://github.com/eifinger/hass-weenect/commit/55f71079e117bb2617d2543ae1e5130421e71696))
+
+### Fix
+* Remove title from step_user ([`717bd23`](https://github.com/eifinger/hass-weenect/commit/717bd23b119fa0196ee5acc25b07e7c3ee015926))
+
 ## v2.1.2 (2022-02-18)
 ### Fix
 * Use selector for update rate service ([`e983cc8`](https://github.com/eifinger/hass-weenect/commit/e983cc8fdf5d8593f2b5b16fef6d841fea0702aa))
