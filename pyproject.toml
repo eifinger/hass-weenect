@@ -56,7 +56,7 @@ pytest-homeassistant-custom-component = "0.5.14"
 pytest-mock = "3.8.2"
 pylint = "2.14.4"
 pyupgrade = "^2.37.1"
-safety = "^2.0.0"
+safety = "^2.1.0"
 vulture = "^2.5"
 yamllint = "^1.27.1"
 
