@@ -35,7 +35,7 @@ async def test_setup_unload_and_reload_entry(hass):
     )
 
     # Reload the entry and assert that the data from above is still there
-    assert await async_reload_entry(hass, config_entry) is None
+    await async_reload_entry(hass, config_entry)
     assert DOMAIN in hass.data and config_entry.entry_id in hass.data[DOMAIN]
     assert isinstance(
         hass.data[DOMAIN][config_entry.entry_id], WeenectDataUpdateCoordinator
