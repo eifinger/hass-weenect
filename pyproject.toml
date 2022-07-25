@@ -83,5 +83,4 @@ version_variable = "custom_components/weenect/const.py:VERSION"
 build_command = false
 upload_to_repository = false
 upload_to_release = false
-commit_subject = "chore(release): {version}"
 branch = "main"
