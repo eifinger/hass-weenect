@@ -58,7 +58,7 @@ pylint = "2.15.2"
 pyupgrade = "^2.37.3"
 safety = "^2.1.1"
 vulture = "^2.5"
-yamllint = "^1.27.1"
+yamllint = "^1.28.0"
 
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term-missing --cov=custom_components tests"
