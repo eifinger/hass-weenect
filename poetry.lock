@@ -1620,7 +1620,7 @@ voluptuous = "*"
 
 [[package]]
 name = "vulture"
-version = "2.5"
+version = "2.6"
 description = "Find dead code"
 category = "dev"
 optional = false
@@ -1677,7 +1677,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "de7836b4009087dafe2fa2dad779a2b71a08b97875ef0ea31728d2da2b87abef"
+content-hash = "941595eb57d404809cab2281a0a86147cd0016415b3ae759bc33c62057c6307b"
 
 [metadata.files]
 aiohttp = [
@@ -2801,8 +2801,8 @@ voluptuous-serialize = [
     {file = "voluptuous_serialize-2.5.0-py3-none-any.whl", hash = "sha256:bec8bc2d48c636692f9ab9caf7efda3951183a30bfe96d1ffe87369c96d9beca"},
 ]
 vulture = [
-    {file = "vulture-2.5-py2.py3-none-any.whl", hash = "sha256:a7c7e7a23b11e78840fdd821509d05a6134aa9fd60418fe39d60b3026fe698d9"},
-    {file = "vulture-2.5.tar.gz", hash = "sha256:2831694055eb2e36a09c3b7680934837102b9b6c0969206e3902d513612177c3"},
+    {file = "vulture-2.6-py2.py3-none-any.whl", hash = "sha256:e792e903ccc063ec4873a8979dcf11b51ea3d65a2d3b31c113d47be48f0cdcae"},
+    {file = "vulture-2.6.tar.gz", hash = "sha256:2515fa848181001dc8a73aba6a01a1a17406f5d372f24ec7f7191866f9f4997e"},
 ]
 wrapt = [
     {file = "wrapt-1.14.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:1b376b3f4896e7930f1f772ac4b064ac12598d1c38d04907e696cc4d794b43d3"},

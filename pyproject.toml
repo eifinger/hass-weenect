@@ -57,7 +57,7 @@ pytest-mock = "3.8.2"
 pylint = "2.15.2"
 pyupgrade = "^2.38.0"
 safety = "^2.1.1"
-vulture = "^2.5"
+vulture = "^2.6"
 yamllint = "^1.28.0"
 
 [tool.pytest.ini_options]
