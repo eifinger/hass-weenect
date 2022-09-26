@@ -35,7 +35,7 @@ jobs:
       - name: Coverage
         run: |
           poetry run coverage xml -i
-      - uses: codecov/codecov-action@v3.1.0
+      - uses: codecov/codecov-action@v3.1.1
         with:
           token: ${{secrets.CODECOV}}
           file: ./coverage.xml
