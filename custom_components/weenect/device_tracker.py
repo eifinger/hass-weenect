@@ -66,7 +66,7 @@ async def async_setup_entry(
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_device_trackers,
     )
-    coordinator.unsub_dispatchers.append(unsub_dispatcher)
+    entry.async_on_unload(unsub_dispatcher)
     if len(coordinator.data) > 0:
         async_add_device_trackers(coordinator.data.keys())
 

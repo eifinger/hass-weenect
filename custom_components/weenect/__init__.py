@@ -5,11 +5,10 @@ For more details about this integration, please refer to
 https://github.com/eifinger/hass-weenect
 """
 # pyright: reportGeneralTypeIssues=false
-import asyncio
 import logging
 import re
 from datetime import timedelta
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from aioweenect import AioWeenect
 from homeassistant.config_entries import ConfigEntry
@@ -49,12 +48,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        hass.async_add_job(
-            hass.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    entry.add_update_listener(async_reload_entry)
+    entry.async_on_unload(entry.add_update_listener(async_reload_entry))
     return True
 
 
@@ -73,7 +69,6 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         )
         self.client = client
         self.config_entry = config_entry
-        self.unsub_dispatchers: List[Callable[[], None]] = []
         self.data: Dict[str, Any] = {}
 
     async def _async_update_data(self) -> Dict[int, Any]:
@@ -129,23 +124,13 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
-    for unsub_dispatcher in hass.data[DOMAIN][entry.entry_id].unsub_dispatchers:
-        unsub_dispatcher()
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-    if unloaded:
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
 
-    return unloaded
+    return unload_ok
 
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
-    await async_setup_entry(hass, entry)
+    await hass.config_entries.async_reload(entry.entry_id)
