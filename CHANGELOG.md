@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v3.0.1 (2023-04-13)
+### Fix
+* Enable commit_version_number ([#224](https://github.com/eifinger/hass-weenect/issues/224)) ([`35b4f16`](https://github.com/eifinger/hass-weenect/commit/35b4f1638eb5291c356f24b9be5ecdaba9ccf0c6))
+
 ## v2.2.0 (2022-04-03)
 ### Feature
 * Add German translation ([`55f7107`](https://github.com/eifinger/hass-weenect/commit/55f71079e117bb2617d2543ae1e5130421e71696))
