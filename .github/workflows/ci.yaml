@@ -68,7 +68,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Python Semantic Release Noop
-        uses: relekang/python-semantic-release@v7.31.4
+        uses: python-semantic-release/python-semantic-release@v7.33.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repository_username: __token__
@@ -85,7 +85,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Python Semantic Release
-        uses: relekang/python-semantic-release@v7.31.4
+        uses: python-semantic-release/python-semantic-release@v7.33.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repository_username: __token__
