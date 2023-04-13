@@ -55,7 +55,6 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         name="Cell Tower Id",
         key="cellid",
-        state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
