@@ -58,7 +58,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         f"{config_entry.entry_id}_{TRACKER_ADDED}",
         async_add_binary_sensors,
     )
-    coordinator.unsub_dispatchers.append(unsub_dispatcher)
+    config_entry.async_on_unload(unsub_dispatcher)
     if len(coordinator.data) > 0:
         async_add_binary_sensors(coordinator.data.keys())
 
