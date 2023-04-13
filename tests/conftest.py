@@ -17,6 +17,7 @@ def expected_lingering_timers() -> bool:
     """
     return True
 
+
 # This fixture enables loading custom integrations in all tests.
 # Remove to enable selective use of this fixture
 @pytest.fixture(autouse=True)
