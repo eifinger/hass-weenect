@@ -26,50 +26,43 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 aioweenect = "1.1.1"
 
-[tool.poetry.dev-dependencies]
-black = "22.8.0"
-blacken-docs = "^1.12.1"
-coverage = {version = "^6.2", extras = ["toml"]}
-bandit = "^1.7.2"
-codecov = "2.1.12"
-codespell = "^2.2.1"
-darglint = "^1.8.1"
-flake8 = "4.0.1"
-flake8-bandit = "^3.0.0"
-flake8-bugbear = "^22.9.11"
-flake8-builtins = "^1.5.3"
-flake8-comprehensions = "^3.10.0"
-flake8-docstrings = "^1.6.0"
-flake8-eradicate = "^1.3.0"
-flake8-markdown = "^0.3.0"
-flake8-simplify = "^0.19.3"
-mypy = "0.971"
-pre-commit = "2.20.0"
-pre-commit-hooks = "^4.3.0"
-pytest = "6.2.5"
-pytest-asyncio = "0.19.0"
-pytest-cov = "^2.12.1"
-pytest-homeassistant-custom-component = "0.5.14"
-pytest-mock = "3.8.2"
-pylint = "2.15.2"
-pyupgrade = "^2.38.0"
-safety = "^2.1.1"
-vulture = "^2.5"
-yamllint = "^1.28.0"
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+blacken-docs = "^1.13.0"
+codespell = "^2.2.4"
+mypy = "^1.1.1"
+pre-commit = "^3.1.1"
+pre-commit-hooks = "^4.4.0"
+vulture = "^2.7"
+yamllint = "^1.29.0"
+ruff = "^0.0.256"
+pytest-homeassistant-custom-component = "^0.13.9"
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term-missing --cov=custom_components tests"
+addopts = "--cov --cov-report term-missing --cov=custom_components --asyncio-mode=auto tests"
 
 [tool.coverage.report]
 show_missing = true
 exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+[tool.ruff]
+ignore = ['E501']
+line-length = 88
+select = [
+    'B',
+    'B9',
+    'C',
+    'E',
+    'F',
+    'W',
+]
+fix = true
+
+[tool.ruff.mccabe]
+max-complexity = 12
 
 [tool.vulture]
 min_confidence = 80
@@ -80,6 +73,7 @@ version_source = "tag"
 version_toml = "pyproject.toml:tool.poetry.version"
 version_pattern = "custom_components/weenect/manifest.json:\"version\": \"{version}\""
 version_variable = "custom_components/weenect/const.py:VERSION"
+commit_subject = "chore(release): {version}"
 build_command = false
 upload_to_repository = false
 upload_to_release = false

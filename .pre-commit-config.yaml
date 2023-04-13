@@ -2,13 +2,6 @@
 repos:
   - repo: local
     hooks:
-      - id: bandit
-        name: 🎰 Checking using bandit
-        language: system
-        types: [python]
-        entry: poetry run bandit
-        files: ^custom_components/
-        require_serial: true
       - id: black
         name: ☕️ Format using black
         language: system
@@ -75,7 +68,11 @@ repos:
         name: ✅ Check code for common misspellings
         language: system
         types: [text]
-        exclude: ^poetry\.lock$
+        exclude: |
+          (?x)^(
+              poetry.lock|
+              CHANGELOG.md
+          )$
         entry: poetry run codespell --ignore-words=.codespell
       - id: debug-statements
         name: 🪵  Debug Statements and imports (Python)
@@ -98,17 +95,6 @@ repos:
         language: system
         types: [text]
         entry: poetry run fix-byte-order-marker
-      - id: flake8
-        name: 👔 Enforcing style guide with flake8
-        language: system
-        types: [python]
-        entry: poetry run flake8
-        require_serial: true
-      - id: isort
-        name: 🔀 Sort all imports with isort
-        language: system
-        types: [python]
-        entry: poetry run isort
       - id: mypy
         name: 🆎 Static type checking using mypy
         language: system
@@ -129,23 +115,12 @@ repos:
         entry: poetry check
         pass_filenames: false
         always_run: true
-      - id: pylint
-        name: 🌟 Starring code with pylint
-        language: system
-        types: [python]
-        entry: poetry run pylint
       - id: pytest
         name: 🧪 Running tests and test coverage with pytest
         language: system
         types: [python]
         entry: poetry run pytest
         pass_filenames: false
-      - id: pyupgrade
-        name: 🆙 Checking for upgradable syntax with pyupgrade
-        language: system
-        types: [python]
-        entry: poetry run pyupgrade
-        args: [--py36-plus, --keep-runtime-typing]
       - id: trailing-whitespace
         name: ✄  Trim Trailing Whitespace
         language: system
@@ -170,15 +145,21 @@ repos:
         language: node
         types: [python]
         pass_filenames: false
-        additional_dependencies: ['pyright@1.1.99']
+        additional_dependencies: ["pyright@1.1.99"]
+      - id: ruff
+        name: ⚡️ Check with ruff
+        language: system
+        entry: poetry run ruff check
+        types: [python]
+        args: ["--force-exclude"]
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v2.5.1"
+    rev: "v3.0.0-alpha.6"
     hooks:
       - id: prettier
         name: 💄 Ensuring files are prettier
         types: [yaml, json, markdown]
   - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: "v0.8.0"
+    rev: "v0.9.0"
     hooks:
       - id: shellcheck
         name: ✅ Check Shell files
