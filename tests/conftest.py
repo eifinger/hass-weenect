@@ -8,16 +8,6 @@ from tests.const import GET_RACKERS_RESPONSE
 pytest_plugins = "pytest_homeassistant_custom_component"  # pylint: disable=invalid-name
 
 
-@pytest.fixture(autouse=True)
-def expected_lingering_timers() -> bool:
-    """Temporary ability to bypass test failures.
-    Parametrize to True to bypass the pytest failure.
-    @pytest.mark.parametrize("expected_lingering_timers", [True])
-    This should be removed when all lingering timers have been cleaned up.
-    """
-    return True
-
-
 # This fixture enables loading custom integrations in all tests.
 # Remove to enable selective use of this fixture
 @pytest.fixture(autouse=True)
