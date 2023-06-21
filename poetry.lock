@@ -957,13 +957,13 @@ files = [
 
 [[package]]
 name = "homeassistant"
-version = "2023.6.1"
+version = "2023.6.2"
 description = "Open-source home automation platform running on Python 3."
 optional = false
 python-versions = ">=3.10.0"
 files = [
-    {file = "homeassistant-2023.6.1-py3-none-any.whl", hash = "sha256:41d68c3c93583ff43db47da672886dd21344bbb87250132a5fa8b7809356d939"},
-    {file = "homeassistant-2023.6.1.tar.gz", hash = "sha256:f05d8a895fe5ba34db696425d087c2c3343b1f1362a0700771f7e2ee52f6873b"},
+    {file = "homeassistant-2023.6.2-py3-none-any.whl", hash = "sha256:c432e063106bacdad69f7d3364537a64f5e14c02e688827c8cf7ab9eb01c6273"},
+    {file = "homeassistant-2023.6.2.tar.gz", hash = "sha256:58f8ea28292d08493bc8faf3f3f183a61a05b43e10de3d1c231531384c1cfe2d"},
 ]
 
 [package.dependencies]
@@ -1808,19 +1808,19 @@ pytest = ">=3.6"
 
 [[package]]
 name = "pytest-homeassistant-custom-component"
-version = "0.13.37"
+version = "0.13.38"
 description = "Experimental package to automatically extract test plugins for Home Assistant custom components"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "pytest-homeassistant-custom-component-0.13.37.tar.gz", hash = "sha256:2687c9b7408fcbdc4857e4ead6e0f4fecd133ca88bce2b0a4aad579762fde622"},
-    {file = "pytest_homeassistant_custom_component-0.13.37-py3-none-any.whl", hash = "sha256:f6a18acd4e8f202015dc8d837c5359a1f126e1789350acdeb6aa0a41a51f8f49"},
+    {file = "pytest-homeassistant-custom-component-0.13.38.tar.gz", hash = "sha256:d47ccbaa05e912594f7c8ee465e3e9fb4bc5f0e35bb21457192c88bba73bbfac"},
+    {file = "pytest_homeassistant_custom_component-0.13.38-py3-none-any.whl", hash = "sha256:6420418077d22911a8c9bc62bc2d8850b1258fead5e609033b61dec099ef33f7"},
 ]
 
 [package.dependencies]
 coverage = "7.2.4"
 freezegun = "1.2.2"
-homeassistant = "2023.6.1"
+homeassistant = "2023.6.2"
 mock-open = "1.4.0"
 numpy = "1.23.2"
 paho-mqtt = "1.6.1"
@@ -2601,4 +2601,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7a20128ceb4f3d58c34cad5b3d30b002879742256ece5f77e3395813e92ffb53"
+content-hash = "aacc6919fb7b420db60877003b033e31d06df6d52d213eb12c96dcf985af665a"
