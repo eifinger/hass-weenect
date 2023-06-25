@@ -39,7 +39,7 @@ async def test_setup_unload_and_reload_entry(hass):
 
 
 @pytest.mark.usefixtures("error_on_get_trackers")
-async def test_setup_entry_exception(hass):
+async def test_setup_entry_exception(hass, caplog):
     """Test ConfigEntryNotReady when API raises an exception during entry setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
@@ -48,3 +48,4 @@ async def test_setup_entry_exception(hass):
     # an error.
     with pytest.raises(ConfigEntryNotReady):
         assert await async_setup_entry(hass, config_entry)
+    assert "Dummy Exception Message" in caplog.text

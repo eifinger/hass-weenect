@@ -80,6 +80,12 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
             self._adjust_update_rate(data)
             return data  # type: ignore
         except Exception as exception:
+            _LOGGER.debug(
+                "Failed to update weenect data: %s",
+                exception,
+                exc_info=True,
+                stack_info=True,
+            )
             raise UpdateFailed(exception) from exception
 
     def _detect_added_and_removed_trackers(self, data: Dict[int, Any]) -> None:
