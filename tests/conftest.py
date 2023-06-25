@@ -41,7 +41,7 @@ def error_get_trackers_fixture():
     """Simulate error when retrieving data from weenect."""
     with patch(
         "aioweenect.AioWeenect.get_trackers",
-        side_effect=Exception,
+        side_effect=Exception("Dummy Exception Message"),
     ):
         yield
 
