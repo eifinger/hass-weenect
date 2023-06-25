@@ -6,7 +6,7 @@ from homeassistant.const import Platform
 # Base component constants
 NAME = "Weenect"
 DOMAIN = "weenect"
-VERSION = "3.0.1"
+VERSION = "3.1.0"
 ATTRIBUTION = "Data provided by https://my.weenect.com/"
 ISSUE_URL = "https://github.com/eifinger/hass-weenect/issues"
 

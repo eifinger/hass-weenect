@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.1.0 (2023-06-25)
+
+### Feature
+
+* Add debug log for exceptions ([#274](https://github.com/eifinger/hass-weenect/issues/274)) ([`ee41f76`](https://github.com/eifinger/hass-weenect/commit/ee41f7672ff5ba9dd9c7d23199c42e9f3b335539))
+
 ## v3.0.1 (2023-04-13)
 ### Fix
 * Enable commit_version_number ([#224](https://github.com/eifinger/hass-weenect/issues/224)) ([`35b4f16`](https://github.com/eifinger/hass-weenect/commit/35b4f1638eb5291c356f24b9be5ecdaba9ccf0c6))
