@@ -957,13 +957,13 @@ files = [
 
 [[package]]
 name = "homeassistant"
-version = "2023.6.1"
+version = "2023.6.3"
 description = "Open-source home automation platform running on Python 3."
 optional = false
 python-versions = ">=3.10.0"
 files = [
-    {file = "homeassistant-2023.6.1-py3-none-any.whl", hash = "sha256:41d68c3c93583ff43db47da672886dd21344bbb87250132a5fa8b7809356d939"},
-    {file = "homeassistant-2023.6.1.tar.gz", hash = "sha256:f05d8a895fe5ba34db696425d087c2c3343b1f1362a0700771f7e2ee52f6873b"},
+    {file = "homeassistant-2023.6.3-py3-none-any.whl", hash = "sha256:ce443bdb0a7803e08fb1625df58bc454d3a8dc0c0d75e5884b7a8e83439e9d5d"},
+    {file = "homeassistant-2023.6.3.tar.gz", hash = "sha256:8655362cd1bff54cbb5df493fd9c1539009aaf4205bc5520a4c4a8482be24eb7"},
 ]
 
 [package.dependencies]
@@ -989,7 +989,7 @@ pyOpenSSL = "23.1.0"
 python-slugify = "4.0.1"
 pyyaml = "6.0"
 requests = "2.31.0"
-typing-extensions = ">=4.5.0,<5.0"
+typing-extensions = ">=4.6.3,<5.0"
 ulid-transform = "0.7.2"
 voluptuous = "0.13.1"
 voluptuous-serialize = "2.6.0"
@@ -1808,19 +1808,19 @@ pytest = ">=3.6"
 
 [[package]]
 name = "pytest-homeassistant-custom-component"
-version = "0.13.37"
+version = "0.13.39"
 description = "Experimental package to automatically extract test plugins for Home Assistant custom components"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "pytest-homeassistant-custom-component-0.13.37.tar.gz", hash = "sha256:2687c9b7408fcbdc4857e4ead6e0f4fecd133ca88bce2b0a4aad579762fde622"},
-    {file = "pytest_homeassistant_custom_component-0.13.37-py3-none-any.whl", hash = "sha256:f6a18acd4e8f202015dc8d837c5359a1f126e1789350acdeb6aa0a41a51f8f49"},
+    {file = "pytest-homeassistant-custom-component-0.13.39.tar.gz", hash = "sha256:0126f895a383384ee2e4d52b0f95a1a9e6a4cba937602f1c588356949d6aa4c4"},
+    {file = "pytest_homeassistant_custom_component-0.13.39-py3-none-any.whl", hash = "sha256:cf52cb22e62353f551b4c51d38eae042453bbbf942cdd7e85767ba3c0717682c"},
 ]
 
 [package.dependencies]
 coverage = "7.2.4"
 freezegun = "1.2.2"
-homeassistant = "2023.6.1"
+homeassistant = "2023.6.3"
 mock-open = "1.4.0"
 numpy = "1.23.2"
 paho-mqtt = "1.6.1"
@@ -2384,13 +2384,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "typing-extensions"
-version = "4.5.0"
+version = "4.6.3"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
-    {file = "typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
+    {file = "typing_extensions-4.6.3-py3-none-any.whl", hash = "sha256:88a4153d8505aabbb4e13aacb7c486c2b4a33ca3b3f807914a9b4c844c471c26"},
+    {file = "typing_extensions-4.6.3.tar.gz", hash = "sha256:d91d5919357fe7f681a9f2b5b4cb2a5f1ef0a1e9f59c4d8ff0d3491e05c0ffd5"},
 ]
 
 [[package]]
@@ -2601,4 +2601,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7a20128ceb4f3d58c34cad5b3d30b002879742256ece5f77e3395813e92ffb53"
+content-hash = "3a30ba85ecafbf5a0b1d73fbea8e0bcea982b51579395c9af297202cd6bbe1f4"
