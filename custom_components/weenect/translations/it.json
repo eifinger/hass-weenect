@@ -1,0 +1,28 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Maggiori dettagli sulla configurazione sono disponibili qui:: https://github.com/eifinger/hass-weenect",
+                "data": {
+                    "username": "Username",
+                    "password": "Password"
+                }
+            }
+        },
+        "error": {
+            "auth": "Username/Password sbagliati."
+        },
+        "abort": {
+            "already_configured": "Account già configurato."
+        }
+    },
+    "options": {
+        "step": {
+            "user": {
+                "data": {
+                    "update_rate": "Intervallo di aggiornamento"
+                }
+            }
+        }
+    }
+}

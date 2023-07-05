@@ -11,7 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
+from homeassistant.const import PERCENTAGE, TIME_SECONDS, SIGNAL_STRENGTH_DECIBELS
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
@@ -37,6 +37,44 @@ SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         name="Last Sensor Mode",
         key="last_sensor_mode",
         entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="SOS Phone Number",
+        key="sos_phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Subscription Remaining Days",
+        key="remaining_days",
+        icon="mdi:currency-usd-off",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Subscription Expiration Date",
+        key="expiration_date",
+        icon="mdi:currency-usd-off",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Usage",
+        key="call_usage",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=TIME_SECONDS,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Max",
+        key="call_max_threshold",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=TIME_SECONDS,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Available",
+        key="call_available",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=TIME_SECONDS,
     ),
 )
 
@@ -71,7 +109,26 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         name="GPS Satellites",
         key="satellites",
+        icon="mdi:crosshairs-gps",
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Next Charge",
+        key="next_charge_at",
+        icon="mdi:currency-usd",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+USER_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="SMS Available",
+        key="sms",
+        icon="mdi:message-processing",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
 )
@@ -104,6 +161,18 @@ async def async_setup_entry(
                         coordinator, tracker_id, location_sensor_description
                     )
                 )
+            for subscription_sensor_description in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(
+                    WeenectSubscriptionSensor(
+                        coordinator, tracker_id, subscription_sensor_description
+                    )
+                )
+            for user_sensor_description in USER_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(
+                    WeenectUserSensor(
+                        coordinator, tracker_id, user_sensor_description
+                    )
+                )
 
         async_add_entities(sensors, True)
 
@@ -124,6 +193,11 @@ class WeenectSensor(WeenectEntity, SensorEntity):
     def native_value(self) -> StateType | datetime:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
+            if self.entity_description.key == "call_available":
+                if "call_usage" in self.coordinator.data[self.id] and "call_max_threshold" in self.coordinator.data[self.id]:
+                    return self.coordinator.data[self.id]["call_max_threshold"] - self.coordinator.data[self.id]["call_usage"]
+                else:
+                    return None
             return self.coordinator.data[self.id][self.entity_description.key]
         return None
 
@@ -144,7 +218,48 @@ class WeenectLocationSensor(WeenectSensor):
                 value = self.coordinator.data[self.id]["position"][0][
                     self.entity_description.key
                 ]
-                if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                if self.device_class == str(SensorDeviceClass.TIMESTAMP) and value is not None:
                     return dt.parse_datetime(value)
+                return value
+        return None
+
+
+class WeenectSubscriptionSensor(WeenectSensor):
+    """weenect sensor for subscription information."""
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["subscription"])
+
+    @property
+    def native_value(self) -> StateType:
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            if self.coordinator.data[self.id]["subscription"]:
+                value = self.coordinator.data[self.id]["subscription"][
+                    self.entity_description.key
+                ]
+                return value
+        return None
+
+
+class WeenectUserSensor(WeenectSensor):
+    """weenect sensor for user information."""
+
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["user"])
+
+    @property
+    def native_value(self) -> StateType:
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            if self.coordinator.data[self.id]["user"]:
+                value = self.coordinator.data[self.id]["user"][
+                    self.entity_description.key
+                ]
                 return value
         return None
