@@ -8,19 +8,20 @@ set_update_interval:
       integration: weenect
   fields:
     update_interval:
-      description: The update interval. Possible values are 30S 1M 5M 10M 30M 1H
+      description: The update interval. Possible values are 0S(GPS OFF) 30S 1M 5M 10M 30M 60M
       required: true
       example: "30M"
       default: "30M"
       selector:
         select:
           options:
+            - "0S"
             - "30S"
             - "1M"
             - "5M"
             - "10M"
             - "30M"
-            - "1H"
+            - "60M"
 
 activate_super_live:
   description: Activate the super live mode.
