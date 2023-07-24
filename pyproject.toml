@@ -38,7 +38,7 @@ pre-commit = "^3.3.3"
 pre-commit-hooks = "^4.4.0"
 vulture = "^2.7"
 yamllint = "^1.31.0"
-ruff = "^0.0.275"
+ruff = "^0.0.280"
 pytest-homeassistant-custom-component = "^0.13.39"
 
 [tool.pytest.ini_options]
