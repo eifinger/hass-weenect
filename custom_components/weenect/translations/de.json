@@ -24,5 +24,61 @@
                 }
             }
         }
-    }
+    },
+    "services": {
+        "set_update_interval": {
+          "name": "Update Intervall setzen",
+          "description": "Ändert das Update Intervall des Trackers",
+          "fields": {
+            "update_interval": {
+              "name": "Update Intervall",
+              "description": "Mögliche Werte sind: 30S 1M 5M 10M 30M 1H"
+            },
+            "entity_id": {
+                "name": "Entity",
+                "description": "Der Tracker"
+            }
+          }
+        },
+        "activate_super_live": {
+            "name": "Super Live Modus aktivieren",
+            "description": "Aktiviert den Super Live Modus des Trackers für 60s",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "Der Tracker"
+                }
+            }
+        },
+        "refresh_location": {
+            "name": "Standort aktualisieren",
+            "description": "Sende eine Standort Aktualisierungsanfrage an den Tracker",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "Der Tracker"
+                }
+            }
+        },
+        "ring": {
+            "name": "Klingeln",
+            "description": "Den Tracker klingeln lassen",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "Der Tracker"
+                }
+            }
+        },
+        "vibrate": {
+            "name": "Vibrieren",
+            "description": "Den Tracker vibrieren lassen",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "Der Tracker"
+                }
+            }
+        }
+      }
 }
