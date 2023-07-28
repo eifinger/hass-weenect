@@ -24,5 +24,61 @@
                 }
             }
         }
-    }
+    },
+    "services": {
+        "set_update_interval": {
+          "name": "Set Update Intervall",
+          "description": "Changes the rate in which the tracker updates its location",
+          "fields": {
+            "update_interval": {
+              "name": "Update Interval",
+              "description": "Possible values are: 30S 1M 5M 10M 30M 1H"
+            },
+            "entity_id": {
+                "name": "Entity",
+                "description": "The tracker"
+            }
+          }
+        },
+        "activate_super_live": {
+            "name": "Actiate Super Live Mode",
+            "description": "Activate the super live mode of the tracker for 60s",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "The tracker"
+                }
+            }
+        },
+        "refresh_location": {
+            "name": "Refresh Location",
+            "description": "Send a request to the tracker to refresh its location",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "The tracker"
+                }
+            }
+        },
+        "ring": {
+            "name": "Ring",
+            "description": "Let the tracker ring",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "The tracker"
+                }
+            }
+        },
+        "vibrate": {
+            "name": "Vibrate",
+            "description": "Let the tracker vibrate",
+            "fields": {
+                "entity_id": {
+                    "name": "Entity",
+                    "description": "The tracker"
+                }
+            }
+        }
+      }
 }

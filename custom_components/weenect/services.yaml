@@ -1,6 +1,5 @@
 ---
 set_update_interval:
-  description: Set the tracker update interval.
   target:
     entity:
       integration: weenect
@@ -8,7 +7,6 @@ set_update_interval:
       integration: weenect
   fields:
     update_interval:
-      description: The update interval. Possible values are 30S 1M 5M 10M 30M 1H
       required: true
       example: "30M"
       default: "30M"
@@ -23,7 +21,6 @@ set_update_interval:
             - "1H"
 
 activate_super_live:
-  description: Activate the super live mode.
   target:
     entity:
       integration: weenect
@@ -31,7 +28,6 @@ activate_super_live:
       integration: weenect
 
 refresh_location:
-  description: Request a location update.
   target:
     entity:
       integration: weenect
@@ -39,7 +35,6 @@ refresh_location:
       integration: weenect
 
 ring:
-  description: Let the tracker ring.
   target:
     entity:
       integration: weenect
@@ -47,7 +42,6 @@ ring:
       integration: weenect
 
 vibrate:
-  description: Let the tracker vibrate.
   target:
     entity:
       integration: weenect
