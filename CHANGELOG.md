@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.2.0 (2023-07-28)
+
+### Feature
+
+* Add service translations ([#294](https://github.com/eifinger/hass-weenect/issues/294)) ([`f427381`](https://github.com/eifinger/hass-weenect/commit/f4273819d82455efe52a94a232ec3ce9fa304891))
+
 ## v3.1.0 (2023-06-25)
 
 ### Feature
