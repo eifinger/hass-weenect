@@ -26,15 +26,10 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ign
         """Handle a flow initialized by the user."""
         self._errors = {}
 
-        entries = self._async_current_entries()
-        for entry in entries:
-            if (
-                entry.data[CONF_USERNAME] == user_input[CONF_USERNAME]
-                and entry.data[CONF_PASSWORD] == user_input[CONF_PASSWORD]
-            ):
+        if user_input is not None:
+            if self._is_already_configured(user_input):
                 return self.async_abort(reason="already_configured")
 
-        if user_input is not None:
             valid = await self._test_credentials(
                 user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
             )
@@ -46,6 +41,17 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ign
             self._errors["base"] = "auth"
 
         return await self._show_config_form(user_input)
+
+    def _is_already_configured(self, user_input) -> bool:
+        """Check if an entry for these credentials already exists."""
+        entries = self._async_current_entries()
+        for entry in entries:
+            if (
+                entry.data[CONF_USERNAME] == user_input[CONF_USERNAME]
+                and entry.data[CONF_PASSWORD] == user_input[CONF_PASSWORD]
+            ):
+                return True
+        return False
 
     async def _show_config_form(self, user_input) -> FlowResult:
         """Show the configuration form."""
