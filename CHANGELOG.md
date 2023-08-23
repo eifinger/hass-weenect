@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.2.1 (2023-08-23)
+
+### Fix
+
+* Allow multiple entries ([#306](https://github.com/eifinger/hass-weenect/issues/306)) ([`a1bbeb6`](https://github.com/eifinger/hass-weenect/commit/a1bbeb6303851744c072c005eb8dbf420d282544))
+
 ## v3.2.0 (2023-07-28)
 
 ### Feature
