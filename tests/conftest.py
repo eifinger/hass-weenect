@@ -1,6 +1,7 @@
 """Global fixtures for integration_blueprint integration."""
 from unittest.mock import AsyncMock, patch
 
+import copy
 import pytest
 
 from tests.const import GET_RACKERS_RESPONSE
@@ -54,5 +55,17 @@ def get_trackers_fixture():
     with patch(
         "aioweenect.AioWeenect.get_trackers",
         side_effect=AsyncMock(return_value=GET_RACKERS_RESPONSE),
+    ):
+        yield
+
+
+@pytest.fixture(name="get_trackers_last_freq_mode_none")
+def get_trackers_last_freq_mode_none_fixture():
+    """Static result when retrieving data from weenect."""
+    response = copy.deepcopy(GET_RACKERS_RESPONSE)
+    response["items"][0]["last_freq_mode"] = None
+    with patch(
+        "aioweenect.AioWeenect.get_trackers",
+        side_effect=AsyncMock(return_value=response),
     ):
         yield
