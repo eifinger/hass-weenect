@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.2.2 (2023-08-27)
+
+### Fix
+
+* Check for None in parse_duration ([`f73d33e`](https://github.com/eifinger/hass-weenect/commit/f73d33ec8314737ac6d95204197741303ce10d3a))
+
 ## v3.2.1 (2023-08-23)
 
 ### Fix
