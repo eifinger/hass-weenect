@@ -139,13 +139,6 @@ repos:
         language: system
         types: [yaml]
         entry: poetry run yamllint
-      - id: pyright
-        name: 🆎 Static type checking using pyright
-        entry: pyright
-        language: node
-        types: [python]
-        pass_filenames: false
-        additional_dependencies: ["pyright@1.1.99"]
       - id: ruff
         name: ⚡️ Check with ruff
         language: system
