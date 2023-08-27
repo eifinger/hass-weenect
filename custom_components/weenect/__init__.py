@@ -99,7 +99,7 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         """Set the update rate to the shortest update rate of all trackers."""
         update_rate = timedelta(seconds=DEFAULT_UPDATE_RATE)
         for tracker in data.values():
-            tracker_rate = self.parse_duration(tracker["last_freq_mode"])
+            tracker_rate = self.parse_duration(tracker.get("last_freq_mode"))
             if tracker_rate and tracker_rate < update_rate:
                 update_rate = tracker_rate
         self.update_interval = update_rate
@@ -114,17 +114,18 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         return result
 
     @staticmethod
-    def parse_duration(duration: str) -> Optional[timedelta]:
+    def parse_duration(duration: str | None) -> Optional[timedelta]:
         """Parse a timedelta from a weenect duration."""
-        pattern = re.compile(r"\d\d[S,M,H]")
+        pattern = re.compile(r"^[0-9]+[SMH]$")
 
-        if pattern.match(duration) is not None:
-            if duration.endswith("S"):
-                return timedelta(seconds=float(duration[:-1]))
-            if duration.endswith("M"):
-                return timedelta(minutes=float(duration[:-1]))
-            if duration.endswith("H"):
-                return timedelta(hours=float(duration[:-1]))
+        if duration is not None:
+            if pattern.match(duration) is not None:
+                if duration.endswith("S"):
+                    return timedelta(seconds=float(duration[:-1]))
+                if duration.endswith("M"):
+                    return timedelta(minutes=float(duration[:-1]))
+                if duration.endswith("H"):
+                    return timedelta(hours=float(duration[:-1]))
         return None
 
 
