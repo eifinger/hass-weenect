@@ -50,7 +50,9 @@ async def async_setup_entry(
     ) -> None:
         """Add device_trackers callback."""
 
-        trackers = [WeenectDeviceTracker(coordinator, tracker_id) for tracker_id in added]
+        trackers = [
+            WeenectDeviceTracker(coordinator, tracker_id) for tracker_id in added
+        ]
 
         async_add_entities(trackers, True)
 
