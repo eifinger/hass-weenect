@@ -49,3 +49,15 @@ async def test_setup_entry_exception(hass, caplog):
     with pytest.raises(ConfigEntryNotReady):
         assert await async_setup_entry(hass, config_entry)
     assert "Dummy Exception Message" in caplog.text
+
+
+@pytest.mark.usefixtures("get_trackers_last_freq_mode_none")
+async def test_setup_entry_last_freq_mode_none(hass, caplog):
+    """Test ConfigEntryNotReady when last_freq_mode is None."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+
+    with pytest.raises(ConfigEntryNotReady):
+        assert await async_setup_entry(hass, config_entry)
+    assert (
+        "TypeError: expected string or bytes-like object, got 'NoneType'" in caplog.text
+    )
