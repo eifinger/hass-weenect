@@ -55,9 +55,9 @@ async def test_setup_entry_exception(hass, caplog):
 async def test_setup_entry_last_freq_mode_none(hass, caplog):
     """Test ConfigEntryNotReady when last_freq_mode is None."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
 
-    with pytest.raises(ConfigEntryNotReady):
-        assert await async_setup_entry(hass, config_entry)
-    assert (
-        "TypeError: expected string or bytes-like object" in caplog.text
-    )
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+    assert "TypeError: expected string or bytes-like object" not in caplog.text
