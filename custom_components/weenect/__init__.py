@@ -75,6 +75,7 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         """Update data via library."""
         try:
             data = await self.client.get_trackers()
+            _LOGGER.debug("Data received: %s", data)
             data = self.transform_data(data)
             self._detect_added_and_removed_trackers(data)
             self._adjust_update_rate(data)
