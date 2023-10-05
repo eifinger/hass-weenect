@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.2.4 (2023-10-05)
+
+### Fix
+
+* Handle empty last_message_received ([#323](https://github.com/eifinger/hass-weenect/issues/323)) ([`f1b6bcf`](https://github.com/eifinger/hass-weenect/commit/f1b6bcf2635a6277b0e84b6f6552421c1b912a55))
+
 ## v3.2.3 (2023-10-05)
 
 ### Fix
