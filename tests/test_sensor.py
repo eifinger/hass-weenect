@@ -45,7 +45,7 @@ async def test_sensor(hass):
 
 
 @pytest.mark.usefixtures("get_trackers")
-async def test_device_class_does_not_return_strin_for_its_state(hass, caplog):
+async def test_device_class_does_not_return_string_for_its_state(hass, caplog):
     """Test that sensor works."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
     config_entry.add_to_hass(hass)
@@ -58,3 +58,16 @@ async def test_device_class_does_not_return_strin_for_its_state(hass, caplog):
         "is providing a string for its state, while the device class is"
         not in caplog.text
     )
+
+
+@pytest.mark.usefixtures("get_trackers_last_message_none")
+async def test_sensor_with_last_message_none(hass):
+    """Test that the special timestamp sensor works for a None value ."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("sensor.test_last_message_received").state == "unknown"
