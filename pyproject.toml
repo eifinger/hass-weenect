@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "hass-weenect"
-version = "3.2.2"
+version = "3.2.3"
 description = "Homeassistant Custom Component for Weenect"
 license = "MIT"
 authors = ["Kevin Stillhammer <kevin.stillhammer@gmail.com>"]

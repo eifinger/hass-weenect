@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.2.3 (2023-10-05)
+
+### Fix
+
+* Log responses in debug mode ([#322](https://github.com/eifinger/hass-weenect/issues/322)) ([`64db8e7`](https://github.com/eifinger/hass-weenect/commit/64db8e7b5eb206b9edbb1f783ec2c4f60c657022))
+
 ## v3.2.2 (2023-08-27)
 
 ### Fix
