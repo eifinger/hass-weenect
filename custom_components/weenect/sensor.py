@@ -145,6 +145,7 @@ class WeenectLocationSensor(WeenectSensor):
                     self.entity_description.key
                 ]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
-                    return dt.parse_datetime(value)
+                    if value:
+                        return dt.parse_datetime(value)
                 return value
         return None
