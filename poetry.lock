@@ -2527,13 +2527,13 @@ voluptuous = "*"
 
 [[package]]
 name = "vulture"
-version = "2.7"
+version = "2.9.1"
 description = "Find dead code"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "vulture-2.7-py2.py3-none-any.whl", hash = "sha256:bccc51064ed76db15a6b58277cea8885936af047f53d2655fb5de575e93d0bca"},
-    {file = "vulture-2.7.tar.gz", hash = "sha256:67fb80a014ed9fdb599dd44bb96cb54311032a104106fc2e706ef7a6dad88032"},
+    {file = "vulture-2.9.1-py2.py3-none-any.whl", hash = "sha256:a46857014619bd4b785a506b9ddb738cd4621043558309b03a879d18f86e2d72"},
+    {file = "vulture-2.9.1.tar.gz", hash = "sha256:b6a2aa632b6fd51488a8eeac650ab4a509bb1a032e81943817a8a2e6a63a30b3"},
 ]
 
 [package.dependencies]
@@ -2647,4 +2647,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "6c97779e09f2c8c1a128c575760e72844bc71abc1ced0996356b3490f66989b8"
+content-hash = "0dc12921985d2b905d0df1f619047687b55de2188a424e7d5c9a8c8a735bd71d"
