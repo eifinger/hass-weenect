@@ -27,7 +27,7 @@ Platform | Description
 
 ## Services
 
-### weeenct.set_update_interval
+### weenect.set_update_interval
 
 Set the tracker update interval.
 
@@ -35,19 +35,19 @@ Name | Description | Example
 -- | -- | --
 `update_interval` | `The update interval. Possible values are 30S 1M 5M 10M 30M 1H.` | `30M`
 
-### weeenct.activate_super_live
+### weenect.activate_super_live
 
 Activate the super live mode.
 
-### weeenct.refresh_location
+### weenect.refresh_location
 
 Request a location update.
 
-### weeenct.ring
+### weenect.ring
 
 Let the tracker ring.
 
-### weeenct.vibrate
+### weenect.vibrate
 
 Let the tracker vibrate.
 
