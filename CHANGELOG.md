@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.3.0 (2024-02-27)
+
+### Feature
+
+* Allow disabling gps ([#363](https://github.com/eifinger/hass-weenect/issues/363)) ([`622c4f1`](https://github.com/eifinger/hass-weenect/commit/622c4f1de52014e39d2f2ef1e6b009a16cc6754f))
+
 ## v3.2.4 (2023-10-05)
 
 ### Fix
