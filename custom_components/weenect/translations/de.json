@@ -32,7 +32,7 @@
           "fields": {
             "update_interval": {
               "name": "Update Intervall",
-              "description": "Mögliche Werte sind: 30S 1M 5M 10M 30M 1H"
+              "description": "\"0S\" schaltet das Tracking aus"
             },
             "entity_id": {
                 "name": "Entity",
