@@ -13,6 +13,7 @@ set_update_interval:
       selector:
         select:
           options:
+            - "0S"
             - "30S"
             - "1M"
             - "5M"
