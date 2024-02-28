@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v3.3.1 (2024-02-28)
+
+### Fix
+
+* Replace deprecated SOURCE_TYPE_GPS with SourceType.GPS ([#365](https://github.com/eifinger/hass-weenect/issues/365)) ([`892c031`](https://github.com/eifinger/hass-weenect/commit/892c031c484a6c09d682284c198227470eb685e9))
+
 ## v3.3.0 (2024-02-27)
 
 ### Feature
