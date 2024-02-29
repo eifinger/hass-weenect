@@ -29,11 +29,11 @@ Platform | Description
 
 ### weenect.set_update_interval
 
-Set the tracker update interval.
+Set the tracker update interval. Disable tracking by setting interval to 0S.
 
 Name | Description | Example
 -- | -- | --
-`update_interval` | `The update interval. Possible values are 30S 1M 5M 10M 30M 1H.` | `30M`
+`update_interval` | `The update interval. Possible values are 0S 30S 1M 5M 10M 30M 1H.` | `30M`
 
 ### weenect.activate_super_live
 
