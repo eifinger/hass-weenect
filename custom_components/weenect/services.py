@@ -11,7 +11,7 @@ DOMAIN_SERVICES = f"{DOMAIN}_services"
 
 SERVICE_SET_UPDATE_INTERVAL_SCHEMA = cv.make_entity_service_schema(
     {
-        vol.Optional(UPDATE_INTERVAL, default="30M"): cv.string,
+        vol.Optional(UPDATE_INTERVAL, default="10M"): cv.string,
     }
 )
 
