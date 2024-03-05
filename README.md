@@ -33,7 +33,7 @@ Set the tracker update interval. Disable tracking by setting interval to 0S.
 
 Name | Description | Example
 -- | -- | --
-`update_interval` | `The update interval. Possible values are 0S, 30S, 1M, 2M, 3M, 5M, 10M, 30M, 60M. Please note, that 30M and 60M are not officially supported in the Weenect app.` | `10M`
+`update_interval` | `The GPS update interval. Possible values are 0S, 30S, 1M, 2M, 3M, 5M, 10M, 30M, 60M. 0S disables tracking. Battery life will be low for 30S and 1M, high for 2M and 3M and medium for 5M and 10M. Please note, that 30M and 60M are not officially supported in the Weenect app.` | `10M`
 
 ### weenect.activate_super_live
 
