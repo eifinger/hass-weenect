@@ -33,7 +33,7 @@ Set the tracker update interval.
 
 Name | Description | Example
 -- | -- | --
-`update_interval` | `The update interval. Possible values are 30S 1M 5M 10M 30M 1H.` | `30M`
+`update_interval` | `The update interval. Possible values are 0S, 30S, 1M, 2M, 3M, 5M, 10M, 30M, 60M. Please note, that 30M and 60M are not officially supported in the Weenect app.` | `10M`
 
 ### weeenct.activate_super_live
 

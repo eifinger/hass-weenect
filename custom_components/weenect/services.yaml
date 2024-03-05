@@ -8,18 +8,20 @@ set_update_interval:
   fields:
     update_interval:
       required: true
-      example: "30M"
-      default: "30M"
+      example: "10M"
+      default: "10M"
       selector:
         select:
           options:
             - "0S"
             - "30S"
             - "1M"
+            - "2M"
+            - "3M"
             - "5M"
             - "10M"
             - "30M"
-            - "1H"
+            - "60M"
 
 activate_super_live:
   target:
