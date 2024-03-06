@@ -200,7 +200,7 @@ class WeenectSensor(WeenectEntity, SensorEntity):
             "call_usage" in self.coordinator.data[self.id]
             and "call_max_threshold" in self.coordinator.data[self.id]
         ):
-            return (
+            return int(
                 self.coordinator.data[self.id]["call_max_threshold"]
                 - self.coordinator.data[self.id]["call_usage"]
             )
