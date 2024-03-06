@@ -194,8 +194,7 @@ async def async_setup_entry(
 class WeenectSensor(WeenectEntity, SensorEntity):
     """weenect sensor for general information."""
 
-    @property
-    def get_call_available(self) -> StateType:
+    def _get_call_available(self) -> int:
         """Return remaining call time."""
         if (
             "call_usage" in self.coordinator.data[self.id]
@@ -213,7 +212,7 @@ class WeenectSensor(WeenectEntity, SensorEntity):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.entity_description.key == "call_available":
-                return self.get_call_available()
+                return self._get_call_available()
             value = self.coordinator.data[self.id][self.entity_description.key]
             if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                 if value:
