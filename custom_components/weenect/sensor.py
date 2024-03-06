@@ -194,7 +194,7 @@ async def async_setup_entry(
 class WeenectSensor(WeenectEntity, SensorEntity):
     """weenect sensor for general information."""
 
-    def _get_call_available(self) -> int:
+    def _get_call_available(self) -> int | None:
         """Return remaining call time."""
         if (
             "call_usage" in self.coordinator.data[self.id]
