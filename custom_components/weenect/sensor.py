@@ -11,7 +11,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS, TIME_SECONDS
+from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
@@ -62,21 +62,21 @@ SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         key="call_usage",
         icon="mdi:phone",
         entity_category=EntityCategory.DIAGNOSTIC,
-        native_unit_of_measurement=TIME_SECONDS,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
     ),
     SensorEntityDescription(
         name="Phone Call Max",
         key="call_max_threshold",
         icon="mdi:phone",
         entity_category=EntityCategory.DIAGNOSTIC,
-        native_unit_of_measurement=TIME_SECONDS,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
     ),
     SensorEntityDescription(
         name="Phone Call Available",
         key="call_available",
         icon="mdi:phone",
         entity_category=EntityCategory.DIAGNOSTIC,
-        native_unit_of_measurement=TIME_SECONDS,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
     ),
 )
 
