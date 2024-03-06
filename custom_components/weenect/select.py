@@ -16,8 +16,8 @@ from custom_components.weenect.services import async_set_update_interval
 from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
 
-SELECT_OPTIONS = ("0S", "30S", "1M", "5M", "10M", "30M", "60M")
-DEFAULT_SELECT_OPTION = "30M"
+SELECT_OPTIONS = ("0S", "30S", "1M", "2M", "3M", "5M", "10M")
+DEFAULT_SELECT_OPTION = "10M"
 
 SELECT_ENTITY_DESCRIPTIONS: tuple[SelectEntityDescription, ...] = (
     SelectEntityDescription(
