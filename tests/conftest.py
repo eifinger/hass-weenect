@@ -97,7 +97,7 @@ def get_trackers_phone_call_available_minuend_missing_fixture():
 
 
 @pytest.fixture(name="get_trackers_phone_call_available_subtrahend_missing")
-def get_trackers_last_message_none_fixture():
+def get_trackers_phone_call_available_subtrahend_missing_fixture():
     """Static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["call_usage"] = None
