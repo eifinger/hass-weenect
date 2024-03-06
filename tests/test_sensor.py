@@ -53,8 +53,7 @@ async def test_sensor(hass):
     assert hass.states.get("sensor.test_phone_call_max").state == "600"
     assert hass.states.get("sensor.test_phone_call_available").state == "500"
     assert (
-        hass.states.get("sensor.test_next_charge").state
-        == "2022-09-21T11:34:12+00:00"
+        hass.states.get("sensor.test_next_charge").state == "2022-09-21T11:34:12+00:00"
     )
     assert hass.states.get("sensor.test_sms_available").state == "13"
 

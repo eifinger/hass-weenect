@@ -1,4 +1,5 @@
 """Sensor platform for weenect."""
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -165,7 +166,9 @@ async def async_setup_entry(
                         coordinator, tracker_id, location_sensor_description
                     )
                 )
-            for subscription_sensor_description in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
+            for (
+                subscription_sensor_description
+            ) in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
                 sensors.append(
                     WeenectSubscriptionSensor(
                         coordinator, tracker_id, subscription_sensor_description
@@ -173,9 +176,7 @@ async def async_setup_entry(
                 )
             for user_sensor_description in USER_SENSOR_ENTITY_DESCRIPTIONS:
                 sensors.append(
-                    WeenectUserSensor(
-                        coordinator, tracker_id, user_sensor_description
-                    )
+                    WeenectUserSensor(coordinator, tracker_id, user_sensor_description)
                 )
 
         async_add_entities(sensors, True)
@@ -198,13 +199,21 @@ class WeenectSensor(WeenectEntity, SensorEntity):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.entity_description.key == "call_available":
-                if "call_usage" in self.coordinator.data[self.id] and "call_max_threshold" in self.coordinator.data[self.id]:
-                    return self.coordinator.data[self.id]["call_max_threshold"] - self.coordinator.data[self.id]["call_usage"]
+                if (
+                    "call_usage" in self.coordinator.data[self.id]
+                    and "call_max_threshold" in self.coordinator.data[self.id]
+                ):
+                    return (
+                        self.coordinator.data[self.id]["call_max_threshold"]
+                        - self.coordinator.data[self.id]["call_usage"]
+                    )
                 else:
                     return None
             value = self.coordinator.data[self.id][self.entity_description.key]
             if self.entity_description.key == "expiration_date":
-                value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(tzinfo=timezone.utc)
+                value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(
+                    tzinfo=timezone.utc
+                )
             return value
         return None
 
@@ -231,13 +240,16 @@ class WeenectLocationSensor(WeenectSensor):
                 return value
         return None
 
+
 class WeenectSubscriptionSensor(WeenectSensor):
     """weenect sensor for subscription information."""
 
     @property
     def available(self) -> bool:
         """Return if entity is available."""
-        return super().available and bool(self.coordinator.data[self.id]["subscription"])
+        return super().available and bool(
+            self.coordinator.data[self.id]["subscription"]
+        )
 
     @property
     def native_value(self) -> StateType:
@@ -248,7 +260,9 @@ class WeenectSubscriptionSensor(WeenectSensor):
                     self.entity_description.key
                 ]
                 if self.entity_description.key == "next_charge_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(tzinfo=timezone.utc)
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(
+                        tzinfo=timezone.utc
+                    )
                 return value
         return None
 
