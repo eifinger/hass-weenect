@@ -97,7 +97,7 @@ async def test_sensor_with_call_available_minuend_missing(hass):
 
     await hass.async_block_till_done()
 
-    assert hass.states.get("sensor.test_phone_call_available").state == "unknown"
+    assert hass.states.get("sensor.test_phone_call_available") == None
 
 
 @pytest.mark.usefixtures("get_trackers_phone_call_available_subtrahend_missing")
@@ -110,4 +110,4 @@ async def test_sensor_with_call_available_subtrahend_missing(hass):
 
     await hass.async_block_till_done()
 
-    assert hass.states.get("sensor.test_phone_call_available").state == "unknown"
+    assert hass.states.get("sensor.test_phone_call_available") == None
