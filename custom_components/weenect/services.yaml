@@ -20,8 +20,6 @@ set_update_interval:
             - "3M"
             - "5M"
             - "10M"
-            - "30M"
-            - "60M"
 
 activate_super_live:
   target:

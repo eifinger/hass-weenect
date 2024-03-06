@@ -33,7 +33,7 @@ Set the tracker update interval.
 
 Name | Description | Example
 -- | -- | --
-`update_interval` | `The GPS update interval. Possible values are 0S, 30S, 1M, 2M, 3M, 5M, 10M, 30M, 60M. 0S disables tracking. Battery life will be low for 30S and 1M, high for 2M and 3M and medium for 5M and 10M. Please note, that 30M and 60M are not officially supported in the Weenect app.` | `10M`
+`update_interval` | `The GPS update interval. Possible values are 0S, 30S, 1M, 2M, 3M, 5M, 10M. 0S disables tracking. Battery life will be low for 30S and 1M, high for 2M and 3M and medium for 5M and 10M.` | `10M`
 
 ### weenect.activate_super_live
 
@@ -75,8 +75,8 @@ automation:
         data:
           update_interval: "1M"
   - id: 652b4b69-c951-4861-8b7d-3cbb15fc8b79
-    alias: "Setze Nayas Tracker Updaterate auf 60M wenn wir zu Hause sind"
-    description: "Set Nayas tracker update rate to 60m when we are at home"
+    alias: "Setze Nayas Tracker Updaterate auf 0S wenn wir zu Hause sind"
+    description: "Set Nayas tracker update rate to 0s (disable tracking) when we are at home"
     mode: single
     initial_state: true
     trigger:
@@ -89,7 +89,7 @@ automation:
         target:
           entity_id: device_tracker.naya
         data:
-          update_interval: "60M"
+          update_interval: "0S"
 ````
 
 <a href="https://www.buymeacoffee.com/eifinger" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a><br>
