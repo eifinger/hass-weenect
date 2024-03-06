@@ -2,6 +2,20 @@
 
 <!--next-version-placeholder-->
 
+## v4.0.0 (2024-03-06)
+
+### Feature
+
+* Update intervals ([#367](https://github.com/eifinger/hass-weenect/issues/367)) ([`ac1cf1a`](https://github.com/eifinger/hass-weenect/commit/ac1cf1a7a6f2fcff3ff6d9a722ba6cc9c9132d88))
+
+### Breaking
+
+* Update intervals ([#367](https://github.com/eifinger/hass-weenect/issues/367)) ([`ac1cf1a`](https://github.com/eifinger/hass-weenect/commit/ac1cf1a7a6f2fcff3ff6d9a722ba6cc9c9132d88))
+
+### Documentation
+
+* Add how to disable tracking to README.md ([#366](https://github.com/eifinger/hass-weenect/issues/366)) ([`d53802c`](https://github.com/eifinger/hass-weenect/commit/d53802ca13d5ffcd6642caec72d0d7fa6e458793))
+
 ## v3.3.1 (2024-02-28)
 
 ### Fix
