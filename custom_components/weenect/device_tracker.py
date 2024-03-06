@@ -129,7 +129,7 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
         tracker_id: int,
     ):
         super().__init__(coordinator, tracker_id)
-        self._attr_icon = "mdi:paw"
+        self._attr_icon = "mdi:tag"
         self._attr_unique_id = tracker_id
         self._attr_name = self.coordinator.data[self.id]["name"]
 
