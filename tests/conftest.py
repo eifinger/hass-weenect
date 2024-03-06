@@ -1,7 +1,8 @@
 """Global fixtures for integration_blueprint integration."""
-from unittest.mock import AsyncMock, patch
 
 import copy
+from unittest.mock import AsyncMock, patch
+
 import pytest
 
 from tests.const import GET_RACKERS_RESPONSE
@@ -76,6 +77,30 @@ def get_trackers_last_message_none_fixture():
     """Static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["position"][0]["last_message"] = None
+    with patch(
+        "aioweenect.AioWeenect.get_trackers",
+        side_effect=AsyncMock(return_value=response),
+    ):
+        yield
+
+
+@pytest.fixture(name="get_trackers_phone_call_available_minuend_missing")
+def get_trackers_last_message_none_fixture():
+    """Static result when retrieving data from weenect."""
+    response = copy.deepcopy(GET_RACKERS_RESPONSE)
+    response["items"][0]["call_max_threshold"] = None
+    with patch(
+        "aioweenect.AioWeenect.get_trackers",
+        side_effect=AsyncMock(return_value=response),
+    ):
+        yield
+
+
+@pytest.fixture(name="get_trackers_phone_call_available_subtrahend_missing")
+def get_trackers_last_message_none_fixture():
+    """Static result when retrieving data from weenect."""
+    response = copy.deepcopy(GET_RACKERS_RESPONSE)
+    response["items"][0]["call_usage"] = None
     with patch(
         "aioweenect.AioWeenect.get_trackers",
         side_effect=AsyncMock(return_value=response),
