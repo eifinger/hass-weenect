@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v4.1.0 (2024-03-06)
+
+### Feature
+
+* Release new sensors ([`59f3c55`](https://github.com/eifinger/hass-weenect/commit/59f3c5506a3a3d49e4a9868928de508de62e91d6))
+
 ## v4.0.0 (2024-03-06)
 
 ### Feature
