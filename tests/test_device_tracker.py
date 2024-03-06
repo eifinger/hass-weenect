@@ -33,4 +33,17 @@ async def test_device_tracker(hass):
     assert hass.states.get("device_tracker.test").attributes["source_type"] == "gps"
     assert hass.states.get("device_tracker.test").attributes["latitude"] == 47.024191
     assert hass.states.get("device_tracker.test").attributes["gps_accuracy"] == 31
+    assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:paw"
+
+
+@pytest.mark.usefixtures("get_trackers_not_a_pet_tracker")
+async def test_device_tracker_not_a_pet_tracker(hass):
+    """Test that device_tracker icon changes when it's not a pet tracker ."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
     assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:tag"

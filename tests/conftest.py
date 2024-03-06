@@ -106,3 +106,15 @@ def get_trackers_phone_call_available_subtrahend_missing_fixture():
         side_effect=AsyncMock(return_value=response),
     ):
         yield
+
+
+@pytest.fixture(name="get_trackers_not_a_pet_tracker")
+def get_trackers_not_a_pet_tracker_missing_fixture():
+    """Static result when retrieving data from weenect."""
+    response = copy.deepcopy(GET_RACKERS_RESPONSE)
+    response["items"][0]["type"] = "familykid"
+    with patch(
+        "aioweenect.AioWeenect.get_trackers",
+        side_effect=AsyncMock(return_value=response),
+    ):
+        yield
