@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 
 from homeassistant.components.sensor import (
@@ -217,7 +217,10 @@ class WeenectSensor(WeenectEntity, SensorEntity):
             value = self.coordinator.data[self.id][self.entity_description.key]
             if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                 if value:
-                    return dt.parse_datetime(value)
+                    value = dt.parse_datetime(value)
+                    if value and value.tzinfo is None:
+                        value = value.replace(tzinfo=timezone.utc)
+                    return value
             return value
         return None
 
@@ -240,7 +243,9 @@ class WeenectLocationSensor(WeenectSensor):
                 ]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                     if value:
-                        return dt.parse_datetime(value)
+                        value = dt.parse_datetime(value)
+                        if value and value.tzinfo is None:
+                            value = value.replace(tzinfo=timezone.utc)
                 return value
         return None
 
@@ -265,7 +270,9 @@ class WeenectSubscriptionSensor(WeenectSensor):
                 ]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                     if value:
-                        return dt.parse_datetime(value)
+                        value = dt.parse_datetime(value)
+                        if value and value.tzinfo is None:
+                            value = value.replace(tzinfo=timezone.utc)
                 return value
         return None
 
