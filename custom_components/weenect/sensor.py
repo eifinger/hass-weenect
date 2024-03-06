@@ -256,7 +256,6 @@ class WeenectSubscriptionSensor(WeenectSensor):
 class WeenectUserSensor(WeenectSensor):
     """weenect sensor for user information."""
 
-
     @property
     def available(self) -> bool:
         """Return if entity is available."""
