@@ -1,4 +1,5 @@
 """Device tracker platform for weenect."""
+
 from typing import List
 
 from homeassistant.components.device_tracker import SourceType
@@ -129,7 +130,10 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
         tracker_id: int,
     ):
         super().__init__(coordinator, tracker_id)
-        self._attr_icon = "mdi:tag"
+        if self.coordinator.data[self.id]["type"].startswith("pet"):
+            self._attr_icon = "mdi:paw"
+        else:
+            self._attr_icon = "mdi:tag"
         self._attr_unique_id = tracker_id
         self._attr_name = self.coordinator.data[self.id]["name"]
 
