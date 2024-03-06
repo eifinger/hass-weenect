@@ -195,25 +195,29 @@ class WeenectSensor(WeenectEntity, SensorEntity):
     """weenect sensor for general information."""
 
     @property
+    def get_call_available(self) -> StateType:
+        """Return remaining call time."""
+        if (
+            "call_usage" in self.coordinator.data[self.id]
+            and "call_max_threshold" in self.coordinator.data[self.id]
+        ):
+            return (
+                self.coordinator.data[self.id]["call_max_threshold"]
+                - self.coordinator.data[self.id]["call_usage"]
+            )
+        else:
+            return None
+
+    @property
     def native_value(self) -> StateType | datetime:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.entity_description.key == "call_available":
-                if (
-                    "call_usage" in self.coordinator.data[self.id]
-                    and "call_max_threshold" in self.coordinator.data[self.id]
-                ):
-                    return (
-                        self.coordinator.data[self.id]["call_max_threshold"]
-                        - self.coordinator.data[self.id]["call_usage"]
-                    )
-                else:
-                    return None
+                return self.get_call_available(self)
             value = self.coordinator.data[self.id][self.entity_description.key]
-            if self.entity_description.key == "expiration_date":
-                value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(
-                    tzinfo=timezone.utc
-                )
+            if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                if value:
+                    return dt.parse_datetime(value)
             return value
         return None
 
@@ -259,10 +263,9 @@ class WeenectSubscriptionSensor(WeenectSensor):
                 value = self.coordinator.data[self.id]["subscription"][
                     self.entity_description.key
                 ]
-                if self.entity_description.key == "next_charge_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").replace(
-                        tzinfo=timezone.utc
-                    )
+                if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                    if value:
+                        return dt.parse_datetime(value)
                 return value
         return None
 
