@@ -213,7 +213,7 @@ class WeenectSensor(WeenectEntity, SensorEntity):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.entity_description.key == "call_available":
-                return self.get_call_available(self)
+                return self.get_call_available()
             value = self.coordinator.data[self.id][self.entity_description.key]
             if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                 if value:
