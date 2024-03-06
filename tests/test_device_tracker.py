@@ -33,4 +33,4 @@ async def test_device_tracker(hass):
     assert hass.states.get("device_tracker.test").attributes["source_type"] == "gps"
     assert hass.states.get("device_tracker.test").attributes["latitude"] == 47.024191
     assert hass.states.get("device_tracker.test").attributes["gps_accuracy"] == 31
-    assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:paw"
+    assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:tag"

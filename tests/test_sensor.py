@@ -43,6 +43,21 @@ async def test_sensor(hass):
     )
     assert hass.states.get("sensor.test_gps_satellites").state == "0"
 
+    assert hass.states.get("sensor.test_sos_phone_number").state == "+4917383836316"
+    assert hass.states.get("sensor.test_subscription_remaining_days").state == "524"
+    assert (
+        hass.states.get("sensor.test_subscription_expiration_date").state
+        == "2022-09-21T11:34:12+00:00"
+    )
+    assert hass.states.get("sensor.test_phone_call_usage").state == "100"
+    assert hass.states.get("sensor.test_phone_call_max").state == "600"
+    assert hass.states.get("sensor.test_phone_call_available").state == "500"
+    assert (
+        hass.states.get("sensor.test_next_charge").state
+        == "2022-09-21T11:34:12+00:00"
+    )
+    assert hass.states.get("sensor.test_sms_available").state == "13"
+
 
 @pytest.mark.usefixtures("get_trackers")
 async def test_device_class_does_not_return_string_for_its_state(hass, caplog):
