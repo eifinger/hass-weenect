@@ -1,7 +1,8 @@
 """Sensor platform for weenect."""
+
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 
 from homeassistant.components.sensor import (
@@ -11,7 +12,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
+from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
@@ -38,6 +39,46 @@ SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         key="last_sensor_mode",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
+    SensorEntityDescription(
+        name="SOS Phone Number",
+        key="sos_phone",
+        icon="mdi:phone-alert",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Subscription Remaining Days",
+        key="remaining_days",
+        icon="mdi:currency-usd-off",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Subscription Expiration Date",
+        key="expiration_date",
+        icon="mdi:currency-usd-off",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Usage",
+        key="call_usage",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Max",
+        key="call_max_threshold",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
+    ),
+    SensorEntityDescription(
+        name="Phone Call Available",
+        key="call_available",
+        icon="mdi:phone",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        native_unit_of_measurement=UnitOfTime.SECONDS,
+    ),
 )
 
 LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
@@ -52,6 +93,7 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         name="Cell Tower Id",
         key="cellid",
+        icon="mdi:radio-tower",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
@@ -71,7 +113,27 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         name="GPS Satellites",
         key="satellites",
+        icon="mdi:crosshairs-gps",
         state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="Next Charge",
+        key="next_charge_at",
+        icon="mdi:currency-usd",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+)
+
+USER_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
+    SensorEntityDescription(
+        name="SMS Available",
+        key="sms",
+        icon="mdi:message-processing",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
 )
@@ -104,6 +166,18 @@ async def async_setup_entry(
                         coordinator, tracker_id, location_sensor_description
                     )
                 )
+            for (
+                subscription_sensor_description
+            ) in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(
+                    WeenectSubscriptionSensor(
+                        coordinator, tracker_id, subscription_sensor_description
+                    )
+                )
+            for user_sensor_description in USER_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(
+                    WeenectUserSensor(coordinator, tracker_id, user_sensor_description)
+                )
 
         async_add_entities(sensors, True)
 
@@ -120,11 +194,33 @@ async def async_setup_entry(
 class WeenectSensor(WeenectEntity, SensorEntity):
     """weenect sensor for general information."""
 
+    def _get_call_available(self) -> int | None:
+        """Return remaining call time."""
+        if (
+            "call_usage" in self.coordinator.data[self.id]
+            and "call_max_threshold" in self.coordinator.data[self.id]
+        ):
+            return int(
+                self.coordinator.data[self.id]["call_max_threshold"]
+                - self.coordinator.data[self.id]["call_usage"]
+            )
+        else:
+            return None
+
     @property
     def native_value(self) -> StateType | datetime:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
-            return self.coordinator.data[self.id][self.entity_description.key]
+            if self.entity_description.key == "call_available":
+                return self._get_call_available()
+            value = self.coordinator.data[self.id][self.entity_description.key]
+            if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                if value:
+                    value = dt.parse_datetime(value)
+                    if value and value.tzinfo is None:
+                        value = value.replace(tzinfo=timezone.utc)
+                    return value
+            return value
         return None
 
 
@@ -146,6 +242,55 @@ class WeenectLocationSensor(WeenectSensor):
                 ]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                     if value:
-                        return dt.parse_datetime(value)
+                        value = dt.parse_datetime(value)
+                        if value and value.tzinfo is None:
+                            value = value.replace(tzinfo=timezone.utc)
+                return value
+        return None
+
+
+class WeenectSubscriptionSensor(WeenectSensor):
+    """weenect sensor for subscription information."""
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(
+            self.coordinator.data[self.id]["subscription"]
+        )
+
+    @property
+    def native_value(self) -> StateType:
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            if self.coordinator.data[self.id]["subscription"]:
+                value = self.coordinator.data[self.id]["subscription"][
+                    self.entity_description.key
+                ]
+                if self.device_class == str(SensorDeviceClass.TIMESTAMP):
+                    if value:
+                        value = dt.parse_datetime(value)
+                        if value and value.tzinfo is None:
+                            value = value.replace(tzinfo=timezone.utc)
+                return value
+        return None
+
+
+class WeenectUserSensor(WeenectSensor):
+    """weenect sensor for user information."""
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return super().available and bool(self.coordinator.data[self.id]["user"])
+
+    @property
+    def native_value(self) -> StateType:
+        """Return the state of the resources if it has been received yet."""
+        if self.id in self.coordinator.data:
+            if self.coordinator.data[self.id]["user"]:
+                value = self.coordinator.data[self.id]["user"][
+                    self.entity_description.key
+                ]
                 return value
         return None

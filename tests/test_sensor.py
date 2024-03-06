@@ -43,6 +43,20 @@ async def test_sensor(hass):
     )
     assert hass.states.get("sensor.test_gps_satellites").state == "0"
 
+    assert hass.states.get("sensor.test_sos_phone_number").state == "+4917383836316"
+    assert hass.states.get("sensor.test_subscription_remaining_days").state == "524"
+    assert (
+        hass.states.get("sensor.test_subscription_expiration_date").state
+        == "2022-09-21T11:34:12+00:00"
+    )
+    assert hass.states.get("sensor.test_phone_call_usage").state == "100"
+    assert hass.states.get("sensor.test_phone_call_max").state == "600"
+    assert hass.states.get("sensor.test_phone_call_available").state == "500"
+    assert (
+        hass.states.get("sensor.test_next_charge").state == "2022-09-21T11:34:12+00:00"
+    )
+    assert hass.states.get("sensor.test_sms_available").state == "13"
+
 
 @pytest.mark.usefixtures("get_trackers")
 async def test_device_class_does_not_return_string_for_its_state(hass, caplog):
@@ -71,3 +85,29 @@ async def test_sensor_with_last_message_none(hass):
     await hass.async_block_till_done()
 
     assert hass.states.get("sensor.test_last_message_received").state == "unknown"
+
+
+@pytest.mark.usefixtures("get_trackers_phone_call_available_minuend_missing")
+async def test_sensor_with_call_available_minuend_missing(hass):
+    """Test that the subtraction sensor works when minuend is not available ."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("sensor.test_phone_call_available").state == "unknown"
+
+
+@pytest.mark.usefixtures("get_trackers_phone_call_available_subtrahend_missing")
+async def test_sensor_with_call_available_subtrahend_missing(hass):
+    """Test that the subtraction sensor works when subtrahend is not available ."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("sensor.test_phone_call_available").state == "unknown"
