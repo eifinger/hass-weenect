@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v5.0.0 (2024-03-10)
+
+### Fix
+
+* Some sensors should be "unavailable" when the tracker is offline ([#372](https://github.com/eifinger/hass-weenect/issues/372)) ([`067bd3b`](https://github.com/eifinger/hass-weenect/commit/067bd3ba3a710c8c7d10033fb810d7b43a482682))
+
+### Breaking
+
+* some sensors should be "unavailable" when the tracker is offline ([#372](https://github.com/eifinger/hass-weenect/issues/372)) ([`067bd3b`](https://github.com/eifinger/hass-weenect/commit/067bd3ba3a710c8c7d10033fb810d7b43a482682))
+
 ## v4.1.0 (2024-03-06)
 
 ### Feature
