@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v5.1.0 (2024-03-10)
+
+### Feature
+
+* Add extra attributes to device_tracker ([#371](https://github.com/eifinger/hass-weenect/issues/371)) ([`cac4af9`](https://github.com/eifinger/hass-weenect/commit/cac4af9241eab41a48a4bbf495df4eb913b808b7))
+
 ## v5.0.0 (2024-03-10)
 
 ### Fix
