@@ -109,7 +109,7 @@ def get_trackers_phone_call_available_subtrahend_missing_fixture():
 
 
 @pytest.fixture(name="get_trackers_not_a_pet_tracker")
-def get_trackers_not_a_pet_tracker():
+def get_trackers_not_a_pet_tracker_missing_fixture():
     """Static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["position"][0]["type"] = "familykid"
@@ -121,7 +121,7 @@ def get_trackers_not_a_pet_tracker():
 
 
 @pytest.fixture(name="get_trackers_when_offline")
-def get_trackers_when_offline():
+def get_trackers_when_offline_missing_fixture():
     """Static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["position"][0]["is_online"] = False
