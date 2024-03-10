@@ -111,3 +111,19 @@ async def test_sensor_with_call_available_subtrahend_missing(hass):
     await hass.async_block_till_done()
 
     assert hass.states.get("sensor.test_phone_call_available").state == "unknown"
+
+
+@pytest.mark.usefixtures("get_trackers_when_offline")
+async def test_sensor_unavailable_when_offline(hass):
+    """Test that location-specific sensors are unavailable when offline."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("sensor.test_battery").state == "unavailable"
+    assert hass.states.get("sensor.test_cell_tower_id").state == "unavailable"
+    assert hass.states.get("sensor.test_gsm_strength").state == "unavailable"
+    assert hass.states.get("sensor.test_gps_satellites").state == "unavailable"
