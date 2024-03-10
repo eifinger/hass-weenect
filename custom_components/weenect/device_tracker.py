@@ -183,8 +183,5 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
                     "direction"
                 ]
                 res["PDOP"] = self.coordinator.data[self.id]["position"][0]["pdop"]
-                res["confidence"] = self.coordinator.data[self.id]["position"][0][
-                    "confidence"
-                ]
 
         return res

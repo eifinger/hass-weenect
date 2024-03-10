@@ -34,6 +34,9 @@ async def test_device_tracker(hass):
     assert hass.states.get("device_tracker.test").attributes["latitude"] == 47.024191
     assert hass.states.get("device_tracker.test").attributes["gps_accuracy"] == 31
     assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:paw"
+    assert hass.states.get("device_tracker.test").attributes["speed"] == 4.8
+    assert hass.states.get("device_tracker.test").attributes["course"] == 312
+    assert hass.states.get("device_tracker.test").attributes["PDOP"] == 99.9
 
 
 @pytest.mark.usefixtures("get_trackers_not_a_pet_tracker")
