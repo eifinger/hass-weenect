@@ -178,7 +178,11 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
             if self.coordinator.data[self.id]["position"]:
                 return {
                     "speed": self.coordinator.data[self.id]["position"][0]["speed"],
-                    "course": self.coordinator.data[self.id]["position"][0]["direction"],
+                    "course": self.coordinator.data[self.id]["position"][0][
+                        "direction"
+                    ],
                     "PDOP": self.coordinator.data[self.id]["position"][0]["pdop"],
-                    "confidence": self.coordinator.data[self.id]["position"][0]["confidence"]
+                    "confidence": self.coordinator.data[self.id]["position"][0][
+                        "confidence"
+                    ],
                 }
