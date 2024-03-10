@@ -140,7 +140,7 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
     @property
     def available(self) -> bool:
         """Return if entity is available."""
-        return super().available and bool(self.coordinator.data[self.id]["position"])
+        return super().available and bool(self.coordinator.data[self.id]["position"]) and bool(self.coordinator.data[self.id]["position"][0]["is_online"])
 
     @property
     def latitude(self):

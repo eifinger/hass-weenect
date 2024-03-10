@@ -77,6 +77,8 @@ class WeenectBinarySensor(WeenectEntity, BinarySensorEntity):
     @property
     def available(self) -> bool:
         """Return if entity is available."""
+        if self.entity_description.key in ["valid_signal"]:
+            return super().available and bool(self.coordinator.data[self.id]["position"]) and bool(self.coordinator.data[self.id]["position"][0]["is_online"])
         return super().available and bool(self.coordinator.data[self.id]["position"])
 
     @property
