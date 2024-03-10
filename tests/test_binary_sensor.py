@@ -33,3 +33,16 @@ async def test_binary_sensor(hass):
 
     assert hass.states.get("binary_sensor.test_valid_signal").state == "off"
     assert hass.states.get("binary_sensor.test_is_online").state == "on"
+
+
+@pytest.mark.usefixtures("get_trackers_when_offline")
+async def test_binary_sensor_unavailable_when_offline(hass):
+    """Test that valid_signal is unavailable when offline."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("binary_sensor.test_valid_signal").state == "unavailable"

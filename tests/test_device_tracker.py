@@ -47,3 +47,16 @@ async def test_device_tracker_not_a_pet_tracker(hass):
     await hass.async_block_till_done()
 
     assert hass.states.get("device_tracker.test").attributes["icon"] == "mdi:tag"
+
+
+@pytest.mark.usefixtures("get_trackers_when_offline")
+async def test_device_tracker_unavailable_when_offline(hass):
+    """Test that device_tracker is unavailable when offline."""
+    config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
+
+    await hass.config_entries.async_setup(config_entry.entry_id)
+
+    await hass.async_block_till_done()
+
+    assert hass.states.get("device_tracker.test").state == "unavailable"
