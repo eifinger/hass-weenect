@@ -174,19 +174,17 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
     @property
     def extra_state_attributes(self):
         """Return device specific attributes."""
+        res = self._attr_extra_state_attributes
+
         if self.id in self.coordinator.data:
-            if (
-                self.coordinator.data[self.id]["id"]
-                and self.coordinator.data[self.id]["position"]
-            ):
-                return {
-                    "id": self.coordinator.data[self.id]["id"],
-                    "speed": self.coordinator.data[self.id]["position"][0]["speed"],
-                    "course": self.coordinator.data[self.id]["position"][0][
-                        "direction"
-                    ],
-                    "PDOP": self.coordinator.data[self.id]["position"][0]["pdop"],
-                    "confidence": self.coordinator.data[self.id]["position"][0][
-                        "confidence"
-                    ],
-                }
+            if self.coordinator.data[self.id]["position"]:
+                res["speed"] = self.coordinator.data[self.id]["position"][0]["speed"]
+                res["course"] = self.coordinator.data[self.id]["position"][0][
+                    "direction"
+                ]
+                res["PDOP"] = self.coordinator.data[self.id]["position"][0]["pdop"]
+                res["confidence"] = self.coordinator.data[self.id]["position"][0][
+                    "confidence"
+                ]
+
+        return res
