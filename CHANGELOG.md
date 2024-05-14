@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v5.1.1 (2024-05-14)
+
+### Fix
+
+* Unique_id is not a string ([#374](https://github.com/eifinger/hass-weenect/issues/374)) ([`43b8b5e`](https://github.com/eifinger/hass-weenect/commit/43b8b5ec1dda6f3296cfd704058a13a94bff22b8))
+
 ## v5.1.0 (2024-03-10)
 
 ### Feature
