@@ -134,7 +134,7 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
             self._attr_icon = "mdi:paw"
         else:
             self._attr_icon = "mdi:tag"
-        self._attr_unique_id = tracker_id
+        self._attr_unique_id = str(tracker_id)
         self._attr_name = self.coordinator.data[self.id]["name"]
 
     @property
