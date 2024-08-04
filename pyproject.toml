@@ -1,6 +1,6 @@
 [project]
 name = "hass-fressnapf-tracker"
-version = "1.0.0"
+version = "5.1.2"
 description = "Homeassistant Custom Component for weenect"
 license = "MIT"
 readme = "README.md"

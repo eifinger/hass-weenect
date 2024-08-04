@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v5.1.2 (2024-08-04)
+
+### Fix
+
+* Blocking call in aioweenect ([#377](https://github.com/eifinger/hass-weenect/issues/377)) ([`f49f51b`](https://github.com/eifinger/hass-weenect/commit/f49f51b10b770602c477b8e3e68c623896e1505d))
+
 ## v5.1.1 (2024-05-14)
 
 ### Fix
