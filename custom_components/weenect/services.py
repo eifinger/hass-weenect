@@ -1,4 +1,5 @@
 """weenect services."""
+
 import logging
 
 import voluptuous as vol
@@ -22,7 +23,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 def _is_valid_tracker_id(hass, tracker_id, config_entry) -> bool:
     """Determine whether the config_entry is valid this tracker_id."""
-    if tracker_id in hass.data[DOMAIN][config_entry].data.keys():
+    if tracker_id in hass.data[DOMAIN][config_entry].data:
         return True
     _LOGGER.warning(
         "Could not find a registered integration for tracker with id: %s",
@@ -31,44 +32,40 @@ def _is_valid_tracker_id(hass, tracker_id, config_entry) -> bool:
     return False
 
 
-async def async_set_update_interval(
-    hass: HomeAssistant, tracker_id: int, update_interval: str
-):
+async def async_set_update_interval(hass: HomeAssistant, tracker_id: str, update_interval: str):
     """Set the update interval for this tracker id."""
 
     for config_entry in hass.data[DOMAIN]:
         if _is_valid_tracker_id(hass, tracker_id, config_entry):
-            await hass.data[DOMAIN][config_entry].client.set_update_interval(
-                tracker_id, update_interval
-            )
+            await hass.data[DOMAIN][config_entry].client.set_update_interval(tracker_id, update_interval)
 
 
-async def async_activate_super_live(hass: HomeAssistant, tracker_id: int):
-    """Activate the super live mode for this tracker id"""
+async def async_activate_super_live(hass: HomeAssistant, tracker_id: str):
+    """Activate the super live mode for this tracker id."""
 
     for config_entry in hass.data[DOMAIN]:
         if _is_valid_tracker_id(hass, tracker_id, config_entry):
             await hass.data[DOMAIN][config_entry].client.activate_super_live(tracker_id)
 
 
-async def async_refresh_location(hass: HomeAssistant, tracker_id: int):
-    """Request a position refresh for this tracker id"""
+async def async_refresh_location(hass: HomeAssistant, tracker_id: str):
+    """Request a position refresh for this tracker id."""
 
     for config_entry in hass.data[DOMAIN]:
         if _is_valid_tracker_id(hass, tracker_id, config_entry):
             await hass.data[DOMAIN][config_entry].client.refresh_location(tracker_id)
 
 
-async def async_ring(hass: HomeAssistant, tracker_id: int):
-    """Send a ring command for this tracker id"""
+async def async_ring(hass: HomeAssistant, tracker_id: str):
+    """Send a ring command for this tracker id."""
 
     for config_entry in hass.data[DOMAIN]:
         if _is_valid_tracker_id(hass, tracker_id, config_entry):
             await hass.data[DOMAIN][config_entry].client.ring(tracker_id)
 
 
-async def async_vibrate(hass: HomeAssistant, tracker_id: int):
-    """Send a vibrate command for this tracker id"""
+async def async_vibrate(hass: HomeAssistant, tracker_id: str):
+    """Send a vibrate command for this tracker id."""
 
     for config_entry in hass.data[DOMAIN]:
         if _is_valid_tracker_id(hass, tracker_id, config_entry):

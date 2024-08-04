@@ -38,15 +38,11 @@ async def test_button(hass):
         mock.assert_called_once()
 
     with patch("aioweenect.AioWeenect.ring") as mock:
-        await hass.services.async_call(
-            "button", "press", {"entity_id": "button.test_ring"}, blocking=True
-        )
+        await hass.services.async_call("button", "press", {"entity_id": "button.test_ring"}, blocking=True)
         await hass.async_block_till_done()
         mock.assert_called_once()
 
     with patch("aioweenect.AioWeenect.vibrate") as mock:
-        await hass.services.async_call(
-            "button", "press", {"entity_id": "button.test_vibrate"}, blocking=True
-        )
+        await hass.services.async_call("button", "press", {"entity_id": "button.test_vibrate"}, blocking=True)
         await hass.async_block_till_done()
         mock.assert_called_once()

@@ -1,14 +1,14 @@
-"""
-Custom integration to integrate weenect with Home Assistant.
+"""Custom integration to integrate weenect with Home Assistant.
 
 For more details about this integration, please refer to
 https://github.com/eifinger/hass-weenect
 """
+
 # pyright: reportGeneralTypeIssues=false
 import logging
 import re
 from datetime import timedelta
-from typing import Any, Dict, Optional
+from typing import Any
 
 from aioweenect import AioWeenect
 from homeassistant.config_entries import ConfigEntry
@@ -57,9 +57,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    def __init__(
-        self, hass: HomeAssistant, config_entry: ConfigEntry, client: AioWeenect
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry, client: AioWeenect) -> None:
         """Initialize."""
         super().__init__(
             hass,
@@ -69,9 +67,9 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         )
         self.client = client
         self.config_entry = config_entry
-        self.data: Dict[str, Any] = {}
+        self.data: dict[str, Any] = {}
 
-    async def _async_update_data(self) -> Dict[int, Any]:
+    async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         try:
             data = await self.client.get_trackers()
@@ -89,14 +87,12 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
             )
             raise UpdateFailed(exception) from exception
 
-    def _detect_added_and_removed_trackers(self, data: Dict[int, Any]) -> None:
+    def _detect_added_and_removed_trackers(self, data: dict[str, Any]) -> None:
         """Detect if trackers were added or removed."""
-        added = set(data.keys()) - set(self.data.keys())  # type: ignore
-        async_dispatcher_send(
-            self.hass, f"{self.config_entry.entry_id}_{TRACKER_ADDED}", added
-        )
+        added = set(data.keys()) - set(self.data.keys())
+        async_dispatcher_send(self.hass, f"{self.config_entry.entry_id}_{TRACKER_ADDED}", added)  # type: ignore
 
-    def _adjust_update_rate(self, data: Dict[int, Any]) -> None:
+    def _adjust_update_rate(self, data: dict[str, Any]) -> None:
         """Set the update rate to the shortest update rate of all trackers."""
         update_rate = timedelta(seconds=DEFAULT_UPDATE_RATE)
         for tracker in data.values():
@@ -107,15 +103,15 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
         _LOGGER.debug("Setting update_interval to %s", update_rate)
 
     @staticmethod
-    def transform_data(data: Any) -> Dict[int, Any]:
+    def transform_data(data: Any) -> dict[str, Any]:
         """Extract trackers from list and put them in a dict by tracker id."""
         result = {}
         for tracker in data["items"]:
-            result[tracker["id"]] = tracker
+            result[str(tracker["id"])] = tracker
         return result
 
     @staticmethod
-    def parse_duration(duration: str | None) -> Optional[timedelta]:
+    def parse_duration(duration: str | None) -> timedelta | None:
         """Parse a timedelta from a weenect duration."""
         pattern = re.compile(r"^[0-9]+[SMH]$")
 

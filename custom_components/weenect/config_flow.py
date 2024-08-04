@@ -1,4 +1,5 @@
 """Adds config flow for weenect."""
+
 import logging
 
 import voluptuous as vol
@@ -12,7 +13,7 @@ from .const import CONF_PASSWORD, CONF_USERNAME, DOMAIN
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
-class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore
+class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for weenect."""
 
     VERSION = 1
@@ -30,9 +31,7 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ign
             if self._is_already_configured(user_input):
                 return self.async_abort(reason="already_configured")
 
-            valid = await self._test_credentials(
-                user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
-            )
+            valid = await self._test_credentials(user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
             if valid:
                 return self.async_create_entry(
                     title=user_input[CONF_USERNAME],
@@ -55,11 +54,9 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):  # type: ign
 
     async def _show_config_form(self, user_input) -> FlowResult:
         """Show the configuration form."""
-        return self.async_show_form(
+        return self.async_show_form(  # type: ignore
             step_id="user",
-            data_schema=vol.Schema(
-                {vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str}
-            ),
+            data_schema=vol.Schema({vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str}),
             errors=self._errors,
         )
 

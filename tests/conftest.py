@@ -52,7 +52,7 @@ def error_get_trackers_fixture():
 # This is useful to test the platforms.
 @pytest.fixture(name="get_trackers")
 def get_trackers_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     with patch(
         "aioweenect.AioWeenect.get_trackers",
         side_effect=AsyncMock(return_value=GET_RACKERS_RESPONSE),
@@ -62,7 +62,7 @@ def get_trackers_fixture():
 
 @pytest.fixture(name="get_trackers_last_freq_mode_none")
 def get_trackers_last_freq_mode_none_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["last_freq_mode"] = None
     with patch(
@@ -74,7 +74,7 @@ def get_trackers_last_freq_mode_none_fixture():
 
 @pytest.fixture(name="get_trackers_last_message_none")
 def get_trackers_last_message_none_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return statuc result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["position"][0]["last_message"] = None
     with patch(
@@ -86,7 +86,7 @@ def get_trackers_last_message_none_fixture():
 
 @pytest.fixture(name="get_trackers_phone_call_available_minuend_missing")
 def get_trackers_phone_call_available_minuend_missing_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     del response["items"][0]["call_max_threshold"]
     with patch(
@@ -98,7 +98,7 @@ def get_trackers_phone_call_available_minuend_missing_fixture():
 
 @pytest.fixture(name="get_trackers_phone_call_available_subtrahend_missing")
 def get_trackers_phone_call_available_subtrahend_missing_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     del response["items"][0]["call_usage"]
     with patch(
@@ -110,7 +110,7 @@ def get_trackers_phone_call_available_subtrahend_missing_fixture():
 
 @pytest.fixture(name="get_trackers_not_a_pet_tracker")
 def get_trackers_not_a_pet_tracker_missing_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["type"] = "familykid"
     with patch(
@@ -122,7 +122,7 @@ def get_trackers_not_a_pet_tracker_missing_fixture():
 
 @pytest.fixture(name="get_trackers_when_offline")
 def get_trackers_when_offline_missing_fixture():
-    """Static result when retrieving data from weenect."""
+    """Return static result when retrieving data from weenect."""
     response = copy.deepcopy(GET_RACKERS_RESPONSE)
     response["items"][0]["position"][0]["is_online"] = False
     with patch(

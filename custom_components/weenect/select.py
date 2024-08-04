@@ -1,7 +1,7 @@
 """Support for weenect select entities."""
+
 from __future__ import annotations
 
-from typing import List
 
 from homeassistant.components.select import SelectEntity, SelectEntityDescription
 from homeassistant.config_entries import ConfigEntry
@@ -16,7 +16,7 @@ from custom_components.weenect.services import async_set_update_interval
 from .const import DOMAIN, TRACKER_ADDED
 from .entity import WeenectEntity
 
-SELECT_OPTIONS = ("0S", "30S", "1M", "2M", "3M", "5M", "10M")
+SELECT_OPTIONS = ["0S", "30S", "1M", "2M", "3M", "5M", "10M"]
 DEFAULT_SELECT_OPTION = "10M"
 
 SELECT_ENTITY_DESCRIPTIONS: tuple[SelectEntityDescription, ...] = (
@@ -39,20 +39,18 @@ async def async_setup_entry(
 
     @callback
     def async_add_selects(
-        added: List[int],
+        added: list[str],
     ) -> None:
         """Add selects callback."""
 
         selects: list = []
         for tracker_id in added:
             for select_description in SELECT_ENTITY_DESCRIPTIONS:
-                selects.append(
-                    WeenectSelect(coordinator, tracker_id, select_description)
-                )
+                selects.append(WeenectSelect(coordinator, tracker_id, select_description))
 
         async_add_entities(selects, True)
 
-    unsub_dispatcher = async_dispatcher_connect(
+    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
         hass,
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_selects,
@@ -68,7 +66,7 @@ class WeenectSelect(WeenectEntity, SelectEntity):
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        tracker_id: int,
+        tracker_id: str,
         entity_description: SelectEntityDescription,
     ):
         super().__init__(coordinator, tracker_id, entity_description)

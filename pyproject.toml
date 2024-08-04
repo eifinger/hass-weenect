@@ -1,15 +1,13 @@
-[build-system]
-requires = ["poetry_core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry]
-name = "hass-weenect"
-version = "5.1.1"
-description = "Homeassistant Custom Component for Weenect"
+[project]
+name = "hass-fressnapf-tracker"
+version = "1.0.0"
+description = "Homeassistant Custom Component for weenect"
 license = "MIT"
-authors = ["Kevin Stillhammer <kevin.stillhammer@gmail.com>"]
 readme = "README.md"
-repository = "http://github.com/eifinger/hass-weenect"
+authors = [
+    { name = "Kevin Stillhammer", email = "kevin.stillhammer@gmail.com" }
+]
+repository = "http://github.com/eifinger/weenect"
 keywords = [
     "aiohttp",
     "asyncio",
@@ -24,22 +22,82 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "License :: OSI Approved :: MIT License"
 ]
+requires-python = ">=3.12"
+dependencies = [
+    "aioweenect>=0.1.2",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-aioweenect = "1.1.1"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-blacken-docs = "^1.16.0"
-codespell = "^2.2.6"
-mypy = "^1.6.0"
-pre-commit = "^3.4.0"
-pre-commit-hooks = "^4.5.0"
-vulture = "^2.10"
-yamllint = "^1.32.0"
-ruff = "^0.0.292"
-pytest-homeassistant-custom-component = "^0.13.45"
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["custom_components/weenect"]
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "codespell>=2.3.0",
+    "mypy>=1.11.1",
+    "pre-commit>=3.8.0",
+    "yamllint>=1.35.1",
+    "ruff>=0.5.6",
+    "pytest-homeassistant-custom-component>=0.13.148",
+    "pre-commit-hooks>=4.6.0",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+ignore = [
+    "D107",  # Missing docstring in __init__
+    "D202",  # No blank lines allowed after function docstring
+    "D203",  # 1 blank line required before class docstring
+    "D213",  # Multi-line docstring summary should start at the second line
+    "D404",  # First word of the docstring should not be This
+    "D406",  # Section name should end with a newline
+    "D407",  # Section name underlining
+    "D411",  # Missing blank line before section
+    "E501",  # line too long
+    "E731",  # do not assign a lambda expression, use a def
+]
+select = [
+    "B007", # Loop control variable {name} not used within loop body
+    "B014", # Exception handler with duplicate exception
+    "C",  # complexity
+    "D",  # docstrings
+    "E",  # pycodestyle
+    "F",  # pyflakes/autoflake
+    "ICN001", # import concentions; {name} should be imported as {asname}
+    "PGH004",  # Use specific rule codes when using noqa
+    "PLC0414", # Useless import alias. Import alias does not rename original package.
+    "SIM105", # Use contextlib.suppress({exception}) instead of try-except-pass
+    "SIM117", # Merge with-statements that use the same scope
+    "SIM118", # Use {key} in {dict} instead of {key} in {dict}.keys()
+    "SIM201", # Use {left} != {right} instead of not {left} == {right}
+    "SIM212", # Use {a} if {a} else {b} instead of {b} if not {a} else {a}
+    "SIM300", # Yoda conditions. Use 'age == 42' instead of '42 == age'.
+    "SIM401", # Use get from dict with default instead of an if block
+    "T20",  # flake8-print
+    "TRY004", # Prefer TypeError exception for invalid type
+    "RUF006", # Store a reference to the return value of asyncio.create_task
+    "UP",  # pyupgrade
+    "W",  # pycodestyle
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
 
 [tool.pytest.ini_options]
 addopts = "--cov --cov-report term-missing --cov=custom_components --asyncio-mode=auto tests"
@@ -48,32 +106,11 @@ addopts = "--cov --cov-report term-missing --cov=custom_components --asyncio-mod
 show_missing = true
 exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
 
-[tool.ruff]
-ignore = ['E501']
-line-length = 88
-select = [
-    'B',
-    'B9',
-    'C',
-    'E',
-    'F',
-    'W',
-]
-fix = true
-
-[tool.ruff.mccabe]
-max-complexity = 12
-
-[tool.vulture]
-min_confidence = 80
-paths = ["custom_components", "tests"]
-
 [tool.semantic_release]
 version_source = "tag"
 commit_version_number = true
-version_toml = "pyproject.toml:tool.poetry.version"
+version_toml = "pyproject.toml:project.version"
 version_pattern = "custom_components/weenect/manifest.json:\"version\": \"{version}\""
-version_variable = "custom_components/weenect/const.py:VERSION"
 commit_subject = "chore(release): {version}"
 build_command = false
 upload_to_repository = false

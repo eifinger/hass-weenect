@@ -1,7 +1,5 @@
 """Device tracker platform for weenect."""
 
-from typing import List
-
 from homeassistant.components.device_tracker import SourceType
 from homeassistant.components.device_tracker.config_entry import TrackerEntity
 from homeassistant.config_entries import ConfigEntry
@@ -47,17 +45,15 @@ async def async_setup_entry(
 
     @callback
     def async_add_device_trackers(
-        added: List[int],
+        added: list[str],
     ) -> None:
         """Add device_trackers callback."""
 
-        trackers = [
-            WeenectDeviceTracker(coordinator, tracker_id) for tracker_id in added
-        ]
+        trackers = [WeenectDeviceTracker(coordinator, tracker_id) for tracker_id in added]
 
         async_add_entities(trackers, True)
 
-    unsub_dispatcher = async_dispatcher_connect(
+    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
         hass,
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_device_trackers,
@@ -77,9 +73,7 @@ async def async_setup_entry(
             tracker_ids.append(entity.id)
         for tracker_id in set(tracker_ids):
             if service_call.service == SERVICE_SET_UPDATE_INTERVAL:
-                await async_set_update_interval(
-                    hass, tracker_id, service_call.data[UPDATE_INTERVAL]
-                )
+                await async_set_update_interval(hass, tracker_id, service_call.data[UPDATE_INTERVAL])
             if service_call.service == SERVICE_ACTIVATE_SUPER_LIVE:
                 await async_activate_super_live(hass, tracker_id)
             if service_call.service == SERVICE_REFRESH_LOCATION:
@@ -127,14 +121,14 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        tracker_id: int,
+        tracker_id: str,
     ):
         super().__init__(coordinator, tracker_id)
         if self.coordinator.data[self.id]["type"].startswith("pet"):
             self._attr_icon = "mdi:paw"
         else:
             self._attr_icon = "mdi:tag"
-        self._attr_unique_id = str(tracker_id)
+        self._attr_unique_id = tracker_id
         self._attr_name = self.coordinator.data[self.id]["name"]
 
     @property
@@ -183,9 +177,7 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
         if self.id in self.coordinator.data:
             if self.coordinator.data[self.id]["position"]:
                 res["speed"] = self.coordinator.data[self.id]["position"][0]["speed"]
-                res["course"] = self.coordinator.data[self.id]["position"][0][
-                    "direction"
-                ]
+                res["course"] = self.coordinator.data[self.id]["position"][0]["direction"]
                 res["PDOP"] = self.coordinator.data[self.id]["position"][0]["pdop"]
 
         return res

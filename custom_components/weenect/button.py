@@ -1,7 +1,7 @@
 """Support for weenect button entities."""
+
 from __future__ import annotations
 
-from typing import List
 
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
 from homeassistant.config_entries import ConfigEntry
@@ -66,20 +66,18 @@ async def async_setup_entry(
 
     @callback
     def async_add_buttons(
-        added: List[int],
+        added: list[str],
     ) -> None:
         """Add buttons callback."""
 
         selects: list = []
         for tracker_id in added:
             for button_description in BUTTON_ENTITY_DESCRIPTIONS:
-                selects.append(
-                    WeenectButton(coordinator, tracker_id, button_description)
-                )
+                selects.append(WeenectButton(coordinator, tracker_id, button_description))
 
         async_add_entities(selects, True)
 
-    unsub_dispatcher = async_dispatcher_connect(
+    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
         hass,
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_buttons,
@@ -95,7 +93,7 @@ class WeenectButton(WeenectEntity, ButtonEntity):
     def __init__(
         self,
         coordinator: DataUpdateCoordinator,
-        tracker_id: int,
+        tracker_id: str,
         entity_description: ButtonEntityDescription,
     ):
         super().__init__(coordinator, tracker_id, entity_description)
