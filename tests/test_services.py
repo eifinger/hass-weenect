@@ -56,9 +56,7 @@ async def test_services(hass):
         mock.assert_called_once()
 
     with patch("aioweenect.AioWeenect.ring") as mock:
-        await hass.services.async_call(
-            DOMAIN, SERVICE_RING, {ATTR_ENTITY_ID: "device_tracker.test"}, blocking=True
-        )
+        await hass.services.async_call(DOMAIN, SERVICE_RING, {ATTR_ENTITY_ID: "device_tracker.test"}, blocking=True)
         await hass.async_block_till_done()
         mock.assert_called_once()
 

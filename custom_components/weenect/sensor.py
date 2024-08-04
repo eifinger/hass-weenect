@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from typing import List
+from datetime import datetime, UTC
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -150,38 +149,24 @@ async def async_setup_entry(
 
     @callback
     def async_add_sensors(
-        added: List[int],
+        added: list[str],
     ) -> None:
         """Add sensors callback."""
 
         sensors: list = []
         for tracker_id in added:
             for sensor_description in SENSOR_ENTITY_DESCRIPTIONS:
-                sensors.append(
-                    WeenectSensor(coordinator, tracker_id, sensor_description)
-                )
+                sensors.append(WeenectSensor(coordinator, tracker_id, sensor_description))
             for location_sensor_description in LOCATION_SENSOR_ENTITY_DESCRIPTIONS:
-                sensors.append(
-                    WeenectLocationSensor(
-                        coordinator, tracker_id, location_sensor_description
-                    )
-                )
-            for (
-                subscription_sensor_description
-            ) in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
-                sensors.append(
-                    WeenectSubscriptionSensor(
-                        coordinator, tracker_id, subscription_sensor_description
-                    )
-                )
+                sensors.append(WeenectLocationSensor(coordinator, tracker_id, location_sensor_description))
+            for subscription_sensor_description in SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS:
+                sensors.append(WeenectSubscriptionSensor(coordinator, tracker_id, subscription_sensor_description))
             for user_sensor_description in USER_SENSOR_ENTITY_DESCRIPTIONS:
-                sensors.append(
-                    WeenectUserSensor(coordinator, tracker_id, user_sensor_description)
-                )
+                sensors.append(WeenectUserSensor(coordinator, tracker_id, user_sensor_description))
 
         async_add_entities(sensors, True)
 
-    unsub_dispatcher = async_dispatcher_connect(
+    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
         hass,
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_sensors,
@@ -196,13 +181,9 @@ class WeenectSensor(WeenectEntity, SensorEntity):
 
     def _get_call_available(self) -> int | None:
         """Return remaining call time."""
-        if (
-            "call_usage" in self.coordinator.data[self.id]
-            and "call_max_threshold" in self.coordinator.data[self.id]
-        ):
+        if "call_usage" in self.coordinator.data[self.id] and "call_max_threshold" in self.coordinator.data[self.id]:
             return int(
-                self.coordinator.data[self.id]["call_max_threshold"]
-                - self.coordinator.data[self.id]["call_usage"]
+                self.coordinator.data[self.id]["call_max_threshold"] - self.coordinator.data[self.id]["call_usage"]
             )
         else:
             return None
@@ -218,9 +199,9 @@ class WeenectSensor(WeenectEntity, SensorEntity):
                 if value:
                     value = dt.parse_datetime(value)
                     if value and value.tzinfo is None:
-                        value = value.replace(tzinfo=timezone.utc)
-                    return value
-            return value
+                        value = value.replace(tzinfo=UTC)
+                    return value  # type: ignore
+            return value  # type: ignore
         return None
 
 
@@ -243,15 +224,13 @@ class WeenectLocationSensor(WeenectSensor):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.coordinator.data[self.id]["position"]:
-                value = self.coordinator.data[self.id]["position"][0][
-                    self.entity_description.key
-                ]
+                value = self.coordinator.data[self.id]["position"][0][self.entity_description.key]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                     if value:
                         value = dt.parse_datetime(value)
                         if value and value.tzinfo is None:
-                            value = value.replace(tzinfo=timezone.utc)
-                return value
+                            value = value.replace(tzinfo=UTC)
+                return value  # type: ignore
         return None
 
 
@@ -261,24 +240,20 @@ class WeenectSubscriptionSensor(WeenectSensor):
     @property
     def available(self) -> bool:
         """Return if entity is available."""
-        return super().available and bool(
-            self.coordinator.data[self.id]["subscription"]
-        )
+        return super().available and bool(self.coordinator.data[self.id]["subscription"])
 
     @property
     def native_value(self) -> StateType:
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.coordinator.data[self.id]["subscription"]:
-                value = self.coordinator.data[self.id]["subscription"][
-                    self.entity_description.key
-                ]
+                value = self.coordinator.data[self.id]["subscription"][self.entity_description.key]
                 if self.device_class == str(SensorDeviceClass.TIMESTAMP):
                     if value:
                         value = dt.parse_datetime(value)
                         if value and value.tzinfo is None:
-                            value = value.replace(tzinfo=timezone.utc)
-                return value
+                            value = value.replace(tzinfo=UTC)
+                return value  # type: ignore
         return None
 
 
@@ -295,8 +270,6 @@ class WeenectUserSensor(WeenectSensor):
         """Return the state of the resources if it has been received yet."""
         if self.id in self.coordinator.data:
             if self.coordinator.data[self.id]["user"]:
-                value = self.coordinator.data[self.id]["user"][
-                    self.entity_description.key
-                ]
-                return value
+                value = self.coordinator.data[self.id]["user"][self.entity_description.key]
+                return value  # type: ignore
         return None

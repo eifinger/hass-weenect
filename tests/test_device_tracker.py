@@ -17,17 +17,10 @@ async def test_device_tracker(hass):
 
     await hass.async_block_till_done()
 
-    assert (
-        hass.states.get("device_tracker.test").attributes["attribution"] == ATTRIBUTION
-    )
-    assert hass.states.get("device_tracker.test").attributes["id"] == 100000
-    assert (
-        hass.states.get("device_tracker.test").attributes["sim"]
-        == "8849390213023093728"
-    )
-    assert (
-        hass.states.get("device_tracker.test").attributes["imei"] == "160389554842512"
-    )
+    assert hass.states.get("device_tracker.test").attributes["attribution"] == ATTRIBUTION
+    assert hass.states.get("device_tracker.test").attributes["id"] == "100000"
+    assert hass.states.get("device_tracker.test").attributes["sim"] == "8849390213023093728"
+    assert hass.states.get("device_tracker.test").attributes["imei"] == "160389554842512"
 
     assert hass.states.get("device_tracker.test").state == "not_home"
     assert hass.states.get("device_tracker.test").attributes["source_type"] == "gps"

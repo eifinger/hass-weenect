@@ -1,15 +1,16 @@
 """Constants for weenect tests."""
-from typing import Any, Dict
+
+from typing import Any
 
 from custom_components.weenect.const import CONF_PASSWORD, CONF_USERNAME
 
 # Mock config data to be used across multiple tests
-MOCK_CONFIG: Dict[str, str] = {
+MOCK_CONFIG: dict[str, str] = {
     CONF_USERNAME: "test_username",
     CONF_PASSWORD: "test_password",
 }
 
-GET_RACKERS_RESPONSE: Dict[str, Any] = {
+GET_RACKERS_RESPONSE: dict[str, Any] = {
     "items": [
         {
             "id": 100000,

@@ -17,30 +17,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.12"]
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: eifinger/setup-rye@v4
+        id: setup-rye
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+          enable-cache: true
+          cache-prefix: ${{ matrix.python-version }}
+      - name: Pin python-version ${{ matrix.python-version }}
+        run: rye pin ${{ matrix.python-version }}
       - name: Install dependencies
+        if: steps.setup-rye.outputs.cache-hit != 'true'
         run: |
-          poetry install
+          rye sync --no-lock
+      - name: Cache pre-commit
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-|${{ matrix.python-version }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint
         run: |
-          SKIP=no-commit-to-branch poetry run pre-commit run --all-files
-      - name: Coverage
-        run: |
-          poetry run coverage xml -i
-      - uses: codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab  # v4.1.0
-        with:
-          token: ${{secrets.CODECOV}}
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
+          rye run pre-commit run --all-files
+        env:
+          SKIP: no-commit-to-branch
+      - name: Lint GitHub Actions
+        uses: eifinger/actionlint-action@v1
   hacs:
     name: HACS Action
     runs-on: "ubuntu-latest"

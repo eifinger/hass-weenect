@@ -17,19 +17,10 @@ async def test_binary_sensor(hass):
 
     await hass.async_block_till_done()
 
-    assert (
-        hass.states.get("binary_sensor.test_valid_signal").attributes["attribution"]
-        == ATTRIBUTION
-    )
-    assert hass.states.get("binary_sensor.test_valid_signal").attributes["id"] == 100000
-    assert (
-        hass.states.get("binary_sensor.test_valid_signal").attributes["sim"]
-        == "8849390213023093728"
-    )
-    assert (
-        hass.states.get("binary_sensor.test_valid_signal").attributes["imei"]
-        == "160389554842512"
-    )
+    assert hass.states.get("binary_sensor.test_valid_signal").attributes["attribution"] == ATTRIBUTION
+    assert hass.states.get("binary_sensor.test_valid_signal").attributes["id"] == "100000"
+    assert hass.states.get("binary_sensor.test_valid_signal").attributes["sim"] == "8849390213023093728"
+    assert hass.states.get("binary_sensor.test_valid_signal").attributes["imei"] == "160389554842512"
 
     assert hass.states.get("binary_sensor.test_valid_signal").state == "off"
     assert hass.states.get("binary_sensor.test_is_online").state == "on"
