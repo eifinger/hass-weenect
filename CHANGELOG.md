@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v5.1.3 (2024-08-07)
+
+### Fix
+
+* Bump aioweenect to 1.1.4 ([#379](https://github.com/eifinger/hass-weenect/issues/379)) ([`7bc6cfc`](https://github.com/eifinger/hass-weenect/commit/7bc6cfcaa2e386ecf8aae2e367a62b5c95abb5da))
+
 ## v5.1.2 (2024-08-04)
 
 ### Fix
