@@ -14,9 +14,10 @@ acme==2.10.0
     # via hass-nabucasa
 aiodns==3.2.0
     # via homeassistant
-aiohttp==3.9.5
+aiohappyeyeballs==2.3.5
+    # via aiohttp
+aiohttp==3.10.1
     # via aiohttp-cors
-    # via aiohttp-fast-url-dispatcher
     # via aiohttp-fast-zlib
     # via aioweenect
     # via hass-nabucasa
@@ -25,15 +26,13 @@ aiohttp==3.9.5
     # via snitun
 aiohttp-cors==0.7.0
     # via homeassistant
-aiohttp-fast-url-dispatcher==0.3.0
-    # via homeassistant
 aiohttp-fast-zlib==0.1.1
     # via homeassistant
 aiooui==0.1.6
     # via bluetooth-adapters
 aiosignal==1.3.1
     # via aiohttp
-aioweenect==1.1.4
+aioweenect==1.1.5
     # via hass-weenect
 aiozoneinfo==0.2.1
     # via homeassistant
@@ -54,9 +53,9 @@ attrs==23.2.0
     # via hass-nabucasa
     # via homeassistant
     # via snitun
-awesomeversion==24.2.0
+awesomeversion==24.6.0
     # via homeassistant
-bcrypt==4.1.2
+bcrypt==4.1.3
     # via homeassistant
 bleak==0.22.2
     # via bleak-retry-connector
@@ -94,10 +93,10 @@ ciso8601==2.3.1
     # via hass-nabucasa
     # via homeassistant
 codespell==2.3.0
-coverage==7.5.3
+coverage==7.6.0
     # via pytest-cov
     # via pytest-homeassistant-custom-component
-cryptography==42.0.8
+cryptography==43.0.0
     # via acme
     # via bluetooth-data-tools
     # via hass-nabucasa
@@ -120,7 +119,7 @@ fnv-hash-fast==0.5.0
     # via homeassistant
 fnvhash==0.1.0
     # via fnv-hash-fast
-freezegun==1.5.0
+freezegun==1.5.1
     # via pytest-freezer
     # via pytest-homeassistant-custom-component
 frozenlist==1.4.1
@@ -134,7 +133,7 @@ hass-nabucasa==0.81.1
     # via homeassistant
 home-assistant-bluetooth==1.12.2
     # via homeassistant
-homeassistant==2024.7.4
+homeassistant==2024.8.0
     # via pytest-homeassistant-custom-component
 httpcore==1.0.5
     # via httpx
@@ -175,7 +174,7 @@ nodeenv==1.9.1
     # via pre-commit
 numpy==1.26.0
     # via pytest-homeassistant-custom-component
-orjson==3.9.15
+orjson==3.10.6
     # via homeassistant
 packaging==24.1
     # via homeassistant
@@ -186,12 +185,14 @@ paho-mqtt==1.6.1
     # via pytest-homeassistant-custom-component
 pathspec==0.12.1
     # via yamllint
-pillow==10.3.0
+pillow==10.4.0
     # via homeassistant
 pip==24.2
     # via homeassistant
     # via pipdeptree
-pipdeptree==2.19.0
+pip-licenses==4.5.1
+    # via pytest-homeassistant-custom-component
+pipdeptree==2.23.1
     # via pytest-homeassistant-custom-component
 platformdirs==4.2.2
     # via virtualenv
@@ -199,6 +200,8 @@ pluggy==1.5.0
     # via pytest
 pre-commit==3.8.0
 pre-commit-hooks==4.6.0
+prettytable==3.10.2
+    # via pip-licenses
 psutil==6.0.0
     # via psutil-home-assistant
 psutil-home-assistant==0.0.1
@@ -229,7 +232,7 @@ pyobjc-framework-corebluetooth==10.3.1
     # via bleak
 pyobjc-framework-libdispatch==10.3.1
     # via bleak
-pyopenssl==24.1.0
+pyopenssl==24.2.1
     # via acme
     # via homeassistant
     # via josepy
@@ -237,7 +240,7 @@ pyrfc3339==1.1
     # via acme
 pyric==0.1.6.3
     # via bluetooth-auto-recovery
-pytest==8.2.0
+pytest==8.3.1
     # via pytest-aiohttp
     # via pytest-asyncio
     # via pytest-cov
@@ -253,7 +256,7 @@ pytest==8.2.0
     # via syrupy
 pytest-aiohttp==1.0.5
     # via pytest-homeassistant-custom-component
-pytest-asyncio==0.23.6
+pytest-asyncio==0.23.8
     # via pytest-aiohttp
     # via pytest-homeassistant-custom-component
 pytest-cov==5.0.0
@@ -262,7 +265,7 @@ pytest-freezer==0.4.8
     # via pytest-homeassistant-custom-component
 pytest-github-actions-annotate-failures==0.2.0
     # via pytest-homeassistant-custom-component
-pytest-homeassistant-custom-component==0.13.148
+pytest-homeassistant-custom-component==0.13.152
 pytest-picked==0.5.0
     # via pytest-homeassistant-custom-component
 pytest-socket==0.7.0
@@ -271,7 +274,7 @@ pytest-sugar==1.0.0
     # via pytest-homeassistant-custom-component
 pytest-timeout==2.3.1
     # via pytest-homeassistant-custom-component
-pytest-unordered==0.6.0
+pytest-unordered==0.6.1
     # via pytest-homeassistant-custom-component
 pytest-xdist==3.6.1
     # via pytest-homeassistant-custom-component
@@ -322,6 +325,8 @@ termcolor==2.4.0
     # via pytest-sugar
 text-unidecode==1.3
     # via python-slugify
+tomli==2.0.1
+    # via pip-licenses
 tqdm==4.66.4
     # via pytest-homeassistant-custom-component
 typing-extensions==4.12.2
@@ -333,7 +338,7 @@ tzdata==2024.1
     # via aiozoneinfo
 uart-devices==0.1.0
     # via bluetooth-adapters
-ulid-transform==0.9.0
+ulid-transform==0.13.1
     # via homeassistant
 urllib3==1.26.19
     # via botocore
@@ -342,18 +347,20 @@ urllib3==1.26.19
 usb-devices==0.4.5
     # via bluetooth-adapters
     # via bluetooth-auto-recovery
-uv==0.2.13
+uv==0.2.27
     # via pytest-homeassistant-custom-component
 virtualenv==20.26.3
     # via pre-commit
-voluptuous==0.13.1
+voluptuous==0.15.2
     # via homeassistant
     # via voluptuous-openapi
     # via voluptuous-serialize
-voluptuous-openapi==0.0.4
+voluptuous-openapi==0.0.5
     # via homeassistant
 voluptuous-serialize==2.6.0
     # via homeassistant
+wcwidth==0.2.13
+    # via prettytable
 yamllint==1.35.1
 yarl==1.9.4
     # via aiohttp
