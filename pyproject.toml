@@ -1,5 +1,5 @@
 [project]
-name = "hass-fressnapf-tracker"
+name = "hass-weenect"
 version = "5.1.2"
 description = "Homeassistant Custom Component for weenect"
 license = "MIT"
@@ -24,7 +24,7 @@ classifiers = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "aioweenect>=0.1.2",
+    "aioweenect==1.1.4",
 ]
 
 [build-system]

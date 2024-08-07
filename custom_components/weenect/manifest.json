@@ -13,7 +13,7 @@
     "aioweenect"
   ],
   "requirements": [
-    "aioweenect==1.1.2"
+    "aioweenect==1.1.4"
   ],
   "version": "5.1.2"
 }
