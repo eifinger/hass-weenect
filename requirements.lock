@@ -16,7 +16,7 @@ aiohttp==3.10.1
     # via aioweenect
 aiosignal==1.3.1
     # via aiohttp
-aioweenect==1.1.4
+aioweenect==1.1.5
     # via hass-weenect
 attrs==24.1.0
     # via aiohttp
