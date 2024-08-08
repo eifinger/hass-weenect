@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v5.1.4 (2024-08-08)
+
+### Fix
+
+* Support homeassistant 2024.8 and later ([#380](https://github.com/eifinger/hass-weenect/issues/380)) ([`99846ef`](https://github.com/eifinger/hass-weenect/commit/99846ef38296158802a9a8bd3d16bc431f3fd4ea))
+
 ## v5.1.3 (2024-08-07)
 
 ### Fix
