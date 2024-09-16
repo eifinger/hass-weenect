@@ -182,6 +182,15 @@ GET_RACKERS_RESPONSE: dict[str, Any] = {
                     "confidence": None,
                     "original_battery": 74,
                     "is_online": True,
+                    "battery_text": "La batterie est bien charg\u00e9e.",
+                    "battery_color": "green",
+                    "signal_strength_percent": 43,
+                    "gsm_text": "Le r\u00e9seau GSM est moyen, les performances du traceur peuvent \u00eatre affect\u00e9es.",
+                    "gsm_color": "yellow",
+                    "accuracy_text": "La pr\u00e9cision GPS est optimale !",
+                    "accuracy_color": "green",
+                    "wifi_zone_id": 0,
+                    "is_in_deep_sleep": False,
                 }
             ],
             "subscription": {

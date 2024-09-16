@@ -179,5 +179,14 @@ class WeenectDeviceTracker(WeenectBaseEntity, TrackerEntity):
                 res["speed"] = self.coordinator.data[self.id]["position"][0]["speed"]
                 res["course"] = self.coordinator.data[self.id]["position"][0]["direction"]
                 res["PDOP"] = self.coordinator.data[self.id]["position"][0]["pdop"]
+                res["last_position_date"] = self.coordinator.data[self.id]["position"][0]["date_tracker"]
+                res["gsm_text"] = self.coordinator.data[self.id]["position"][0]["gsm_text"]
+                res["gsm_color"] = self.coordinator.data[self.id]["position"][0]["gsm_color"]
+                res["accuracy_text"] = self.coordinator.data[self.id]["position"][0]["accuracy_text"]
+                res["accuracy_color"] = self.coordinator.data[self.id]["position"][0]["accuracy_color"]
+                res["battery_text"] = self.coordinator.data[self.id]["position"][0]["battery_text"]
+                res["battery_color"] = self.coordinator.data[self.id]["position"][0]["battery_color"]
+                res["wifi_zone_id"] = self.coordinator.data[self.id]["position"][0]["wifi_zone_id"]
+                res["is_in_deep_sleep"] = self.coordinator.data[self.id]["position"][0]["is_in_deep_sleep"]
 
         return res
