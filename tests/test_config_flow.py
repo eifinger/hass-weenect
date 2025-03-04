@@ -34,7 +34,7 @@ async def test_successful_config_flow(hass):
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
     # Check that the config flow shows the user form as the first step
-    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["type"] == data_entry_flow.FlowResultType.FORM
     assert result["step_id"] == "user"
 
     # If a user were to enter `test_username` for username and `test_password`
@@ -43,7 +43,7 @@ async def test_successful_config_flow(hass):
 
     # Check that the config flow is complete and a new entry is created with
     # the input data
-    assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+    assert result["type"] == data_entry_flow.FlowResultType.CREATE_ENTRY
     assert result["title"] == "test_username"
     assert result["data"] == MOCK_CONFIG
     assert result["result"]
@@ -73,10 +73,10 @@ async def test_failed_config_flow(hass):
     """Test a failed config flow due to credential validation failure."""
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
 
-    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["type"] == data_entry_flow.FlowResultType.FORM
     assert result["step_id"] == "user"
 
     result = await hass.config_entries.flow.async_configure(result["flow_id"], user_input=MOCK_CONFIG)
 
-    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["type"] == data_entry_flow.FlowResultType.FORM
     assert result["errors"] == {"base": "auth"}

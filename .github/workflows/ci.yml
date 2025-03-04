@@ -17,26 +17,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
-      - uses: eifinger/setup-uv@v1
+      - uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231  # v5.3.1
         id: setup-uv
         with:
           enable-cache: true
           cache-suffix: ${{ matrix.python-version }}
       - name: Cache pre-commit
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf  # v4.2.2
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-|${{ matrix.python-version }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint
         run: |
-          uv run --frozen --python ${{ matrix.python-version }} pre-commit run --all-files
+          uv run --python ${{ matrix.python-version }} pre-commit run --all-files
         env:
           SKIP: no-commit-to-branch
       - name: Lint GitHub Actions
-        uses: eifinger/actionlint-action@v1
+        uses: eifinger/actionlint-action@23c85443d840cd73bbecb9cddfc933cc21649a38  # v1.9.1
   hacs:
     name: HACS Action
     runs-on: "ubuntu-latest"

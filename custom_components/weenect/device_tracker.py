@@ -53,7 +53,7 @@ async def async_setup_entry(
 
         async_add_entities(trackers, True)
 
-    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
+    unsub_dispatcher = async_dispatcher_connect(
         hass,
         f"{entry.entry_id}_{TRACKER_ADDED}",
         async_add_device_trackers,
