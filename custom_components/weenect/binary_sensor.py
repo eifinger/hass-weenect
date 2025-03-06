@@ -50,7 +50,7 @@ async def async_setup_entry(hass, config_entry: ConfigEntry, async_add_entities)
 
         async_add_entities(sensors, True)
 
-    unsub_dispatcher = async_dispatcher_connect(  # type: ignore
+    unsub_dispatcher = async_dispatcher_connect(
         hass,
         f"{config_entry.entry_id}_{TRACKER_ADDED}",
         async_add_binary_sensors,

@@ -43,7 +43,7 @@ repos:
         language: system
         types: [text, executable]
         entry: check-executables-have-shebangs
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: check-json
         name: ｛ Check JSON files
         language: system
@@ -98,7 +98,7 @@ repos:
         language: system
         types: [text]
         entry: end-of-file-fixer
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: fix-byte-order-marker
         name: 🚏 Fix UTF-8 byte order marker
         language: system
@@ -121,7 +121,7 @@ repos:
         language: system
         types: [text]
         entry: trailing-whitespace-fixer
-        stages: [commit, push, manual]
+        stages: [pre-commit, pre-push, manual]
       - id: yamllint
         name: 🎗  Check YAML files with yamllint
         language: system
