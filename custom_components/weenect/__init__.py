@@ -77,7 +77,7 @@ class WeenectDataUpdateCoordinator(DataUpdateCoordinator):
             data = self.transform_data(data)
             self._detect_added_and_removed_trackers(data)
             self._adjust_update_rate(data)
-            return data  # type: ignore
+            return data
         except Exception as exception:
             _LOGGER.debug(
                 "Failed to update weenect data: %s",
