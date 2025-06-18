@@ -20,7 +20,7 @@ jobs:
         python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231  # v5.3.1
+      - uses: astral-sh/setup-uv@fix-version-manifest-file-local
         id: setup-uv
         with:
           enable-cache: true
