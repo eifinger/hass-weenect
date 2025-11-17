@@ -17,63 +17,63 @@ repos:
         name: ✅ Format using ruff
         types: [python]
         language: system
-        entry: ruff format
+        entry: uv run ruff format
       - id: ruff
         name: ✅ Lint using ruff
         types: [python]
         language: system
-        entry: ruff check
+        entry: uv run ruff check
         args: [--fix, --exit-non-zero-on-fix]
       - id: check-ast
         name: 🐍 Check Python AST
         language: system
         types: [python]
-        entry: check-ast
+        entry: uv run check-ast
       - id: check-case-conflict
         name: 🔠 Check for case conflicts
         language: system
-        entry: check-case-conflict
+        entry: uv run check-case-conflict
       - id: check-docstring-first
         name: ℹ️  Check docstring is first
         language: system
         types: [python]
-        entry: check-docstring-first
+        entry: uv run check-docstring-first
       - id: check-executables-have-shebangs
         name: 🧐 Check that executables have shebangs
         language: system
         types: [text, executable]
-        entry: check-executables-have-shebangs
+        entry: uv run check-executables-have-shebangs
         stages: [pre-commit, pre-push, manual]
       - id: check-json
         name: ｛ Check JSON files
         language: system
         types: [json]
-        entry: check-json
+        entry: uv run check-json
       - id: check-merge-conflict
         name: 💥 Check for merge conflicts
         language: system
         types: [text]
-        entry: check-merge-conflict
+        entry: uv run check-merge-conflict
       - id: check-symlinks
         name: 🔗 Check for broken symlinks
         language: system
         types: [symlink]
-        entry: check-symlinks
+        entry: uv run check-symlinks
       - id: check-toml
         name: ✅ Check TOML files
         language: system
         types: [toml]
-        entry: check-toml
+        entry: uv run check-toml
       - id: check-xml
         name: ✅ Check XML files
-        entry: check-xml
+        entry: uv run check-xml
         language: system
         types: [xml]
       - id: check-yaml
         name: ✅ Check YAML files
         language: system
         types: [yaml]
-        entry: check-yaml
+        entry: uv run check-yaml
       - id: codespell
         name: ✅ Check code for common misspellings
         language: system
@@ -82,48 +82,48 @@ repos:
           (?x)^(
               .lock
           )$
-        entry: codespell --ignore-words=.codespell
+        entry: uv run codespell --ignore-words=.codespell
       - id: debug-statements
         name: 🪵  Debug Statements and imports (Python)
         language: system
         types: [python]
-        entry: debug-statement-hook
+        entry: uv run debug-statement-hook
       - id: detect-private-key
         name: 🕵️  Detect Private Keys
         language: system
         types: [text]
-        entry: detect-private-key
+        entry: uv run detect-private-key
       - id: end-of-file-fixer
         name: ⮐  Fix End of Files
         language: system
         types: [text]
-        entry: end-of-file-fixer
+        entry: uv run end-of-file-fixer
         stages: [pre-commit, pre-push, manual]
       - id: fix-byte-order-marker
         name: 🚏 Fix UTF-8 byte order marker
         language: system
         types: [text]
-        entry: fix-byte-order-marker
+        entry: uv run fix-byte-order-marker
       - id: mypy
         name: 🆎 Static type checking using mypy
         language: system
         types: [python]
-        entry: mypy
+        entry: uv run mypy
         require_serial: true
       - id: pytest
         name: 🧪 Running tests and test coverage with pytest
         language: system
         types: [python]
-        entry: pytest
+        entry: uv run pytest
         pass_filenames: false
       - id: trailing-whitespace
         name: ✄  Trim Trailing Whitespace
         language: system
         types: [text]
-        entry: trailing-whitespace-fixer
+        entry: uv run trailing-whitespace-fixer
         stages: [pre-commit, pre-push, manual]
       - id: yamllint
         name: 🎗  Check YAML files with yamllint
         language: system
         types: [yaml]
-        entry: yamllint
+        entry: uv run yamllint
