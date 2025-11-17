@@ -2,9 +2,7 @@
 set_update_interval:
   target:
     entity:
-      integration: weenect
-    device:
-      integration: weenect
+      domain: weenect
   fields:
     update_interval:
       required: true
@@ -24,27 +22,19 @@ set_update_interval:
 activate_super_live:
   target:
     entity:
-      integration: weenect
-    device:
-      integration: weenect
+      domain: weenect
 
 refresh_location:
   target:
     entity:
-      integration: weenect
-    device:
-      integration: weenect
+      domain: weenect
 
 ring:
   target:
     entity:
-      integration: weenect
-    device:
-      integration: weenect
+      domain: weenect
 
 vibrate:
   target:
     entity:
-      integration: weenect
-    device:
-      integration: weenect
+      domain: weenect
