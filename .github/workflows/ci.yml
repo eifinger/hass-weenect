@@ -15,24 +15,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231  # v5.3.1
-        id: setup-uv
-        with:
-          enable-cache: true
-          cache-suffix: ${{ matrix.python-version }}
       - name: Cache pre-commit
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf  # v4.2.2
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-|${{ matrix.python-version }}|${{ hashFiles('.pre-commit-config.yaml') }}
+          key: pre-commit-|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Lint
         run: |
-          uv run --python ${{ matrix.python-version }} pre-commit run --all-files
+          uv run pre-commit run --all-files
         env:
           SKIP: no-commit-to-branch
       - name: Lint GitHub Actions
