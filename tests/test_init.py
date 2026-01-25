@@ -1,12 +1,10 @@
 """Test weenect setup process."""
 
 import pytest
-from homeassistant.exceptions import ConfigEntryNotReady
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.weenect import (
     WeenectDataUpdateCoordinator,
-    async_setup_entry,
     async_unload_entry,
 )
 from custom_components.weenect.const import DOMAIN
@@ -41,12 +39,16 @@ async def test_setup_unload_and_reload_entry(hass):
 async def test_setup_entry_exception(hass, caplog):
     """Test ConfigEntryNotReady when API raises an exception during entry setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
+    config_entry.add_to_hass(hass)
 
     # In this case we are testing the condition where async_setup_entry raises
     # ConfigEntryNotReady using the `error_on_get_trackers` fixture which simulates
     # an error.
-    with pytest.raises(ConfigEntryNotReady):
-        assert await async_setup_entry(hass, config_entry)
+    await hass.config_entries.async_setup(config_entry.entry_id)
+    await hass.async_block_till_done()
+
+    # Verify the entry failed to load due to the exception
+    assert config_entry.state.name == "SETUP_RETRY"
     assert "Dummy Exception Message" in caplog.text
 
 
