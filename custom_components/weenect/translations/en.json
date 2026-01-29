@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "description": "If you need help with the configuration have a look here: https://github.com/eifinger/hass-weenect",
+                "description": "If you need help with the configuration have a look in the [Weenect documentation]({docs_url})",
                 "data": {
                     "username": "Username",
                     "password": "Password"
