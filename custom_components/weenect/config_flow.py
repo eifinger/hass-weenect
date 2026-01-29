@@ -58,6 +58,7 @@ class WeenectFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema({vol.Required(CONF_USERNAME): str, vol.Required(CONF_PASSWORD): str}),
             errors=self._errors,
+            description_placeholders={"docs_url": "https://github.com/eifinger/hass-weenect"},
         )
 
     async def _test_credentials(self, username, password) -> bool:

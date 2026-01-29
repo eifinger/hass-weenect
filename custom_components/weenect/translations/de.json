@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "description": "Wenn du Hilfe benötigst findest du sie vielleicht hier: https://github.com/eifinger/hass-weenect",
+                "description": "Wenn du Hilfe benötigst findest du sie in der [Weenect Dokumentation]({docs_url})",
                 "data": {
                     "username": "Benutzername",
                     "password": "Passwort"
