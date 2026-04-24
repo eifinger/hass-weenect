@@ -39,6 +39,8 @@ async def test_sensor(hass):
     assert hass.states.get("sensor.test_phone_call_available").state == "500"
     assert hass.states.get("sensor.test_next_charge").state == "2022-09-21T11:34:12+00:00"
     assert hass.states.get("sensor.test_sms_available").state == "13"
+    assert hass.states.get("sensor.test_wifi_zone").state == "3799"
+    assert hass.states.get("sensor.test_direction").state == "312"
 
 
 @pytest.mark.usefixtures("get_trackers")

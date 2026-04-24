@@ -28,6 +28,7 @@ GET_RACKERS_RESPONSE: dict[str, Any] = {
                 "vibrate",
                 "activity_tracking",
                 "super_tracking",
+                "has_wifi",
             ],
             "icon": None,
             "color": None,
@@ -182,6 +183,7 @@ GET_RACKERS_RESPONSE: dict[str, Any] = {
                     "confidence": None,
                     "original_battery": 74,
                     "is_online": True,
+                    "wifi_zone_id": 3799,
                 }
             ],
             "subscription": {
