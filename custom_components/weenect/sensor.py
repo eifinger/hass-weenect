@@ -116,6 +116,18 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
+    SensorEntityDescription(
+        name="WiFi Zone",
+        key="wifi_zone_id",
+        icon="mdi:crosshairs-gps",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Direction",
+        key="direction",
+        icon="mdi:compass-rose",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
 )
 
 SUBSCRIPTION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
