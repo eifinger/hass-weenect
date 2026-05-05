@@ -78,6 +78,12 @@ SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         native_unit_of_measurement=UnitOfTime.SECONDS,
     ),
+    SensorEntityDescription(
+        name="Geofence Number",
+        key="geofence_number",
+        icon="mdi:crosshairs-gps",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
 )
 
 LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
@@ -126,6 +132,12 @@ LOCATION_SENSOR_ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         name="Direction",
         key="direction",
         icon="mdi:compass-rose",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
+    SensorEntityDescription(
+        name="Geofence Name",
+        key="geofence_name",
+        icon="mdi:crosshairs-gps",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
 )
